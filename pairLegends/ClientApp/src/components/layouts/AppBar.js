@@ -55,7 +55,7 @@ const ResponsiveAppBar = ({ user }) => {
 
     const ToggleColorMode = (
         <Tooltip title={`${theme.palette.mode === 'dark' ? "Light" : "Dark"} Mode`}>
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            <IconButton size="large" edge="end" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
                 {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
         </Tooltip>
@@ -64,7 +64,7 @@ const ResponsiveAppBar = ({ user }) => {
     const AvatarMenu = isSign ? <></> : (
         <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={`${user ? "Go Further" : "Login here"}`}>
-                <IconButton sx={{ ml: 1 }} onClick={handleOpenUserMenu} color="inherit">
+                <IconButton size="large" edge="end" sx={{ ml: 1 }} onClick={handleOpenUserMenu} color="inherit">
                     {user ? <Avatar
                         src={
                             user?.displayAvatarURL
@@ -111,103 +111,22 @@ const ResponsiveAppBar = ({ user }) => {
     );
 
     return (
-        <div>
-            <AppBar position="static" color="primary">
-                <Container maxWidth="xl">
-                    <Toolbar disableGutters>
-                        <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            href="/"
-                            sx={{
-                                mr: 2,
-                                display: { xs: "none", md: "flex" },
-                                fontFamily: "monospace",
-                                fontWeight: 700,
-                                letterSpacing: ".3rem",
-                                color: "inherit",
-                                textDecoration: "none",
-                            }}
-                        >
-                            LOL
-                        </Typography>
-
-                        {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box> */}
-
-                        <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-                        <Typography
-                            variant="h5"
-                            noWrap
-                            component="a"
-                            href="/"
-                            sx={{
-                                mr: 2,
-                                display: { xs: "flex", md: "none" },
-                                flexGrow: 1,
-                                fontFamily: "monospace",
-                                fontWeight: 700,
-                                letterSpacing: ".3rem",
-                                color: "inherit",
-                                textDecoration: "none",
-                            }}
-                        >
-                            LOL
-                        </Typography>
-                        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                            {/* {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              ))} */}
-                        </Box>
-                        {AvatarMenu}
-                        {ToggleColorMode}
-
-                    </Toolbar>
-                </Container>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Tooltip title="Home">
+                        <IconButton size="large" color="inherit" href="/">
+                            <AdbIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Box
+                        sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
+                    />
+                    {AvatarMenu}
+                    {ToggleColorMode}
+                </Toolbar>
             </AppBar>
-        </div>
+        </Box>
     );
 };
 
