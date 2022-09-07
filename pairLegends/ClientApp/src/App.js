@@ -11,17 +11,26 @@ import { ColorModeContext } from './config/color-context';
 import { getDesignTokens, getThemedComponents } from './theme/Theme';
 
 export default function App() {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const [mode, setMode] = React.useState();
-
+    
     React.useEffect(() => {
-        setMode(prefersDarkMode ? 'dark' : 'light');
+        let currentTheme = localStorage.getItem('pairLegendsTheme')
+        if (!currentTheme) {
+            currentTheme = prefersDarkMode ? 'dark' : 'light'
+            localStorage.setItem('pairLegendsTheme', currentTheme)
+        }
+        setMode(currentTheme);
     }, [prefersDarkMode]);
 
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+                let currentTheme = localStorage.getItem('pairLegendsTheme')
+                if (!currentTheme) currentTheme = prefersDarkMode ? 'dark' : 'light'
+                currentTheme = currentTheme === "light" ? "dark" : "light"
+                localStorage.setItem('pairLegendsTheme', currentTheme)
+                setMode(currentTheme);
             },
         }),
         []

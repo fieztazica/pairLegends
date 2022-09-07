@@ -2,8 +2,6 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { CssBaseline, Box } from "@mui/material";
 import { Outlet } from "react-router";
-import StickyFooter from './StickyFooter';
-//import { NavMenu } from '../NavMenu';
 import ResponsiveAppBar from './AppBar';
 
 export function Layout() {
@@ -24,7 +22,6 @@ export function Layout() {
                     </Container>
                 </Box>
             </main>
-            <StickyFooter />
         </Box>
     );
 
