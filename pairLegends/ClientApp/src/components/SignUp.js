@@ -2,10 +2,8 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
-import IconButton from '@mui/material/IconButton';
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,35 +13,23 @@ import Container from "@mui/material/Container";
 import { Link as DOMLink } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import { validateEmail } from "../utils/index";
-import { useForm, useFormContext } from "react-hook-form";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
+import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement, PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
-
-const parseError = (error) => {
-    if (error.type === 'pattern') {
-        return 'Enter an email'
-    }
-    return 'This field is required'
-}
+import { validatePassword } from "../utils/index";
 
 export function SignUp() {
-    const [showPassword, setShowPassword] = React.useState(false)
-    const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
-    const form = {
-        agree: false
+    const formContext = useForm()
+
+    const { handleSubmit } = formContext
+
+    const onSubmit = (data, e) => {
+        console.log(data)
     }
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const onError = (error, e) => {
+        console.log(error)
+    }
 
     const inDevelopment = () => { alert("Tinh nang dang phat trien") }
 
@@ -69,55 +55,48 @@ export function SignUp() {
                         sx={{ mt: 3 }}
                     >
                         <FormContainer
-                            defaultValues={form}
-                            onSubmit={console.log('submit')}
+                            formContext={formContext}
+                            handleSubmit={handleSubmit(onSubmit, onError)}
                             FormProps={{
                                 'aria-autocomplete': 'none',
                                 autoComplete: 'new-password'
                             }}
                         >
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12}>
                                     <TextFieldElement
-                                        autoComplete="given-name"
-                                        name="firstName"
-                                        required
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
+                                        name="username"
+                                        id="username"
+                                        label="Username"
                                         autoFocus
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextFieldElement
                                         required
                                         fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        autoComplete="family-name"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextFieldElement
-                                        required
-                                        fullWidth
                                         id="email"
                                         type='email'
                                         label="Email Address"
                                         name="email"
                                         autoComplete="email"
-                                        parseError={parseError}
+                                        required
+                                        fullWidth
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <PasswordElement
-                                        required
-                                        fullWidth
+                                        validation={
+                                            {
+                                                validate: (value) => validatePassword(value)
+                                            }
+                                        }
                                         name="password"
                                         label="Password"
                                         id="password"
                                         autoComplete="new-password"
+                                        required
+                                        fullWidth
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -144,7 +123,6 @@ export function SignUp() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                onClick={console.log('yo')}
                             >
                                 Sign Up
                             </Button>

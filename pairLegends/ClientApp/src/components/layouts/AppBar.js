@@ -53,6 +53,14 @@ const ResponsiveAppBar = ({ user }) => {
 
     const isSign = location.pathname.includes("/sign-")
 
+    const ToggleColorMode = (
+        <Tooltip title={`${theme.palette.mode === 'dark' ? "Light" : "Dark"} Mode`}>
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+        </Tooltip>
+    )
+
     const AvatarMenu = isSign ? <></> : (
         <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={`${user ? "Go Further" : "Login here"}`}>
@@ -193,10 +201,9 @@ const ResponsiveAppBar = ({ user }) => {
                 </Button>
               ))} */}
                         </Box>
-                        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                        </IconButton>
                         {AvatarMenu}
+                        {ToggleColorMode}
+
                     </Toolbar>
                 </Container>
             </AppBar>
