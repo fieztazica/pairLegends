@@ -99,7 +99,7 @@ export function SignIn() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <DOMLink to="/sign-up">
+                                <DOMLink to="/sign-up" style={{ textDecoration: 'none' }}>
                                     <Link variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>

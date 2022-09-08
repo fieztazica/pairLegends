@@ -158,7 +158,7 @@ export function SignUp() {
                         </Stack>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <DOMLink to="/sign-in">
+                                <DOMLink to="/sign-in" style={{ textDecoration: 'none' }}>
                                     <Link variant="body2">Already have an account? Sign in</Link>
                                 </DOMLink>
                             </Grid>

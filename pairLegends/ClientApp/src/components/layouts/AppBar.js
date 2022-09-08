@@ -5,25 +5,16 @@ import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-// import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import LoginIcon from '@mui/icons-material/Login';
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
-// import { ReactComponent as LogoSvg } from "../assets/images/logo.svg";
-import { useTheme } from "@emotion/react";
 import { useLocation } from "react-router";
-// import { Stack } from "@mui/system";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { ColorModeContext } from '../../config/color-context';
 import Link from '@mui/material/Link';
+import { Link as DOMLink } from "react-router-dom";
 import { ReactComponent as LoLSvg } from "./image.svg"
 import SvgIcon from "@mui/material/SvgIcon";
+import AppRoutes from '../../AppRoutes'
 // const pages = [];
 // const settings = ["Logout"];
 
@@ -32,8 +23,6 @@ const ResponsiveAppBar = ({ user }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
-    const theme = useTheme();
-    const colorMode = React.useContext(ColorModeContext);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -51,19 +40,10 @@ const ResponsiveAppBar = ({ user }) => {
         setAnchorElUser(null);
     };
 
-    //console.log(location);
+    const excludePathname = AppRoutes.filter(route => route.excludeAppBar).map(route => route.path)
+    const isInExclude = excludePathname.some(pathname => pathname === location.pathname)
 
-    const isSign = location.pathname.includes("/sign-")
-
-    const ToggleColorMode = (
-        <Tooltip title={`${theme.palette.mode === 'dark' ? "Light" : "Dark"} Mode`}>
-            <IconButton size="large" edge="end" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-        </Tooltip>
-    )
-
-    const AvatarMenu = isSign ? <></> : (
+    const AvatarMenu = isInExclude ? <></> : (
         <Box>
             <Tooltip title={`${user ? "Go Further" : "Login here"}`}>
                 <IconButton size="large" edge="end" sx={{ ml: 1 }} onClick={handleOpenUserMenu} color="inherit">
@@ -93,28 +73,33 @@ const ResponsiveAppBar = ({ user }) => {
                 onClose={handleCloseUserMenu}
             >
                 {user?.displayName ? (
-                    <Link color="inherit" underline="none" href="/profile">
-                        <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+                    <DOMLink to="/profile" style={{ textDecoration: 'none' }}>
+                        <Link color="inherit" underline="none" >
+                            <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">
+                                    {user.displayName}
+                                </Typography>
+                            </MenuItem>
+                        </Link>
+                    </DOMLink>
+                ) : <></>}
+                <DOMLink to={`${user ? "/logout" : "/sign-in"}`} style={{ textDecoration: 'none' }}>
+                    <Link color="inherit" underline="none">
+                        <MenuItem key={"loginout"} onClick={handleCloseUserMenu}>
                             <Typography textAlign="center">
-                                {user.displayName}
+                                {user ? "Logout" : "Login"}
                             </Typography>
                         </MenuItem>
                     </Link>
-                ) : <></>}
-                <Link color="inherit" underline="none" href={`${user ? "/logout" : "/sign-in"}`}>
-                    <MenuItem key={"loginout"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                            {user ? "Logout" : "Login"}
-                        </Typography>
-                    </MenuItem>
-                </Link>
+                </DOMLink>
+
             </Menu>
         </Box>
     );
 
     return (
         <Box>
-            <AppBar position="static">
+            <AppBar position="static" color="primary">
                 <Toolbar>
                     <Tooltip title="Home">
                         <IconButton size="small" color="inherit" href="/">
@@ -125,7 +110,6 @@ const ResponsiveAppBar = ({ user }) => {
                         sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
                     />
                     {AvatarMenu}
-                    {ToggleColorMode}
                 </Toolbar>
             </AppBar>
         </Box>
