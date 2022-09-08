@@ -22,6 +22,8 @@ import { useLocation } from "react-router";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ColorModeContext } from '../../config/color-context';
 import Link from '@mui/material/Link';
+import { ReactComponent as LoLSvg } from "./image.svg"
+import SvgIcon from "@mui/material/SvgIcon";
 // const pages = [];
 // const settings = ["Logout"];
 
@@ -62,7 +64,7 @@ const ResponsiveAppBar = ({ user }) => {
     )
 
     const AvatarMenu = isSign ? <></> : (
-        <Box sx={{ flexGrow: 0 }}>
+        <Box>
             <Tooltip title={`${user ? "Go Further" : "Login here"}`}>
                 <IconButton size="large" edge="end" sx={{ ml: 1 }} onClick={handleOpenUserMenu} color="inherit">
                     {user ? <Avatar
@@ -111,12 +113,12 @@ const ResponsiveAppBar = ({ user }) => {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box>
             <AppBar position="static">
                 <Toolbar>
                     <Tooltip title="Home">
-                        <IconButton size="large" color="inherit" href="/">
-                            <AdbIcon />
+                        <IconButton size="small" color="inherit" href="/">
+                            <SvgIcon fontSize="large" component={LoLSvg} inheritViewBox />
                         </IconButton>
                     </Tooltip>
                     <Box
