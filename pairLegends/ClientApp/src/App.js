@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useTheme, createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material/styles";
 //import './custom.css';
 import { theme } from './theme/devias'
+import { Helmet } from "react-helmet";
 
 export default function App() {
 
@@ -16,8 +17,17 @@ export default function App() {
                 <Routes>
                     <Route element={<Layout />}>
                         {AppRoutes.map((route, index) => {
-                            const { element, ...rest } = route;
-                            return <Route key={index} {...rest} element={element} />;
+                            const { element, title, ...rest } = route;
+                            return (< Route key = { index } {...rest} element={
+                            <>
+                                <Helmet>
+                                    <meta charSet="utf-8" />
+                                    <title>Pair Legends | {title}</title>
+                                </Helmet>
+                                {element}
+                            </>
+                        }
+                            />);
                         })}
                     </Route>
                     {/*<Route path="*" element={<Navigate to="/" replace />} />*/}

@@ -16,6 +16,12 @@ import Stack from '@mui/material/Stack';
 import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement, PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
 import { validatePassword } from "../utils/index";
+import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { ReactComponent as DiscordSvg } from "../assets/svg/discord.svg"
+import SvgIcon from "@mui/material/SvgIcon";
+
+const DiscordIcon = () => (<SvgIcon component={DiscordSvg} inheritViewBox />)
 
 export function SignUp() {
 
@@ -39,7 +45,6 @@ export function SignUp() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -135,6 +140,7 @@ export function SignUp() {
                             sx={{ mt: 2, mb: 3 }}
                         >
                             <Button
+                                startIcon={<GoogleIcon />}
                                 fullWidth
                                 variant="contained"
                                 onClick={inDevelopment}
@@ -142,6 +148,7 @@ export function SignUp() {
                                 Google
                             </Button>
                             <Button
+                                startIcon={<GitHubIcon />}
                                 fullWidth
                                 variant="contained"
                                 onClick={inDevelopment}
@@ -149,6 +156,7 @@ export function SignUp() {
                                 Github
                             </Button>
                             <Button
+                                startIcon={<DiscordIcon />}
                                 fullWidth
                                 variant="contained"
                                 onClick={inDevelopment}

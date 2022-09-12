@@ -1,6 +1,7 @@
 ﻿import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -12,12 +13,11 @@ import { useLocation } from "react-router";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from '@mui/material/Link';
 import { Link as DOMLink } from "react-router-dom";
-import { ReactComponent as LoLSvg } from "./image.svg"
+import { ReactComponent as LoLSvg } from "../../assets/svg/lol.svg"
 import SvgIcon from "@mui/material/SvgIcon";
 import AppRoutes from '../../AppRoutes'
 // const pages = [];
 // const settings = ["Logout"];
-
 
 const ResponsiveAppBar = ({ user }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -106,6 +106,23 @@ const ResponsiveAppBar = ({ user }) => {
                             <SvgIcon fontSize="large" component={LoLSvg} inheritViewBox />
                         </IconButton>
                     </Tooltip>
+                    <Typography
+                        ml={2}
+                        variant="h5"
+                        component="a"
+                        href="/"
+                        color="inherit"
+                        sx={{
+                            '&:hover': {
+                                color: 'inherit',
+                                backgroundColor: "transparent",
+                                textShadow: "2px 2px 3px black",
+                                transitionDuration: "0.4s"
+                            },
+                            textDecoration: 'none',
+                        }}>
+                        Pair Legends
+                    </Typography>
                     <Box
                         sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
                     />

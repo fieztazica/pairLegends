@@ -59,8 +59,6 @@ export function NotFound() {
                             Home
                         </Button>
                     </Link>
-
-
                 </Box>
             </Container>
         </Box>
