@@ -7,8 +7,11 @@ import { useTheme, createTheme, ThemeProvider, responsiveFontSizes } from "@mui/
 //import './custom.css';
 import { theme } from './theme/devias'
 import { Helmet } from "react-helmet";
+import { SnackbarProvider } from 'notistack';
+import SnackbarAction from './components/SnackbarAction'
 
 export default function App() {
+    const myRef = React.useRef(null)
 
     return (
         <ThemeProvider theme={theme}>
@@ -17,16 +20,18 @@ export default function App() {
                 <Routes>
                     <Route element={<Layout />}>
                         {AppRoutes.map((route, index) => {
-                            const { element, title, ...rest } = route;
-                            return (< Route key = { index } {...rest} element={
-                            <>
-                                <Helmet>
-                                    <meta charSet="utf-8" />
-                                    <title>Pair Legends | {title}</title>
-                                </Helmet>
-                                {element}
-                            </>
-                        }
+                            const { element, name, ...rest } = route;
+                            return (< Route key={index} {...rest} element={
+                                <>
+                                    <Helmet>
+                                        <meta charSet="utf-8" />
+                                        <title>Pair Legends | {name}</title>
+                                    </Helmet>
+                                    <SnackbarProvider autoHideDuration={3000} maxSnack={3} action={(key) => SnackbarAction(key)} >
+                                        {element}
+                                    </SnackbarProvider>
+                                </>
+                            }
                             />);
                         })}
                     </Route>

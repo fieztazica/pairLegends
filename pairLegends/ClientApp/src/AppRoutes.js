@@ -11,45 +11,45 @@ const AppRoutes = [
     {
         index: true,
         element: <Home />,
-        title: "Home"
+        name: "Home"
     },
     {
         path: '*',
         element: <NotFound />,
-        title: "Not Found"
+        name: "Not Found"
     },
     {
         path: '/counter',
         element: <Counter />,
-        title: "Counter"
+        name: "Counter"
     },
     {
         path: '/fetch-data',
         element: <FetchData />,
-        title: "Fetch Data"
+        name: "Fetch Data"
     },
     {
         path: '/sign-in',
         element: <SignIn />,
         excludeAppBar: true,
-        title: "Sign In"
+        name: "Sign In"
     },
     {
         path: '/sign-up',
         element: <SignUp />,
         excludeAppBar: true,
-        title: "Sign Up"
+        name: "Sign Up"
     },
     {
         path: '/game',
         element: <Game />,
-        title: "Game"
+        name: "Game"
     },
     {
         path: '/profile',
         element: <Profile />,
         excludeAppBar: true,
-        title: "Profile"
+        name: "Profile"
     },
 ];
 

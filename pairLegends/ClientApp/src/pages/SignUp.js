@@ -1,6 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import CssBaseline from "@mui/material/CssBaseline";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
@@ -17,27 +18,39 @@ import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement, PasswordElement, PasswordRepeatElement } from 'react-hook-form-mui'
 import { validatePassword } from "../utils/index";
 import GoogleIcon from '@mui/icons-material/Google';
+import CloseIcon from '@mui/icons-material/Close';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { ReactComponent as DiscordSvg } from "../assets/svg/discord.svg"
 import SvgIcon from "@mui/material/SvgIcon";
+import { useSnackbar } from 'notistack';
 
 const DiscordIcon = () => (<SvgIcon component={DiscordSvg} inheritViewBox />)
 
 export function SignUp() {
 
+    const { enqueueSnackbar } = useSnackbar();
     const formContext = useForm()
 
     const { handleSubmit } = formContext
 
     const onSubmit = (data, e) => {
         console.log(data)
+        inDevelopment()()
     }
 
     const onError = (error, e) => {
         console.log(error)
-    }
+        SnackBar(`${Object.keys(error).length} errors occured.`, 'error')()
 
-    const inDevelopment = () => { alert("Tinh nang dang phat trien") }
+    }
+    const SnackBar = (message, variant, ...props) => () => {
+        enqueueSnackbar(message, {
+            variant,
+            ...props
+        });
+    };
+
+    const inDevelopment = SnackBar("This feature is in development.", 'warning')
 
     return (
         <div>

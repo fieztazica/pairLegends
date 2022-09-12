@@ -13,24 +13,37 @@ import Container from "@mui/material/Container";
 import { Link as DOMLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement, PasswordElement, CheckboxElement } from 'react-hook-form-mui'
+import { useSnackbar } from 'notistack';
 
 export function SignIn() {
 
+    const { enqueueSnackbar } = useSnackbar();
     const formContext = useForm()
 
     const { handleSubmit } = formContext
 
     const onSubmit = (data, e) => {
         console.log(data)
+        inDevelopment()()
     }
 
     const onError = (error, e) => {
         console.log(error)
+        SnackBar(`${Object.keys(error).length} errors occured.`, 'error')()
     }
 
     const ForgotPwdFunc = () => {
-        alert("Chiu thui chu biet sao gio?\nCo cai mat khau cung quen ¯\\_(ツ)_/¯");
+        SnackBar(`Who know?`, 'info')()
     };
+
+    const SnackBar = (message, variant, ...props) => () => {
+        enqueueSnackbar(message, {
+            variant,
+            ...props
+        });
+    };
+
+    const inDevelopment = SnackBar("This feature is in development.", 'warning')
 
     return (
         <div>
@@ -93,7 +106,7 @@ export function SignIn() {
                         </FormContainer>
                         <Grid container>
                             <Grid item xs>
-                                <Link component="button" href="" variant="body2" onClick={ForgotPwdFunc}>
+                                <Link component="button" href="" variant="body2" onClick={inDevelopment}>
                                     Forgot password?
                                 </Link>
                             </Grid>
