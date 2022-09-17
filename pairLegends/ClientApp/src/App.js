@@ -22,7 +22,7 @@ export default function App() {
                         {AppRoutes.map((route, index) => {
                             const { element, name, ...rest } = route;
                             return (< Route key={index} {...rest} element={
-                                <>
+                                name ? (<>
                                     <Helmet>
                                         <meta charSet="utf-8" />
                                         <title>Pair Legends | {name}</title>
@@ -30,7 +30,8 @@ export default function App() {
                                     <SnackbarProvider autoHideDuration={3000} maxSnack={3} action={(key) => SnackbarAction(key)} >
                                         {element}
                                     </SnackbarProvider>
-                                </>
+                                </>) :
+                                    element
                             }
                             />);
                         })}
