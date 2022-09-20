@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PLContext))]
-    partial class PLContextModelSnapshot : ModelSnapshot
+    [Migration("20220918060513_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,31 +157,6 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Model.Match", b =>
-                {
-                    b.Property<string>("PLUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("BeginAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Champs")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Tiles")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TilesDone")
-                        .HasColumnType("int");
-
-                    b.HasKey("PLUserId", "BeginAt");
-
-                    b.ToTable("Matches");
-                });
-
             modelBuilder.Entity("Model.PLUser", b =>
                 {
                     b.Property<string>("Id")
@@ -294,22 +271,6 @@ namespace Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Model.Match", b =>
-                {
-                    b.HasOne("Model.PLUser", "PLUser")
-                        .WithMany("Matches")
-                        .HasForeignKey("PLUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PLUser");
-                });
-
-            modelBuilder.Entity("Model.PLUser", b =>
-                {
-                    b.Navigation("Matches");
                 });
 #pragma warning restore 612, 618
         }

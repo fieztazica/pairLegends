@@ -37,25 +37,27 @@ export function Layout() {
             <main>
                 <Box sx={{ pt: 2, pb: 2 }}>
                     <Container>
-                        <Breadcrumbs aria-label="breadcrumb">
-                            <LinkRouter underline="hover" color="inherit" to="/">
-                                Home
-                            </LinkRouter>
-                            {pathnames.map((value, index) => {
-                                const last = index === pathnames.length - 1;
-                                const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+                        <Box sx={{ pb: 2 }}>
+                            <Breadcrumbs aria-label="breadcrumb">
+                                <LinkRouter underline="hover" color="inherit" to="/">
+                                    Home
+                                </LinkRouter>
+                                {pathnames.map((value, index) => {
+                                    const last = index === pathnames.length - 1;
+                                    const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
-                                return last ? (
-                                    <Typography color="text.primary" key={to}>
-                                        {breadcrumbNameMap[to]}
-                                    </Typography>
-                                ) : (
-                                    <LinkRouter underline="hover" color="inherit" to={to} key={to}>
-                                        {breadcrumbNameMap[to]}
-                                    </LinkRouter>
-                                );
-                            })}
-                        </Breadcrumbs>
+                                    return last ? (
+                                        <Typography color="text.primary" key={to}>
+                                            {breadcrumbNameMap[to]}
+                                        </Typography>
+                                    ) : (
+                                        <LinkRouter underline="hover" color="inherit" to={to} key={to}>
+                                            {breadcrumbNameMap[to]}
+                                        </LinkRouter>
+                                    );
+                                })}
+                            </Breadcrumbs>
+                        </Box>
                         <Outlet />
                     </Container>
                 </Box>

@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pairLegendsCore", "pairLege
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "pl-react", "pl-react\pl-react.esproj", "{925874D0-4A68-46BC-A80C-253CCB366793}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "Tool\Tool.csproj", "{E44C8808-D8B2-4027-A235-798990BE87DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{925874D0-4A68-46BC-A80C-253CCB366793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{925874D0-4A68-46BC-A80C-253CCB366793}.Release|Any CPU.Build.0 = Release|Any CPU
 		{925874D0-4A68-46BC-A80C-253CCB366793}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44C8808-D8B2-4027-A235-798990BE87DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44C8808-D8B2-4027-A235-798990BE87DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44C8808-D8B2-4027-A235-798990BE87DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44C8808-D8B2-4027-A235-798990BE87DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
