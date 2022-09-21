@@ -53,7 +53,7 @@ export function Game() {
                         display='flex'
                         flexDirection='column'
                     >
-                        <Typography>
+                        <Typography variant="h5" component="h5">
                             The game is designed for desktop only.
                         </Typography>
                         <Link to="/" style={{ textDecoration: 'none' }}>
