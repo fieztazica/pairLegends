@@ -14,12 +14,10 @@ export class Home extends Component {
         return (
             <Box
                 component="main"
-                sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexGrow: 1,
-                    minHeight: '80vh'
-                }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="50vh"
             >
                 <Container maxWidth="md">
                     <Box
