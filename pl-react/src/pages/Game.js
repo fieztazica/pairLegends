@@ -2,6 +2,8 @@ import * as React from "react";
 import { Stack, LinearProgress, IconButton, SvgIcon, Container, Grid, Box, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Typography } from "@mui/material";
 import { ReactComponent as LoLSvg } from "../assets/svg/lol.svg"
 import { useSnackbar } from 'notistack';
+import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const LinearProgressWithLabel = ({ value, label }) => {
     return (
@@ -17,6 +19,15 @@ const LinearProgressWithLabel = ({ value, label }) => {
 }
 
 export function Game() {
+    const [colNum, setColNum] = React.useState("8");
+    const [champs, setChamps] = React.useState("6");
+    const [beginAt, setBeginAt] = React.useState(0);
+    const [endAt, setEndAt] = React.useState(0);
+    const [status, setStatus] = React.useState("idle");
+    const [tiles, setTiles] = React.useState([[]]);
+
+    const seconds = 60;
+    const [secs, setSecs] = React.useState(seconds);
     const { enqueueSnackbar } = useSnackbar();
 
     const SnackBar = (message, variant, ...props) => () => {
@@ -45,24 +56,21 @@ export function Game() {
                         <Typography>
                             The game is designed for desktop only.
                         </Typography>
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <Button
+                                startIcon={(<HomeIcon fontSize="small" />)}
+                                sx={{ mt: 3 }}
+                                variant="contained"
+                            >
+                                Home
+                            </Button>
+                        </Link>
                     </Box>
                 </Container>
 
             </Box>
         );
     }
-
-    const [colNum, setColNum] = React.useState("8");
-    const [champs, setChamps] = React.useState("6");
-    const [beginAt, setBeginAt] = React.useState(0);
-    const [endAt, setEndAt] = React.useState(0);
-    const [status, setStatus] = React.useState("idle");
-    const [tiles, setTiles] = React.useState([[]]);
-
-    const seconds = 60;
-    const [secs, setSecs] = React.useState(seconds);
-
-    
 
     const colNumChange = (event) => {
         setColNum(event.target.value);
@@ -191,8 +199,6 @@ export function Game() {
         }
     }
 
-
-
     return (
         <Box
             display="flex"
@@ -213,7 +219,6 @@ export function Game() {
                     </Typography>
                 </Box>
             </Container>
-
         </Box>
     );
 }
