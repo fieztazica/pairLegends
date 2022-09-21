@@ -17,16 +17,7 @@ const LinearProgressWithLabel = ({ value, label }) => {
 }
 
 export function Game() {
-    const [colNum, setColNum] = React.useState("8");
-    const [champs, setChamps] = React.useState("6");
-    const [beginAt, setBeginAt] = React.useState(0);
-    const [endAt, setEndAt] = React.useState(0);
-    const [status, setStatus] = React.useState("idle");
-    const [tiles, setTiles] = React.useState([[]]);
     const { enqueueSnackbar } = useSnackbar();
-
-    const seconds = 60;
-    const [secs, setSecs] = React.useState(seconds);
 
     const SnackBar = (message, variant, ...props) => () => {
         enqueueSnackbar(message, {
@@ -34,6 +25,44 @@ export function Game() {
             ...props
         });
     };
+
+    var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
+
+    if (isMobile) {
+        SnackBar("The game is designed for desktop only.", 'warning')()
+        return (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Container maxWidth="md">
+                    <Box
+                        alignItems='center'
+                        display='flex'
+                        flexDirection='column'
+                    >
+                        <Typography>
+                            The game is designed for desktop only.
+                        </Typography>
+                    </Box>
+                </Container>
+
+            </Box>
+        );
+    }
+
+    const [colNum, setColNum] = React.useState("8");
+    const [champs, setChamps] = React.useState("6");
+    const [beginAt, setBeginAt] = React.useState(0);
+    const [endAt, setEndAt] = React.useState(0);
+    const [status, setStatus] = React.useState("idle");
+    const [tiles, setTiles] = React.useState([[]]);
+
+    const seconds = 60;
+    const [secs, setSecs] = React.useState(seconds);
+
+    
 
     const colNumChange = (event) => {
         setColNum(event.target.value);
@@ -162,8 +191,7 @@ export function Game() {
         }
     }
 
-    var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
-    if (isMobile) SnackBar("The game is designed for desktop only.", 'warning')()
+
 
     return (
         <Box
@@ -172,28 +200,18 @@ export function Game() {
             alignItems="center"
         >
             <Container maxWidth="md">
-                {
-                    isMobile ?
-                        <>
-                            <Typography>
-                                The game is designed for desktop only.
-                            </Typography>
-                        </> :
-                        <>
-                            <Box
-                                alignItems='center'
-                                display='flex'
-                                flexDirection='column'
-                            >
-                                <GameStatusCase value={status} />
-                            </Box>
-                            <Box>
-                                <Typography>
-                                    {`${status} 8x${colNum} ${champs} ${secs} ${beginAt} ${endAt}`}
-                                </Typography>
-                            </Box>
-                        </>
-                }
+                <Box
+                    alignItems='center'
+                    display='flex'
+                    flexDirection='column'
+                >
+                    <GameStatusCase value={status} />
+                </Box>
+                <Box>
+                    <Typography>
+                        {`${status} 8x${colNum} ${champs} ${secs} ${beginAt} ${endAt}`}
+                    </Typography>
+                </Box>
             </Container>
 
         </Box>
