@@ -10,10 +10,11 @@ const Tiles = ({ value }) => {
                     <Stack
                         direction='row'
                         spacing={2}
+                        key={xI}
                     >
                         {
                             x.map((y, yI) => (
-                                <Box >
+                                <Box key={yI}>
                                     <IconButton size="small" color="inherit" >
                                         <SvgIcon fontSize="large" component={LoLSvg} inheritViewBox />
                                     </IconButton>

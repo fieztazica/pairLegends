@@ -10,10 +10,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as DOMLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement, PasswordElement, CheckboxElement } from 'react-hook-form-mui'
 import { useSnackbar } from 'notistack';
+import LinkRouter from "../components/LinkRouter";
 
 export function SignIn() {
 
@@ -111,11 +111,9 @@ export function SignIn() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <DOMLink to="/sign-up" style={{ textDecoration: 'none' }}>
-                                    <Link variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </DOMLink>
+                                <LinkRouter to="/sign-up" variant="body2">
+                                    Don't have an account? Sign Up
+                                </LinkRouter>
                             </Grid>
                         </Grid>
                     </Box>

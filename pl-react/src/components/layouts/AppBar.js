@@ -1,21 +1,11 @@
-﻿import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
+﻿import * as React from "react";
+import { AppBar, Box, IconButton, Menu, Button, Toolbar, Typography, Avatar, Divider, MenuItem, Tooltip, Link, SvgIcon } from '@mui/material';
 import { useLocation } from "react-router";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Link from '@mui/material/Link';
-import { Link as DOMLink } from "react-router-dom";
 import { ReactComponent as LoLSvg } from "../../assets/svg/lol.svg"
-import SvgIcon from "@mui/material/SvgIcon";
 import AppRoutes from '../../AppRoutes'
+import LinkRouter from "../LinkRouter";
+
 // const pages = [];
 // const settings = ["Logout"];
 
@@ -72,27 +62,23 @@ const ResponsiveAppBar = ({ user }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {user?.displayName ? (
-                    <DOMLink to="/profile" style={{ textDecoration: 'none' }}>
-                        <Link color="inherit" underline="none" >
-                            <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">
-                                    {user.displayName}
-                                </Typography>
-                            </MenuItem>
-                        </Link>
-                    </DOMLink>
-                ) : <></>}
-                <DOMLink to={`${user ? "/logout" : "/sign-in"}`} style={{ textDecoration: 'none' }}>
-                    <Link color="inherit" underline="none">
-                        <MenuItem key={"loginout"} onClick={handleCloseUserMenu}>
+                {user?.displayName && (
+                    <LinkRouter to="/profile" underline="none">
+                        <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
                             <Typography textAlign="center">
-                                {user ? "Logout" : "Login"}
+                                {user.displayName}
                             </Typography>
                         </MenuItem>
-                    </Link>
-                </DOMLink>
-
+                    </LinkRouter>
+                )}
+                <Divider />
+                <LinkRouter to={`${user ? "/logout" : "/sign-in"}`} underline="none">
+                    <MenuItem key={"loginout"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">
+                            {user ? "Logout" : "Login"}
+                        </Typography>
+                    </MenuItem>
+                </LinkRouter>
             </Menu>
         </Box>
     );

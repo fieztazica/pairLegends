@@ -3,22 +3,19 @@ import { CssBaseline, Box } from "@mui/material";
 import { Outlet } from "react-router";
 import ResponsiveAppBar from './AppBar';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {
-    Link as RouterLink,
     Route,
     Routes,
     MemoryRouter,
     useLocation,
 } from 'react-router-dom';
 import AppRoutes from '../../AppRoutes';
+import LinkRouter from '../LinkRouter';
 
 const breadcrumbNameMap = {}
 AppRoutes.filter(route => !route.index).forEach((route) => breadcrumbNameMap[route.path] = route.name)
-
-const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
 export function Layout() {
     const location = useLocation();

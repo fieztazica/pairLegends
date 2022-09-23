@@ -11,7 +11,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as DOMLink } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import { useForm } from "react-hook-form";
@@ -23,6 +22,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { ReactComponent as DiscordSvg } from "../assets/svg/discord.svg"
 import SvgIcon from "@mui/material/SvgIcon";
 import { useSnackbar } from 'notistack';
+import LinkRouter from "../components/LinkRouter";
 
 const DiscordIcon = () => (<SvgIcon component={DiscordSvg} inheritViewBox />)
 
@@ -179,9 +179,9 @@ export function SignUp() {
                         </Stack>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <DOMLink to="/sign-in" style={{ textDecoration: 'none' }}>
-                                    <Link variant="body2">Already have an account? Sign in</Link>
-                                </DOMLink>
+                                <LinkRouter to="/sign-in" variant="body2">
+                                    Already have an account? Sign in
+                                </LinkRouter>
                             </Grid>
                         </Grid>
                     </Box>

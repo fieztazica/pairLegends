@@ -44,7 +44,7 @@ export function Game() {
         resume,
         restart,
     } = useTimer({ time, onExpire: () => timerOnExpired() });
-    
+
 
     const SnackBar = (message, variant, ...props) => () => {
         enqueueSnackbar(message, {
@@ -185,14 +185,17 @@ export function Game() {
                 <Box
                     alignItems='center'
                     display='flex'
+                    flexDirection='column'>
+                    <Typography>
+                        {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} | Timer: ${hours}:${minutes}:${seconds} - ${isRunning ? 'Running' : 'Not running'} | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}
+                    </Typography>
+                </Box>
+                <Box
+                    alignItems='center'
+                    display='flex'
                     flexDirection='column'
                 >
                     <GameStatusCase value={status} />
-                </Box>
-                <Box>
-                    <Typography>
-                        {`${status} 8x${colNum} ${champs} ${hours}:${minutes}:${seconds} ${isRunning ? 'Running' : 'Not running'} ${lastExpiredTime?.toLocaleString()}`}
-                    </Typography>
                 </Box>
             </Container>
         </Box>
