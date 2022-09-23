@@ -1,3 +1,4 @@
+import * as React from "react";
 import passwordValidator from 'password-validator';
 
 function validateEmail(email) {
@@ -23,4 +24,17 @@ function validatePassword(password) {
     return !res.length ? true : `Your password must follows these: ${res.map(invalid => invalid.message).join(', ')}`
 }
 
-export { validateEmail, validatePassword }
+function useWindowSize() {
+    const [size, setSize] = React.useState([0, 0]);
+    React.useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
+
+export { validateEmail, validatePassword, useWindowSize }

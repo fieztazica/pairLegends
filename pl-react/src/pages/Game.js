@@ -1,48 +1,23 @@
 import * as React from "react";
-import { Stack, LinearProgress, IconButton, SvgIcon, Container, Grid, Box, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Typography } from "@mui/material";
-import { ReactComponent as LoLSvg } from "../assets/svg/lol.svg"
-import { useSnackbar } from 'notistack';
+// components
+import { Stack, IconButton, SvgIcon, Container, Grid, Box, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import LinearProgressWithLabel from "../components/LinearProgressWithLabel";
+import Tiles from "../components/Tiles";
+// hooks
+import { useSnackbar } from 'notistack';
+import { useWindowSize } from "../utils"
 import { useTimer } from 'react-timer-hook';
-import Moment from 'react-moment';
-import moment from 'moment';
-
-const LinearProgressWithLabel = ({ value, label }) => {
-    return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ width: '100%', mr: 1 }}>
-                <LinearProgress variant="determinate" value={value} />
-            </Box>
-            <Box sx={{ minWidth: 35 }}>
-                <Typography variant="body2" color="text.secondary">
-                    {label}s
-                </Typography>
-            </Box>
-        </Box>
-    );
-}
-
-function useWindowSize() {
-    const [size, setSize] = React.useState([0, 0]);
-    React.useLayoutEffect(() => {
-        function updateSize() {
-            setSize([window.innerWidth, window.innerHeight]);
-        }
-        window.addEventListener('resize', updateSize);
-        updateSize();
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
-    return size;
-}
 
 export function Game() {
-    const duration = 5 * 1000;
+    const duration = 300 * 1000;
     const [colNum, setColNum] = React.useState("8");
     const [champs, setChamps] = React.useState("6");
     const [status, setStatus] = React.useState("idle");
     const [tiles, setTiles] = React.useState([[]]);
     const [width, height] = useWindowSize();
+    const { enqueueSnackbar } = useSnackbar();
     const [lastExpiredTime, setLastExpiredTime] = React.useState(null);
 
     function getExpiredTime() {
@@ -51,8 +26,14 @@ export function Game() {
         return time;
     }
 
-    let time = getExpiredTime()
+    var time = getExpiredTime()
+    var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
+    var screen = {
+        width: 1280,
+        height: 720
+    }
 
+    // init hooks
     const {
         seconds,
         minutes,
@@ -63,8 +44,7 @@ export function Game() {
         resume,
         restart,
     } = useTimer({ time, onExpire: () => timerOnExpired() });
-
-    const { enqueueSnackbar } = useSnackbar();
+    
 
     const SnackBar = (message, variant, ...props) => () => {
         enqueueSnackbar(message, {
@@ -72,41 +52,6 @@ export function Game() {
             ...props
         });
     };
-
-    var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
-
-    if (isMobile || width <= 800 || height <= 720) {
-        if (status === 'play') setStatus("idle")
-        return (
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Container maxWidth="md">
-                    <Box
-                        alignItems='center'
-                        display='flex'
-                        flexDirection='column'
-                    >
-                        <Typography variant="h5" component="h5">
-                            {isMobile ? `The game is designed for desktop only.` : (<>Please make your brower wider than 800px.<br />Current width, height: {width}px, {height}px</>)}
-                        </Typography>
-                        <Link to="/" style={{ textDecoration: 'none' }}>
-                            <Button
-                                startIcon={(<HomeIcon fontSize="small" />)}
-                                sx={{ mt: 3 }}
-                                variant="contained"
-                            >
-                                Home
-                            </Button>
-                        </Link>
-                    </Box>
-                </Container>
-
-            </Box>
-        );
-    }
 
     const timerOnExpired = () => {
         setStatus('idle')
@@ -139,29 +84,16 @@ export function Game() {
         pause()
     }
 
-    const Tiles = () => (
-        <Stack spacing={1}>
-            {
-                tiles.map((x, xI) => (
-                    <Stack
-                        direction='row'
-                        spacing={2}
-                    >
-                        {
-                            x.map((y, yI) => (
-                                <Box >
-                                    <IconButton size="small" color="inherit" >
-                                        <SvgIcon fontSize="large" component={LoLSvg} inheritViewBox />
-                                    </IconButton>
-                                    {/*{`${xI}.${yI}`}*/}
-                                </Box>
-                            ))
-                        }
-                    </Stack>
-                ))
-            }
-        </Stack>
-    )
+    React.useEffect(() => {
+        if (isMobile || width <= screen.width || height <= screen.height) {
+            if (isRunning) pause();
+            setStatus('mobile');
+        }
+        else {
+            if (!isRunning) resume();
+            setStatus('idle')
+        }
+    }, [isMobile, width, height])
 
     const GameMode = () => (
         <>
@@ -202,14 +134,13 @@ export function Game() {
     const GameStatusCase = ({ value }) => {
         switch (value) {
             case 'play':
-                const secs = minutes * 60 + seconds
                 return (
                     <Box sx={{ width: '100%' }}>
-                        <Typography>
-                            Playing
-                        </Typography>
-                        <Box>
-                            <LinearProgressWithLabel value={100 - secs / (duration / 1000) * 100} label={secs} />
+                        <Button variant="contained" onClick={() => handleOnIdle()}>
+                            Idle
+                        </Button>
+                        <Box sx={{ width: '100%' }}>
+                            <LinearProgressWithLabel value={100 - (minutes * 60 + seconds) / (duration / 1000) * 100} label={`${minutes}:${seconds}`} />
                         </Box>
                         <Box
                             alignItems='center'
@@ -217,13 +148,28 @@ export function Game() {
                             flexDirection='column'
                             p={2}
                         >
-                            <Tiles />
+                            <Tiles value={tiles} />
                         </Box>
-                        <Button variant="contained" onClick={() => handleOnIdle()}>
-                            Idle
-                        </Button>
                     </Box>
                 );
+            case 'mobile':
+                return (
+                    <>
+                        <Typography variant="h5" component="h5">
+                            {isMobile ? `The game is designed for desktop only.` : (<>Please make your brower wider than {screen.width}px and higher than {screen.height}px.<br />Current width, height: {width}px, {height}px</>)}
+                        </Typography>
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <Button
+                                startIcon={(<HomeIcon fontSize="small" />)}
+                                sx={{ mt: 3 }}
+                                variant="contained"
+                            >
+                                Home
+                            </Button>
+                        </Link>
+                    </>
+
+                )
             default:
                 return <GameMode />;
         }

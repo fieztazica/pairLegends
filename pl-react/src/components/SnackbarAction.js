@@ -2,7 +2,7 @@
 import IconButton from "@mui/material/IconButton";
 import { closeSnackbar } from 'notistack'
 
-export default function SnackbarAction( key) {
+export default function SnackbarAction(key) {
     return (
         <>
             <IconButton
