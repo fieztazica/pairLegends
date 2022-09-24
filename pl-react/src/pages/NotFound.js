@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Button, Container, Typography } from '@mui/material';
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 
 export function NotFound() {
@@ -28,7 +28,7 @@ export function NotFound() {
                         color="primary"
                         variant="h1"
                     >
-                        404: The page you are looking for isn’t here
+                        404: The page you are looking for isn't here
                     </Typography>
                     <Typography
                         align="center"
@@ -41,7 +41,7 @@ export function NotFound() {
                     <Box sx={{ textAlign: 'center' }}>
                         <img
                             alt="Under development"
-                            src="/static/images/undraw_page_not_found_su7k.svg"
+                            src="/static/images/not_found.svg"
                             style={{
                                 marginTop: 50,
                                 display: 'inline-block',
@@ -50,15 +50,19 @@ export function NotFound() {
                             }}
                         />
                     </Box>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
-                        <Button
-                            startIcon={(<HomeIcon fontSize="small" />)}
-                            sx={{ mt: 3 }}
-                            variant="contained"
-                        >
-                            Home
-                        </Button>
-                    </Link>
+                    <Button
+                        to="/"
+                        variant="contained"
+                        startIcon={(<HomeIcon fontSize="small" />)}
+                        component={RouterLink}
+                        sx={{
+                            mt: 3, '&:hover': {
+                                color: 'primary.contrastText',
+                            }
+                        }}
+                    >
+                        Home
+                    </Button>
                 </Box>
             </Container>
         </Box>

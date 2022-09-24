@@ -2,7 +2,6 @@
 import { AppBar, Box, IconButton, Menu, Button, Toolbar, Typography, Avatar, Divider, MenuItem, Tooltip, Link, SvgIcon } from '@mui/material';
 import { useLocation } from "react-router";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { ReactComponent as LoLSvg } from "../../assets/svg/lol.svg"
 import AppRoutes from '../../AppRoutes'
 import LinkRouter from "../LinkRouter";
 
@@ -82,14 +81,13 @@ const ResponsiveAppBar = ({ user }) => {
             </Menu>
         </Box>
     );
-
     return (
         <Box>
             <AppBar position="static" color="primary">
                 <Toolbar>
                     <Tooltip title="Home">
                         <IconButton size="small" color="inherit" href="/">
-                            <SvgIcon fontSize="large" component={LoLSvg} inheritViewBox />
+                            <img src='favicon.png' alt="" height={32} />
                         </IconButton>
                     </Tooltip>
                     <Typography
