@@ -7,6 +7,7 @@
  * @returns {any[][]}
  */
  export function getListPosItem(table, row, col, amount) {
+    if (!table) return null;
     // Declare and init 2d array
     const listPosItems = [...Array(amount + 1)].fill(null).map(() => []);
 

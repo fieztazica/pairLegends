@@ -24,6 +24,8 @@ import { useSnackbar } from "notistack";
 import * as util from "../utils";
 import { useTimer } from "react-timer-hook";
 import { getBoard } from "../utils/Generator";
+import Champions from "../utils/champions.json"
+import { getListPosItem } from "../utils/Binder";
 
 export function Game() {
   const duration = 300 * 1000;
@@ -31,8 +33,8 @@ export function Game() {
   const [champs, setChamps] = React.useState(6);
   const [status, setStatus] = React.useState("idle");
   const [tiles, setTiles] = React.useState();
-  const [champ1, setChamp1] = React.useState({ x: -1, y: -1 });
-  const [champ2, setChamp2] = React.useState({ x: -1, y: -1 });
+  const [champ1, setChamp1] = React.useState(null);
+  const [champ2, setChamp2] = React.useState(null);
   const [width, height] = util.useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [lastExpiredTime, setLastExpiredTime] = React.useState(null);
@@ -84,13 +86,16 @@ export function Game() {
     setTiles(array);
     setStatus("play");
     //restart(getExpiredTime())
+    // let item = getListPosItem(array, 8, colNum, champs)
+    // console.log(item)
+    console.log(Champions[tiles[0][0]]);
   };
 
   const handleClickTiles = (pi, pj) => {
     // Check if this items is out of board
     if (tiles[pi][pj] === 0) return;
 
-    if (!champ1 || (champ1.x < 0 && champ1.y < 0)) {
+    if (!champ1) {
       setChamp1({ x: pi, y: pj });
       return;
     }
@@ -106,8 +111,9 @@ export function Game() {
   React.useEffect(() => {
     const isSuitable =
       isMobile || width <= screen.width || height <= screen.height;
-    if (status === "play" && isRunning) pause();
     setStatus(isSuitable ? "mobile" : "idle");
+    // eslint-disable-next-line
+    if (status === "play" && isRunning || isSuitable) pause();
     // eslint-disable-next-line
   }, [isMobile, width, height]);
 
@@ -222,6 +228,10 @@ export function Game() {
         return <GameMode />;
     }
   };
+  /**
+   *  
+   | ${tiles ? `Champ1: ${Champions[`${tiles[champ1.x][champ1.y]}`]} Champ2: ${Champions[`${tiles[champ2.x][champ2.y]}`]}` : "Tiles empty"}
+   */
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
@@ -230,7 +240,7 @@ export function Game() {
           <Typography>
             {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} | Timer: ${hours}:${minutes}:${seconds} - ${
               isRunning ? "Running" : "Not running"
-            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}
+            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()} | ${tiles && champ1 && champ2 ? `Champ1: ${Champions[`${tiles[champ1.x][champ1.y]}`]} Champ2: ${Champions[`${tiles[champ2.x][champ2.y]}`]}` : "Tiles empty"}`}
           </Typography>
         </Box>
         <Box alignItems="center" display="flex" flexDirection="column">
