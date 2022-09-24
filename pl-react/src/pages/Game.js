@@ -15,7 +15,7 @@ import {
   FormLabel,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import LinearProgressWithLabel from "../components/LinearProgressWithLabel";
 import Tiles from "../components/Tiles";
@@ -24,7 +24,7 @@ import { useSnackbar } from "notistack";
 import * as util from "../utils";
 import { useTimer } from "react-timer-hook";
 import { getBoard } from "../utils/Generator";
-import Champions from "../utils/champions.json"
+import Champions from "../utils/champions.json";
 import { getListPosItem } from "../utils/Binder";
 
 export function Game() {
@@ -85,22 +85,24 @@ export function Game() {
     let array = getBoard(8, parseInt(colNum), parseInt(champs));
     setTiles(array);
     setStatus("play");
+    setChamp1(null);
+    setChamp2(null);
     //restart(getExpiredTime())
     // let item = getListPosItem(array, 8, colNum, champs)
     // console.log(item)
     console.log(Champions[tiles[0][0]]);
   };
 
-  const handleClickTiles = (pi, pj) => {
+  const handleClickTiles = (x, y) => {
     // Check if this items is out of board
-    if (tiles[pi][pj] === 0) return;
+    if (tiles[x][y] === 0) return;
 
     if (!champ1) {
-      setChamp1({ x: pi, y: pj });
+      setChamp1({ x: x, y: y });
       return;
     }
 
-    setChamp2({ x: pi, y: pj });
+    setChamp2({ x: x, y: y });
   };
 
   const handleOnIdle = () => {
@@ -113,7 +115,7 @@ export function Game() {
       isMobile || width <= screen.width || height <= screen.height;
     setStatus(isSuitable ? "mobile" : "idle");
     // eslint-disable-next-line
-    if (status === "play" && isRunning || isSuitable) pause();
+    if ((status === "play" && isRunning) || isSuitable) pause();
     // eslint-disable-next-line
   }, [isMobile, width, height]);
 
@@ -213,15 +215,20 @@ export function Game() {
                 </>
               )}
             </Typography>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <Button
-                startIcon={<HomeIcon fontSize="small" />}
-                sx={{ mt: 3 }}
-                variant="contained"
-              >
-                Home
-              </Button>
-            </Link>
+            <Button
+              to="/"
+              variant="contained"
+              component={RouterLink}
+              startIcon={<HomeIcon fontSize="small" />}
+              sx={{
+                mt: 3,
+                "&:hover": {
+                  color: "primary.contrastText",
+                },
+              }}
+            >
+              Home
+            </Button>
           </>
         );
       default:
@@ -240,7 +247,16 @@ export function Game() {
           <Typography>
             {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} | Timer: ${hours}:${minutes}:${seconds} - ${
               isRunning ? "Running" : "Not running"
-            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()} | ${tiles && champ1 && champ2 ? `Champ1: ${Champions[`${tiles[champ1.x][champ1.y]}`]} Champ2: ${Champions[`${tiles[champ2.x][champ2.y]}`]}` : "Tiles empty"}`}
+            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}
+          </Typography>
+          <Typography>
+            {`${
+              tiles && champ1 && champ2
+                ? `Champ1: ${
+                    Champions[`${tiles[champ1.x][champ1.y]}`]
+                  } Champ2: ${Champions[`${tiles[champ2.x][champ2.y]}`]}`
+                : "Tiles empty"
+            }`}
           </Typography>
         </Box>
         <Box alignItems="center" display="flex" flexDirection="column">

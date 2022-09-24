@@ -13,7 +13,7 @@ const Tiles = ({ champs, champ1, champ2, onClick }) => {
   );
 
   return (
-    <Stack>
+    <Box>
       {champs.map((x, xI) => (
         <Stack direction="row" key={xI}>
           {x.map((y, yI) => {
@@ -29,7 +29,7 @@ const Tiles = ({ champs, champ1, champ2, onClick }) => {
           })}
         </Stack>
       ))}
-    </Stack>
+    </Box>
   );
 };
 

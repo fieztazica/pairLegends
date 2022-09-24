@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -7,136 +7,185 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import LinkRouter from '../components/LinkRouter';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import LinkRouter from "../components/LinkRouter";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Chip, Divider } from "@mui/material";
 
 export function Home() {
-    const [openHtpDialog, setOpenHtpDialog] = React.useState(false);
+  const [openHtpDialog, setOpenHtpDialog] = React.useState(false);
+  const [openCreditsDialog, setOpenCreditsDialog] = React.useState(false);
 
-    const descriptionElementRef = React.useRef(null);
-    React.useEffect(() => {
-        if (openHtpDialog) {
-            const { current: descriptionElement } = descriptionElementRef;
-            if (descriptionElement !== null) {
-                descriptionElement.focus();
-            }
-        }
-    }, [openHtpDialog]);
+  const htpDescriptionElementRef = React.useRef(null);
+  const credDescriptionElementRef = React.useRef(null);
+  React.useEffect(() => {
+    if (openHtpDialog) {
+      const { current: descriptionElement } = htpDescriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+    if (openCreditsDialog) {
+      const { current: descriptionElement } = credDescriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [openHtpDialog, openCreditsDialog]);
 
-    const HomeTitle = () => (
-        <Box m={1}>
-            <Typography
-                align="center"
-                color="primary"
-                variant="h1"
-            >
-                HOME
-            </Typography>
-            <Typography
-                align="center"
-                color="secondary"
-                variant="subtitle2"
-            >
-                Make Pikachu great again.
-            </Typography>
-        </Box>
-    )
+  const HomeTitle = () => (
+    <Box m={1}>
+      <Typography align="center" color="primary" variant="h1">
+        HOME
+      </Typography>
+      <Typography align="center" color="secondary" variant="subtitle2">
+        Make Pikachu great again.
+      </Typography>
+    </Box>
+  );
 
-    const GameButtonGroup = () => (
-        <ButtonGroup
-            variant="contained"
-            orientation="vertical"
-            sx={{
-                m: 1,
-                'a:hover': {
-                    color: 'primary.contrastText',
-                }
+  const GameButtonGroup = () => (
+    <ButtonGroup
+      variant="contained"
+      orientation="vertical"
+      sx={{
+        m: 1,
+        "a:hover": {
+          color: "primary.contrastText",
+        },
+      }}
+    >
+      <Button to="/game" component={RouterLink}>
+        Play Game
+      </Button>
+      <Button onClick={() => setOpenHtpDialog(true)} component={Link}>
+        How to play
+      </Button>
+      <Button onClick={() => setOpenCreditsDialog(true)} component={Link}>
+        Credits
+      </Button>
+      <Button
+        rel="noreferrer"
+        href="https://discord.io/owlvernyte"
+        target="_blank"
+        component={Link}
+      >
+        Support
+      </Button>
+    </ButtonGroup>
+  );
 
-            }}
+  const NavButtonGroup = () => (
+    <ButtonGroup
+      variant="contained"
+      aria-label="outlined primary button group"
+      sx={{
+        m: 1,
+        "a:hover": {
+          color: "primary.contrastText",
+        },
+      }}
+    >
+      <Button href="/fetch-data">Fetch Data</Button>
+      <Button href="/counter">Counter</Button>
+    </ButtonGroup>
+  );
+
+  const HowToPlayDialog = () => (
+    <Dialog
+      open={openHtpDialog}
+      onClose={() => setOpenHtpDialog(false)}
+      aria-labelledby="how-to-play-dialog-title"
+      aria-describedby="how-to-play-dialog-description"
+    >
+      <DialogTitle id="how-to-play-dialog-title">How to play</DialogTitle>
+      <DialogContent dividers>
+        <DialogContentText
+          id="how-to-play-dialog-description"
+          ref={htpDescriptionElementRef}
+          tabIndex={-1}
         >
-            <Button to="/game" component={RouterLink} >
-                Play Game
-            </Button>
-            <Button onClick={() => setOpenHtpDialog(true)} component={Link}>
-                How to play
-            </Button>
-            <Button rel="noreferrer" href="https://discord.io/owlvernyte" target="_blank" component={Link}>
-                Support
-            </Button>
-        </ButtonGroup>
-    )
+          Just play like normal pikachu game but with LoL champions not
+          pokemons.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenHtpDialog(false)}>I'm good</Button>
+      </DialogActions>
+    </Dialog>
+  );
 
-    const NavButtonGroup = () => (
-        <ButtonGroup
-            variant="contained"
-            aria-label="outlined primary button group"
-            sx={{
-                m: 1,
-                'a:hover': {
-                    color: 'primary.contrastText',
-                }
-            }}
-        >
-            <Button href="/fetch-data">
-                Fetch Data
-            </Button>
-            <Button href="/counter" >
-                Counter
-            </Button>
-        </ButtonGroup>
-    )
-
-    const HowToPlayDialog = () => (
-        <Dialog
-            open={openHtpDialog}
-            onClose={() => setOpenHtpDialog(false)}
-            aria-labelledby="how-to-play-dialog-title"
-            aria-describedby="how-to-play-dialog-description"
-        >
-            <DialogTitle id="how-to-play-dialog-title">How to play</DialogTitle>
-            <DialogContent dividers>
-                <DialogContentText
-                    id="how-to-play-dialog-description"
-                    ref={descriptionElementRef}
-                    tabIndex={-1}
-                >
-                    Just play like normal pikachu game but with LoL champions not pokemons.
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => setOpenHtpDialog(false)}>I'm good</Button>
-            </DialogActions>
-        </Dialog>
-    )
-
-    return (
+  const CreditsDialog = () => (
+    <Dialog
+      open={openCreditsDialog}
+      onClose={() => setOpenCreditsDialog(false)}
+      aria-labelledby="credits-dialog-title"
+      aria-describedby="credits-dialog-description"
+    >
+      <DialogTitle id="credits-dialog-title">Credits - Group 3</DialogTitle>
+      <DialogContent dividers>
         <Box
-            component="main"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="50vh"
+          id="credits-dialog-description"
+          ref={credDescriptionElementRef}
+          tabIndex={-1}
         >
-            <Container maxWidth="md">
-                <Box
-                    sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}
-                >
-                    <HomeTitle />
-                    <GameButtonGroup />
-                    <HowToPlayDialog />
-                    <Box m={1}>Nav Zone</Box>
-                    <NavButtonGroup />
-                </Box>
-            </Container>
+          <Box minWidth="50vw" m={1}>
+            <Box p={1}>
+              <Divider sx={{pb:2}}>
+                <Chip label="TEAM" />
+              </Divider>
+              <Typography align="center">
+                2080600246 - Hoang Tien Dat
+                <br />
+                2080600759 -Huynh Nhat Truong
+                <br />
+                2080600763 - Pham Huynh Nhat Truong
+                <br />
+                2080600235 - Le Nguyen Viet Duong
+              </Typography>
+            </Box>
+            <Box p={1}>
+              <Divider sx={{pb:2}}>
+                <Chip label="ACKNOWLEDGEMENTS" />
+              </Divider>
+              <Typography align="center">reeact</Typography>
+            </Box>
+          </Box>
         </Box>
-    );
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenCreditsDialog(false)}>Close</Button>
+      </DialogActions>
+    </Dialog>
+  );
 
+  return (
+    <Box
+      component="main"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="50vh"
+    >
+      <Container maxWidth="md">
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <HomeTitle />
+          <GameButtonGroup />
+          <HowToPlayDialog />
+          <CreditsDialog />
+          <Box m={1}>Nav Zone</Box>
+          <NavButtonGroup />
+        </Box>
+      </Container>
+    </Box>
+  );
 }
