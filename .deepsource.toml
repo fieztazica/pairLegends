@@ -1,0 +1,28 @@
+version = 1
+
+[[analyzers]]
+name = "secrets"
+enabled = true
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  plugins = ["react"]
+
+[[analyzers]]
+name = "csharp"
+enabled = true
+
+[[transformers]]
+name = "prettier"
+enabled = true
+
+[[transformers]]
+name = "dotnet-format"
+enabled = true
+
+[[transformers]]
+name = "standardjs"
+enabled = true

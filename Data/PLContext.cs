@@ -15,9 +15,10 @@ namespace Data
         {
             builder
                 .Entity<Match>()
-                .HasKey(match => new { 
-                    match.PLUserId, 
-                    match.BeginAt 
+                .HasKey(match => new
+                {
+                    match.PLUserId,
+                    match.BeginAt
                 });
             builder
                 .Entity<Match>()

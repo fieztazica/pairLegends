@@ -1,7 +1,7 @@
-﻿import React from 'react';
+import React from "react";
 
 export const ColorModeContext = React.createContext({
-    toggleColorMode: () => {
-        // This is intentional
-    },
+  toggleColorMode: () => {
+    // This is intentional
+  },
 });
