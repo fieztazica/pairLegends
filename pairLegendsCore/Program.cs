@@ -18,10 +18,10 @@ namespace pairLegendsCore
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContextFactory<PLContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DeployConnection"))
             );
             builder.Services.AddDbContext<PLContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DeployConnection"))
             );
             builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<PLContext>()
@@ -33,9 +33,10 @@ namespace pairLegendsCore
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                
             }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 
