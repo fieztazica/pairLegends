@@ -134,7 +134,7 @@ export function Home() {
         >
           <Box minWidth="50vw" m={1}>
             <Box p={1}>
-              <Divider sx={{pb:2}}>
+              <Divider sx={{ pb: 2 }}>
                 <Chip label="TEAM" />
               </Divider>
               <Typography align="center">
@@ -148,7 +148,7 @@ export function Home() {
               </Typography>
             </Box>
             <Box p={1}>
-              <Divider sx={{pb:2}}>
+              <Divider sx={{ pb: 2 }}>
                 <Chip label="ACKNOWLEDGEMENTS" />
               </Divider>
               <Typography align="center">reeact</Typography>

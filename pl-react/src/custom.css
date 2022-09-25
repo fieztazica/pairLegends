@@ -3,23 +3,23 @@
 }
 
 .Footer {
-    text-align: center;
+  text-align: center;
 }
 
 a {
-    color: #0366d6;
+  color: #0366d6;
 }
 
 a:hover {
-    color: #fff;
+  color: #fff;
 }
 
 code {
-    color: #E01A76;
+  color: #e01a76;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
 }

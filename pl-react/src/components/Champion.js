@@ -34,7 +34,7 @@ const Champion = ({ value, onClick, selected = false }) => {
       }
       onClick={onClick}
       alt=""
-      disabled={value === 0 ? true : false}
+      disabled={value === 0}
     >
       <img
         src={`/static/images/pl_${value}.png`}
