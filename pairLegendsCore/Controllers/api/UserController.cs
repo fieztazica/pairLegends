@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.Database;
 using Model.Request;
@@ -37,12 +37,8 @@ namespace pairLegendsCore.Controllers.api
         {
             User foundUser = userManager.FindByIdAsync(id).Result;
             if (foundUser == null) return NotFound();
-            UserRes resultUser = new UserRes
-            {
-                Id = foundUser.Id,
-                UserName = foundUser.UserName,
-                Email = foundUser.Email,
-            };
+            UserRes resultUser = new()
+{Id = foundUser.Id, UserName = foundUser.UserName, Email = foundUser.Email, };
             return Ok(resultUser);
         }
 
@@ -50,11 +46,8 @@ namespace pairLegendsCore.Controllers.api
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserReq value)
         {
-            User newUser = new User
-            {
-                UserName = value.UserName,
-                Email = value.Email,
-            };
+            User newUser = new()
+{UserName = value.UserName, Email = value.Email, };
             var result = await userManager.CreateAsync(newUser, value.Password);
             if (result.Succeeded)
                 return Ok(result);
