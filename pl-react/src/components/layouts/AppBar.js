@@ -1,4 +1,4 @@
-﻿import * as React from "react";
+import * as React from "react";
 import {
   AppBar,
   Box,
@@ -93,14 +93,14 @@ const ResponsiveAppBar = ({ user }) => {
       >
         {user?.displayName && (
           <LinkRouter to="/profile" underline="none">
-            <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+            <MenuItem key="profile" onClick={handleCloseUserMenu}>
               <Typography textAlign="center">{user.displayName}</Typography>
             </MenuItem>
           </LinkRouter>
         )}
         <Divider />
         <LinkRouter to={`${user ? "/logout" : "/sign-in"}`} underline="none">
-          <MenuItem key={"loginout"} onClick={handleCloseUserMenu}>
+          <MenuItem key="loginout" onClick={handleCloseUserMenu}>
             <Typography textAlign="center">
               {user ? "Logout" : "Login"}
             </Typography>

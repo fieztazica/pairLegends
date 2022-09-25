@@ -8,7 +8,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-  let schema = new passwordValidator();
+  const schema = new passwordValidator();
 
   schema
     .is()

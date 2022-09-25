@@ -1,1 +1,1 @@
-var baseURL = "https://localhost:3000/";
+const baseURL = "https://localhost:3000/";

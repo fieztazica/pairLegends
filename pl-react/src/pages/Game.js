@@ -45,11 +45,11 @@ export function Game() {
     return time;
   }
 
-  var time = getExpiredTime();
-  var isMobile = navigator.userAgent.match(
+  const time = getExpiredTime();
+  const isMobile = navigator.userAgent.match(
     /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
   );
-  var screen = {
+  const screen = {
     width: 800,
     height: 600,
   };
@@ -82,12 +82,12 @@ export function Game() {
   };
 
   const handleOnPlay = () => {
-    let array = getBoard(8, parseInt(colNum), parseInt(champs));
+    const array = getBoard(8, parseInt(colNum), parseInt(champs));
     setTiles(array);
     setStatus("play");
     setChamp1(null);
     setChamp2(null);
-    //restart(getExpiredTime())
+    // restart(getExpiredTime())
     // let item = getListPosItem(array, 8, colNum, champs)
     // console.log(item)
     console.log(Champions[tiles[0][0]]);
@@ -98,11 +98,11 @@ export function Game() {
     if (tiles[x][y] === 0) return;
 
     if (!champ1) {
-      setChamp1({ x: x, y: y });
+      setChamp1({ x, y });
       return;
     }
 
-    setChamp2({ x: x, y: y });
+    setChamp2({ x, y });
   };
 
   const handleOnIdle = () => {
@@ -205,7 +205,7 @@ export function Game() {
           <>
             <Typography variant="h5" component="h5">
               {isMobile ? (
-                `The game is designed for desktop only.`
+                "The game is designed for desktop only."
               ) : (
                 <>
                   Please make your browser wider than {screen.width}px and
@@ -236,7 +236,7 @@ export function Game() {
     }
   };
   /**
-   *  
+   *
    | ${tiles ? `Champ1: ${Champions[`${tiles[champ1.x][champ1.y]}`]} Champ2: ${Champions[`${tiles[champ2.x][champ2.y]}`]}` : "Tiles empty"}
    */
 
