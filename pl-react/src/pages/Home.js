@@ -107,6 +107,20 @@ export function Home() {
           id="how-to-play-dialog-description"
           ref={htpDescriptionElementRef}
           tabIndex={-1}
+             Nhiệm vụ của bạn rất đơn giản:
+          <br />
+          - Chỉ cần tìm hai hình giống nhau và đường nối
+                  giữa hai hình đó gấp khúc không quá ba lần, click vào để loại bỏ chúng.
+
+          <br />
+          - Mỗi lần loại bỏ được hai hình bạn sẽ ghi điểm, trò chơi hoàn thành khi bạn loại
+                  bỏ được hết các hình trước khi hết giờ, thời gian còn lại càng nhiều điểm của bạn càng cao.
+
+          <br />
+          - Khi không còn nước di chuyển trò chơi sẽ tự động đảo lại hình, số lần đảo là có giới hạn. Khi kết thúc
+                  trò chơi, điểm số được cộng thêm số lần đảo.
+
+          <br />
         >
           Just play like normal pikachu game but with LoL champions not
           pokemons.
