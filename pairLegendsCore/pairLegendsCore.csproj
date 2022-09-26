@@ -32,9 +32,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Data\Data.csproj" />
 		<ProjectReference Include="..\Model\Model.csproj" />
-		<ProjectReference Include="..\pl-react\pl-react.esproj" >
-			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-		</ProjectReference>
 		<ProjectReference Include="..\Service\Service.csproj" />
 		<ProjectReference Include="..\Tool\Tool.csproj" />
 	</ItemGroup>
