@@ -8,12 +8,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{B0CBBCBD-CDF6-40AB-A575-F566079F2032}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pairLegendsCore", "pairLegendsCore\pairLegendsCore.csproj", "{F8F15556-7786-4BD0-856D-88517E7974B2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{925874D0-4A68-46BC-A80C-253CCB366793} = {925874D0-4A68-46BC-A80C-253CCB366793}
+	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "pl-react", "pl-react\pl-react.esproj", "{925874D0-4A68-46BC-A80C-253CCB366793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{B13EB606-C9DC-4BE2-B1BE-53FE3F6EB359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "Tool\Tool.csproj", "{E44C8808-D8B2-4027-A235-798990BE87DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tool", "Tool\Tool.csproj", "{E44C8808-D8B2-4027-A235-798990BE87DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
