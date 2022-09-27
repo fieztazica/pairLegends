@@ -21,26 +21,25 @@ import LinearProgressWithLabel from "../components/LinearProgressWithLabel";
 import Tiles from "../components/Tiles";
 import GameMode from "../components/GameMode";
 // hooks
-import { useSnackbar } from "notistack";
+//import { useSnackbar } from "notistack";
 import * as util from "../utils";
 import { useTimer } from "react-timer-hook";
 import { getBoard } from "../utils/Generator";
-import Champions from "../utils/champions.json";
 import { getListPosItem } from "../utils/Binder";
 
 export function Game() {
     const duration = 60 * 1000;
     const [colNum, setColNum] = React.useState(10);
     const [champs, setChamps] = React.useState(10);
+    const [fromChamps, setFromChamps] = React.useState(util.mixChampions());
     const [status, setStatus] = React.useState("idle");
     const [tiles, setTiles] = React.useState();
     const [timer, setTimer] = React.useState(false);
-    const [champ1, setChamp1] = React.useState(null);
-    const [champ2, setChamp2] = React.useState(null);
+    const [champ1, setChamp1] = React.useState(0);
+    const [champ2, setChamp2] = React.useState(0);
     const [width, height] = util.useWindowSize();
-    const { enqueueSnackbar } = useSnackbar();
+    //const { enqueueSnackbar } = useSnackbar();
     const [lastExpiredTime, setLastExpiredTime] = React.useState(null);
-
 
     function getExpiredTime() {
         const time = new Date();
@@ -62,14 +61,14 @@ export function Game() {
     const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
         useTimer({ time, onExpire: () => timerOnExpired() });
     // eslint-disable-next-line
-    const SnackBar =
-        (message, variant, ...props) =>
-            () => {
-                enqueueSnackbar(message, {
-                    variant,
-                    ...props,
-                });
-            };
+    //const SnackBar =
+    //    (message, variant, ...props) =>
+    //        () => {
+    //            enqueueSnackbar(message, {
+    //                variant,
+    //                ...props,
+    //            });
+    //        };
 
     const timerOnExpired = () => {
         setStatus("idle");
@@ -95,14 +94,14 @@ export function Game() {
         setChamp1(null);
         setChamp2(null);
         if (timer) restart(getExpiredTime());
-        util.mixChampions()
+        setFromChamps(util.mixChampions())
         // let item = getListPosItem(array, 8, colNum, champs)
         // console.log(item)
     };
 
     const handleClickTiles = (x, y) => {
         // Check if this items is out of board
-        if (tiles[x][y] === 0) return;
+        if (tiles[x][y] === -1) return;
 
         if (!champ1) {
             setChamp1({ x, y });
@@ -157,6 +156,7 @@ export function Game() {
                                 champ1={champ1}
                                 champ2={champ2}
                                 onClick={handleClickTiles}
+                                fromChamps={fromChamps}
                             />
                         </Box>
                     </Box>
@@ -211,9 +211,12 @@ export function Game() {
                     </Typography>
                     {status === 'play' && (
                         <Typography>
-                            {`${tiles && champ1 && champ2
-                                ? `Champ1 (${champ1.x}.${champ1.y}): ${Champions[`${tiles[champ1.x][champ1.y]}`]
-                                } Champ2 (${champ2.x}.${champ2.y}): ${Champions[`${tiles[champ2.x][champ2.y]}`]}`
+                            {`${tiles
+                                ? `
+                                 Champ1: ${champ1 && `${fromChamps[`${tiles[champ1.x][champ1.y]}`]} (${champ1.x}.${champ1.y})`}
+                                 | 
+                                 Champ2: ${champ2 && `${fromChamps[`${tiles[champ2.x][champ2.y]}`]} (${champ2.x}.${champ2.y})`}
+                                `
                                 : "Tiles empty"
                                 }`}
                         </Typography>

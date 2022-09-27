@@ -8,7 +8,8 @@ import {
     Button,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { getChampName } from "../utils/index";
+import './champion.css'
+import { getChampName, mixChampions } from "../utils/index";
 
 const BootstrapButton = styled(Button)({
     padding: "1px 0px",
@@ -22,7 +23,8 @@ const BootstrapButton = styled(Button)({
     },
 });
 
-const Champion = ({ value, onClick, selected = false }) => {
+const Champion = ({ value, onClick, selected = false, from }) => {
+    if (!from) from = require("../utils/champions.json")       
     return (
         <BootstrapButton
             style={
@@ -32,14 +34,14 @@ const Champion = ({ value, onClick, selected = false }) => {
             }
             onClick={onClick}
             alt=""
-            disabled={value === 0}
+            disabled={value === -1}
         >
             <img
-                src={`/static/images/${getChampName(value)}.png`}
+                src={value === -1 ? "" : `/static/images/${getChampName(value, from)}.png`}
                 width={60}
                 height={60}
                 style={
-                    value === 0
+                    value === -1
                         ? { display: "none" }
                         : (
                             selected
@@ -47,7 +49,7 @@ const Champion = ({ value, onClick, selected = false }) => {
                                 : null
                         )
                 }
-                alt={`${getChampName(value)}`}
+                alt={value === -1 ? "barrier" : `${getChampName(value, from)}`}
             />
         </BootstrapButton>
     );

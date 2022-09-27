@@ -1,6 +1,5 @@
 import * as React from "react";
 import passwordValidator from "password-validator";
-import Champion from "../components/Champion";
 
 function validateEmail(email) {
     const res =
@@ -53,19 +52,19 @@ function useWindowSize() {
     return size;
 }
 
-function getChampName(id) {
-    var json = mixChampions();
-    let champ = json[id]
+function getChampName(id, from) {
+    let champ = from[id]
     return camelize(champ)
 }
 
 function mixChampions() {
     var json = require('./champions.json');
-    const ChampionsValues = Object.values(json).filter((v, i) => i != 0).sort(() => Math.random() - 0.5);
-    Object.keys(json).filter((v, i) => i != 0).forEach((v, i) => {
-        json[v] = ChampionsValues[i];
+    let clonedJson = { ...json }
+    const ChampionsValues = Object.values(clonedJson).sort(() => Math.random() - 0.5);
+    Object.keys(clonedJson).forEach((v, i) => {
+        clonedJson[v] = ChampionsValues[i];
     })
-    return json;
+    return clonedJson;
 }
 
 function camelize(str) {
