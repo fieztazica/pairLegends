@@ -47,7 +47,7 @@ const Champion = ({ value, onClick, selected = false }) => {
                                 : null
                         )
                 }
-                alt={`${value}`}
+                alt={`${getChampName(value)}`}
             />
         </BootstrapButton>
     );

@@ -34,6 +34,7 @@ export function Game() {
     const [champs, setChamps] = React.useState(10);
     const [status, setStatus] = React.useState("idle");
     const [tiles, setTiles] = React.useState();
+    const [timer, setTimer] = React.useState(false);
     const [champ1, setChamp1] = React.useState(null);
     const [champ2, setChamp2] = React.useState(null);
     const [width, height] = util.useWindowSize();
@@ -83,13 +84,18 @@ export function Game() {
         setChamps(parseInt(newValue));
     };
 
+    const timerChange = (event) => {
+        setTimer(event.target.checked);
+    };
+
     const handleOnPlay = () => {
         const array = getBoard(8, parseInt(colNum), parseInt(champs));
         setTiles(array);
         setStatus("play");
         setChamp1(null);
         setChamp2(null);
-        //restart(getExpiredTime())
+        if (timer) restart(getExpiredTime());
+        util.mixChampions()
         // let item = getListPosItem(array, 8, colNum, champs)
         // console.log(item)
     };
@@ -130,14 +136,16 @@ export function Game() {
                         <Button variant="contained" onClick={() => handleOnIdle()}>
                             Idle
                         </Button>
-                        <Box sx={{ width: "100%" }}>
-                            <LinearProgressWithLabel
-                                value={
-                                    100 - ((minutes * 60 + seconds) / (duration / 1000)) * 100
-                                }
-                                label={`${minutes}:${seconds}`}
-                            />
-                        </Box>
+                        {timer && (
+                            <Box sx={{ width: "100%" }}>
+                                <LinearProgressWithLabel
+                                    value={
+                                        100 - ((minutes * 60 + seconds) / (duration / 1000)) * 100
+                                    }
+                                    label={`${minutes}:${seconds}`}
+                                />
+                            </Box>
+                        )}
                         <Box
                             alignItems="center"
                             display="flex"
@@ -185,7 +193,7 @@ export function Game() {
                     </>
                 );
             default:
-                return <GameMode colNumValue={colNum} colNumOnChange={colNumChange} champsValue={champs} champsOnChange={champsChange} playOnClick={handleOnPlay} />;
+                return <GameMode colNumValue={colNum} colNumOnChange={colNumChange} champsValue={champs} champsOnChange={champsChange} playOnClick={handleOnPlay} timerValue={timer} timerOnChange={timerChange} />;
         }
     };
     /**
@@ -198,16 +206,19 @@ export function Game() {
             <Container maxWidth="md">
                 <Box alignItems="center" display="flex" flexDirection="column">
                     <Typography>
-                        {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} | Timer: ${hours}:${minutes}:${seconds} - ${isRunning ? "Running" : "Not running"
-                            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}
+                        {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} ${timer ? ` | Timer: ${hours}:${minutes}:${seconds} - ${isRunning ? "Running" : "Not running"
+                            } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}` : ""}`}
                     </Typography>
-                    <Typography>
-                        {`${tiles && champ1 && champ2
-                            ? `Champ1 (${champ1.x}.${champ1.y}): ${Champions[`${tiles[champ1.x][champ1.y]}`]
-                            } Champ2 (${champ2.x}.${champ2.y}): ${Champions[`${tiles[champ2.x][champ2.y]}`]}`
-                            : "Tiles empty"
-                            }`}
-                    </Typography>
+                    {status === 'play' && (
+                        <Typography>
+                            {`${tiles && champ1 && champ2
+                                ? `Champ1 (${champ1.x}.${champ1.y}): ${Champions[`${tiles[champ1.x][champ1.y]}`]
+                                } Champ2 (${champ2.x}.${champ2.y}): ${Champions[`${tiles[champ2.x][champ2.y]}`]}`
+                                : "Tiles empty"
+                                }`}
+                        </Typography>
+                    )}
+
                 </Box>
                 <Box alignItems="center" display="flex" flexDirection="column">
                     <GameStatusCase value={status} />

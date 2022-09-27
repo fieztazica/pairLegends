@@ -8,9 +8,12 @@ import {
     FormControlLabel,
     FormControl,
     FormLabel,
+    Switch,
+    Stack,
+    Divider
 } from "@mui/material";
 
-const GameMode = ({ colNumValue, colNumOnChange, champsValue, champsOnChange, playOnClick }) => (
+const GameMode = ({ colNumValue, colNumOnChange, champsValue, champsOnChange, playOnClick, timerValue, timerOnChange }) => (
     <>
         <Box p={2}>
             <FormControl>
@@ -59,10 +62,17 @@ const GameMode = ({ colNumValue, colNumOnChange, champsValue, champsOnChange, pl
                     />
                 </RadioGroup>
             </FormControl>
+
         </Box>
-        <Button variant="contained" onClick={() => playOnClick()}>
-            Play
-        </Button>
+        <Stack direction="row" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
+            <Button variant="contained" onClick={() => playOnClick()}>
+                Play
+            </Button>
+            <FormControl>
+                <FormControlLabel control={<Switch />} label="Timer" checked={timerValue} onChange={timerOnChange} />
+            </FormControl>
+        </Stack>
+
     </>
 );
 
