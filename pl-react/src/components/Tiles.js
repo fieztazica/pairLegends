@@ -4,36 +4,35 @@ import Champion from "./Champion";
 import { getChampName, mixChampions } from "../utils/index";
 
 const Tiles = ({ champs, champ1, champ2, onClick, fromChamps }) => {
+  const getTile = (x, y, selected) => (
+    <Champion
+      key={`${x}.${y}`}
+      value={champs[x][y]}
+      selected={selected}
+      onClick={() => onClick(x, y)}
+      from={fromChamps}
+    />
+  );
 
-    const getTile = (x, y, selected) => (
-        <Champion
-            key={`${x}.${y}`}
-            value={champs[x][y]}
-            selected={selected}
-            onClick={() => onClick(x, y)}
-            from={fromChamps}
-        />
-    );
+  return (
+    <Box>
+      {champs.map((x, xI) => (
+        <Stack direction="row" key={xI}>
+          {x.map((y, yI) => {
+            let selected = false;
 
-    return (
-        <Box>
-            {champs.map((x, xI) => (
-                <Stack direction="row" key={xI}>
-                    {x.map((y, yI) => {
-                        let selected = false;
+            if (champ1 && champ1.x === xI && champ1.y === yI) {
+              selected = true;
+            } else if (champ2 && champ2.x === xI && champ2.y === yI) {
+              selected = true;
+            }
 
-                        if (champ1 && champ1.x === xI && champ1.y === yI) {
-                            selected = true;
-                        } else if (champ2 && champ2.x === xI && champ2.y === yI) {
-                            selected = true;
-                        }
-
-                        return getTile(xI, yI, selected);
-                    })}
-                </Stack>
-            ))}
-        </Box>
-    );
+            return getTile(xI, yI, selected);
+          })}
+        </Stack>
+      ))}
+    </Box>
+  );
 };
 
 export default Tiles;
