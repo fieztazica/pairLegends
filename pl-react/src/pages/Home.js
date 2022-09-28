@@ -116,6 +116,7 @@ export function Home() {
           <br />
           - Khi không còn nước di chuyển trò chơi sẽ tự động đảo lại hình, sô lần đảo là có giới hạn. Khi cho chơi kết thúc, điểm sô được cộng thêm số lần đảo.
           <br /> 
+            
         </DialogContentText>
       </DialogContent>
       <DialogActions>
