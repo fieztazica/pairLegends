@@ -9,7 +9,7 @@ namespace Model.Database
     public class Match
     {
         public string PLUserId { get; set; }
-        public User PLUser { get; set; }
+        public AppUser PLUser { get; set; }
         public DateTime BeginAt { get; set; }
         public DateTime EndAt { get; set; }
         public int Tiles { get; set; }

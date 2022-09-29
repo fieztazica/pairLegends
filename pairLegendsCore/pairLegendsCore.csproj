@@ -26,13 +26,14 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.23.1" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.4.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Data\Data.csproj" />
 		<ProjectReference Include="..\Model\Model.csproj" />
-		<ProjectReference Include="..\pl-react\pl-react.esproj" >
+		<ProjectReference Include="..\pl-react\pl-react.esproj">
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 		</ProjectReference>
 		<ProjectReference Include="..\Service\Service.csproj" />

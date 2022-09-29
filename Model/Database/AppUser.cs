@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Database
 {
-    public class User : IdentityUser
+    public class AppUser : IdentityUser
     {
         public ICollection<Match> Matches { get; set; }
     }

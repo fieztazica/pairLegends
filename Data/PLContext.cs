@@ -4,7 +4,7 @@ using Model.Database;
 
 namespace Data
 {
-    public class PLContext : IdentityDbContext<User>
+    public class PLContext : IdentityDbContext<AppUser>
     {
         public DbSet<Match> Matches { get; set; }
         public PLContext(DbContextOptions options) : base(options)
