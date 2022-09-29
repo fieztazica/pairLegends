@@ -63,7 +63,7 @@ namespace pairLegendsCore
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<PLContext>()
                 .AddDefaultTokenProviders();
-            
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -20,6 +20,6 @@ namespace pairLegendsCore.Controllers.api
             _userService = userService;
         }
 
-        
+
     }
 }
