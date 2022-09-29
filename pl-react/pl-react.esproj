@@ -11,4 +11,7 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>npm i</PreBuildEvent>
+  </PropertyGroup>
 </Project>
