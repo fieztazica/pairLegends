@@ -12,8 +12,23 @@ namespace pairLegendsCore
 {
     public static class Program
     {
+        private static bool IsOriginAllowed(string origin)
+        {
+            var uri = new Uri(origin);
+            var env = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "n/a";
+
+            var isAllowed = uri.Host.Equals("vercel.app", StringComparison.OrdinalIgnoreCase)
+                            || uri.Host.EndsWith(".vercel.app", StringComparison.OrdinalIgnoreCase);
+            if (!isAllowed && env.Contains("DEV", StringComparison.OrdinalIgnoreCase))
+                isAllowed = uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase);
+
+            return isAllowed;
+        }
+
         public static void Main(string[] args)
         {
+            var AllowAll = "AllowedCorsOrigins";
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -58,12 +73,26 @@ namespace pairLegendsCore
             });
             builder.Services.AddDbContextFactory<PLContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey));
             });
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<PLContext>()
                 .AddDefaultTokenProviders();
-            
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowedCorsOrigins",
+                    builder =>
+                    {
+                        builder
+                            .SetIsOriginAllowed(IsOriginAllowed)
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -106,6 +135,8 @@ namespace pairLegendsCore
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseCors(AllowAll);
 
             app.Run();
         }

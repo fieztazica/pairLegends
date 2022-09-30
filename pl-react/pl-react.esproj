@@ -7,11 +7,10 @@
     <BuildCommand>
     </BuildCommand>
     <!-- Command to create an optimized build of the project that's ready for publishing -->
-    <ProductionBuildCommand>npm run winBuild</ProductionBuildCommand>
+    <ProductionBuildCommand>npm run build</ProductionBuildCommand>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>npm i</PreBuildEvent>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 </Project>
