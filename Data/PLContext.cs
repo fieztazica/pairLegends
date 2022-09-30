@@ -1,34 +1,34 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Data.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Model.Database;
 
 namespace Data
 {
-    public class PLContext : IdentityDbContext<AppUser>
+    public class PLContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public DbSet<Match> Matches { get; set; }
-        public PLContext(DbContextOptions options) : base(options)
+
+        public PLContext(DbContextOptions<PLContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder
-                .Entity<Match>()
-                .HasKey(match => new
-                {
-                    match.PLUserId,
-                    match.BeginAt
-                });
-            builder
-                .Entity<Match>()
-                .HasOne(match => match.PLUser)
-                .WithMany(user => user.Matches)
-                .HasForeignKey(match => match.PLUserId);
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Core Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Core Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new MatchConfiguration());
+
+            builder.Entity<AppRole>().HasData(
+                new AppRole
+                {
+                    Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN", Description = "Admin Role"
+                },
+                new AppRole
+                {
+                    Id = Guid.NewGuid(), Name = "Manager", NormalizedName = "MANAGER", Description = "Manager Role"
+                }
+            );
         }
     }
 }

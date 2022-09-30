@@ -1,12 +1,16 @@
 using System.Text;
 using Data;
+using Data.Repositories;
+using Data.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Model.Database;
+using Service.APIServices;
 using Tool.Constants;
+using Tool.Helpers;
 
 namespace pairLegendsCore
 {
@@ -61,7 +65,7 @@ namespace pairLegendsCore
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey));
             });
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
+            builder.Services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<PLContext>()
                 .AddDefaultTokenProviders();
 
@@ -85,6 +89,17 @@ namespace pairLegendsCore
                 };
             });
 
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IRoleService, RoleService>();
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+            builder.Services.AddSingleton<IJwtManager, JwtManager>();
+            // Add Repositories
+            builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+            // Add Unit Of Work
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            // Add Services
+            builder.Services.AddScoped<IMatchService, MatchService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -95,7 +110,7 @@ namespace pairLegendsCore
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "PL API v1");
                 options.RoutePrefix = string.Empty;
             });
 
