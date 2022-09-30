@@ -15,11 +15,11 @@ public class MatchService : IMatchService
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<AppUser> _userManager;
-    
+
     public MatchService(
-        IMapper mapper, 
-        IUnitOfWork unitOfWork, 
-        IMatchRepository matchRepo, 
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
+        IMatchRepository matchRepo,
         UserManager<AppUser> userManager)
     {
         this._mapper = mapper;
@@ -27,7 +27,7 @@ public class MatchService : IMatchService
         this._userManager = userManager;
         this._matchRepo = new MatchRepository(unitOfWork.DbContext);
     }
-    
+
     public async Task<ApiResult<string>> AddMatch(MatchRequest matchRequest)
     {
         var user = await _userManager.FindByNameAsync(matchRequest.UserName);

@@ -4,5 +4,5 @@ namespace Data.Repositories;
 
 public interface IMatchRepository : IRepository<Match>
 {
-    
+
 }

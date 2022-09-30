@@ -30,8 +30,8 @@ public class JwtManager : IJwtManager
         var tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
         var tokenCredentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha256);
         var tokenDescriptor = new SecurityTokenDescriptor
-        { 
-                
+        {
+
             Subject = new ClaimsIdentity(tokenClaims),
             Issuer = _configuration["JWT:Issuer"],
             Audience = _configuration["JWT:Audience"],
