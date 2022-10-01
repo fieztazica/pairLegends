@@ -222,8 +222,8 @@ public class UserService : IUserService
             user.Email = request.Email;
         // if (!string.IsNullOrEmpty(request.InGameName))
         //     user.InGameName = request.InGameName;
-        if (!string.IsNullOrEmpty(request.PhoneNumber))
-            user.PhoneNumber = request.PhoneNumber;
+        // if (!string.IsNullOrEmpty(request.PhoneNumber))
+        //     user.PhoneNumber = request.PhoneNumber;
         // if (request.Level != -1)
         //     user.Level = request.Level;
         // if (request.Exp != -1)

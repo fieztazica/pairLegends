@@ -12,7 +12,4 @@ public class RegisterRequest
     public string ConfirmPassword { get; set; } = string.Empty;
     [Required]
     public string Email { get; set; } = string.Empty;
-    public string? PhoneNumber { get; set; } = string.Empty;
-    [Required]
-    public string InGameName { get; set; } = string.Empty;
 }
