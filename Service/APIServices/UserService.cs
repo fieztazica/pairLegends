@@ -107,10 +107,10 @@ public class UserService : IUserService
         const int defaultPageIndex = 1;
         var pageSize = defaultPageSize;
         var pageIndex = defaultPageIndex;
-        
+
         if (request.PageSize > 0) pageSize = request.PageSize;
         if (request.PageIndex > 0) pageIndex = request.PageIndex;
-        
+
         var totalUser = await _userManager.Users.CountAsync();
         var userList = await GetUserList(
             skip: pageSize * (pageIndex - 1),
@@ -158,7 +158,7 @@ public class UserService : IUserService
         if (result.Succeeded)
             return new ApiSuccessResult<bool>(true);
         var errorMessages = result.Errors.Select(error => error.Description).ToArray();
-        return new ApiErrorResult<bool>(errorMessages); 
+        return new ApiErrorResult<bool>(errorMessages);
     }
 
     // public async Task<ApiResult<string>> GetConfirmCode(GetConfirmCodeRequest request)
