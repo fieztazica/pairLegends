@@ -26,7 +26,7 @@ namespace pairLegendsCore.Controllers.api
         /// Get User
         /// </summary>
         /// <returns>The User</returns>
-        [HttpGet()]
+        [HttpGet("@me")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get()
