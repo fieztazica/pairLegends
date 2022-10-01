@@ -2,7 +2,7 @@
 
 public class MatchResponse
 {
-    public string PLUserId { get; set; }
+    public Guid PLUserId { get; set; } = Guid.Empty;
     public DateTime BeginAt { get; set; } = DateTime.Now;
     public DateTime EndAt { get; set; } = DateTime.Now;
     public int Tiles { get; set; }

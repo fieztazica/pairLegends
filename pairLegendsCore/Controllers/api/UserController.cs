@@ -94,7 +94,6 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Update User Profile
         /// </summary>
-        /// <param name="userName">UserName</param>
         /// <param name="updateUserRequest">Update Information</param>
         /// <returns>Update Status</returns>
         [HttpPut("update")]

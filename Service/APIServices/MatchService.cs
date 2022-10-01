@@ -33,10 +33,10 @@ public class MatchService : IMatchService
         var user = await _userManager.FindByNameAsync(matchRequest.UserName);
         if (user == null)
         {
-            return new ApiErrorResult<string>("Cannot found Winner!");
+            return new ApiErrorResult<string>("Cannot find player!");
         }
-        var result = _mapper.Map<MatchRequest, Match>(matchRequest);
-        _matchRepo.Add(result);
+        var match = _mapper.Map<MatchRequest, Match>(matchRequest);
+        _matchRepo.Add(match);
 
         var affectRowNumber = _unitOfWork.Commit();
 
@@ -82,13 +82,13 @@ public class MatchService : IMatchService
 
     public ApiResult<IEnumerable<MatchResponse>> GetMatches(PagingRequest pagingRequest)
     {
-        var resultList = _matchRepo.GetList(
+        var matchList = _matchRepo.GetList(
             skip: (pagingRequest.PageIndex - 1) * pagingRequest.PageSize,
             take: pagingRequest.PageSize
         );
-        if (resultList.Any())
-            return new ApiErrorResult<IEnumerable<MatchResponse>>("Get result list failed!");
-        var response = _mapper.Map<IEnumerable<MatchResponse>>(resultList);
+        if (matchList.Any())
+            return new ApiErrorResult<IEnumerable<MatchResponse>>("Get match list failed!");
+        var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
         return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
     }
 }
