@@ -35,7 +35,12 @@ const CreditsDialog = ({ openState, onClose, dRef }) => (
               <Chip label="ACKNOWLEDGEMENTS" />
             </Divider>
             <Typography>
-                <Link href="https://github.com/duonghan/pikachu-react" underline="none">Admired Repo</Link>
+              <Link
+                href="https://github.com/duonghan/pikachu-react"
+                underline="none"
+              >
+                Admired Repo
+              </Link>
             </Typography>
           </Box>
           <Box p={1}>

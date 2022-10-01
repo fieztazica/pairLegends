@@ -15,11 +15,9 @@ AppRoutes.filter((route) => !route.index).forEach(
 );
 
 export function Layout() {
-  
   const [user, setUser] = React.useState();
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
-
 
   return (
     <Box

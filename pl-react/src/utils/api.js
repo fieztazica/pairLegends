@@ -8,10 +8,10 @@ export function getToken() {
 }
 
 export function register() {
-    return axios.get(api + "/authenticate", {
-      withCredentials: true,
-    });
-  }
+  return axios.get(api + "/authenticate", {
+    withCredentials: true,
+  });
+}
 
 export function logout() {
   return axios.get(api + "/logout", {
