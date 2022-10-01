@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations" />
-    <Folder Include="Migrations\" />
     <Folder Include="Configurations\" />
     <Folder Include="Repositories\" />
   </ItemGroup>

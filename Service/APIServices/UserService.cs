@@ -29,7 +29,7 @@ public class UserService : IUserService
             return new ApiErrorResult<string>("User does not exist!");
         var result = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!result)
-            return new ApiErrorResult<string>("Username or Password Incorrect!");
+            return new ApiErrorResult<string>("Username or password Incorrect!");
         var roles = await _userManager.GetRolesAsync(user);
         var token = _jwtManager.Authenticate(user, roles);
         return new ApiSuccessResult<string>(token);
@@ -43,7 +43,7 @@ public class UserService : IUserService
         var result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
             return new ApiSuccessResult<bool>(true);
-        return new ApiErrorResult<bool>("Delete Fail!");
+        return new ApiErrorResult<bool>("Delete failed!");
     }
 
     public async Task<ApiResult<bool>> Delete(string userName)
@@ -57,7 +57,7 @@ public class UserService : IUserService
         return new ApiErrorResult<bool>("Delete failed!");
     }
 
-    public async Task<ApiResult<UserResponse>> GetById(Guid id)
+    public async Task<ApiResult<UserResponse>> GetById(string id)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
         if (user == null)
@@ -72,7 +72,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByNameAsync(userName);
         if (user == null)
-            return new ApiErrorResult<UserResponse>("User Does Not Exist!");
+            return new ApiErrorResult<UserResponse>("User does not exist!");
         var roles = await _userManager.GetRolesAsync(user);
         var userResponse = _mapper.Map<UserResponse>(user);
         userResponse.Roles = roles;
@@ -107,10 +107,10 @@ public class UserService : IUserService
         const int defaultPageIndex = 1;
         var pageSize = defaultPageSize;
         var pageIndex = defaultPageIndex;
-        
+
         if (request.PageSize > 0) pageSize = request.PageSize;
         if (request.PageIndex > 0) pageIndex = request.PageIndex;
-        
+
         var totalUser = await _userManager.Users.CountAsync();
         var userList = await GetUserList(
             skip: pageSize * (pageIndex - 1),
@@ -136,29 +136,29 @@ public class UserService : IUserService
         var isEmailExists = findEmail != null;
 
         if (isUserNameExists)
-            return new ApiErrorResult<bool>("This Username Already Used!");
+            return new ApiErrorResult<bool>("This username already used.");
         if (isEmailExists)
-            return new ApiErrorResult<bool>("This Email Already Used");
+            return new ApiErrorResult<bool>("This email already used.");
         if (request.Password != request.ConfirmPassword)
-            return new ApiErrorResult<bool>("Password and Confirm Password are not the same");
+            return new ApiErrorResult<bool>("Password and confirm password are not the same.");
         var user = _mapper.Map<AppUser>(request);
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
             return new ApiSuccessResult<bool>(true);
-        return new ApiErrorResult<bool>("Register Fail!");
+        return new ApiErrorResult<bool>("Registration failed!");
     }
 
     public async Task<ApiResult<bool>> ChangePassword(ChangePasswordRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user == null)
-            return new ApiErrorResult<bool>("User Does Not Exist");
+            return new ApiErrorResult<bool>("User does not exist.");
         var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
         if (result.Succeeded)
             return new ApiSuccessResult<bool>(true);
         var errorMessages = result.Errors.Select(error => error.Description).ToArray();
-        return new ApiErrorResult<bool>(errorMessages); 
+        return new ApiErrorResult<bool>(errorMessages);
     }
 
     // public async Task<ApiResult<string>> GetConfirmCode(GetConfirmCodeRequest request)
@@ -212,15 +212,22 @@ public class UserService : IUserService
         return new ApiSuccessResult<bool>(true);
     }
 
-    public async Task<ApiResult<bool>> Update(UpdateUserRequest request)
+    public async Task<ApiResult<bool>> Update(string id, UpdateUserRequest request)
     {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+            return new ApiErrorResult<bool>("User is not exist.");
+       
+        if (request.Email != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
+            return new ApiErrorResult<bool>("UserName already existed.");
+
         if (request.Email != null && await _userManager.Users.AnyAsync(x => x.Email == request.Email))
-            return new ApiErrorResult<bool>("Email Already Exists");
-        var user = await _userManager.FindByNameAsync(request.UserName);
+            return new ApiErrorResult<bool>("Email already existed.");
+
         if (!string.IsNullOrEmpty(request.Email))
             user.Email = request.Email;
-        // if (!string.IsNullOrEmpty(request.InGameName))
-        //     user.InGameName = request.InGameName;
+        if (!string.IsNullOrEmpty(request.UserName))
+            user.UserName = request.UserName;
         // if (!string.IsNullOrEmpty(request.PhoneNumber))
         //     user.PhoneNumber = request.PhoneNumber;
         // if (request.Level != -1)
@@ -233,6 +240,6 @@ public class UserService : IUserService
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)
             return new ApiSuccessResult<bool>(true);
-        return new ApiErrorResult<bool>("Update Failed!");
+        return new ApiErrorResult<bool>("Update failed!");
     }
 }

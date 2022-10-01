@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -28,18 +29,55 @@ import { ReactComponent as DiscordSvg } from "../assets/svg/discord.svg";
 import SvgIcon from "@mui/material/SvgIcon";
 import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const DiscordIcon = () => <SvgIcon component={DiscordSvg} inheritViewBox />;
 
 export function SignUp() {
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const formContext = useForm();
+  const [loading, setLoading] = React.useState(false);
 
   const { handleSubmit } = formContext;
 
-  const onSubmit = (data, e) => {
-    console.log(data);
-    inDevelopment()();
+  const onSubmit = (submit, e) => {
+    setLoading(true);
+    const signUpModel = JSON.stringify({
+      userName: `${submit.username}`,
+      password: `${submit.password}`,
+      confirmPassword: `${submit["password-repeat"]}`,
+      email: `${submit.email}`,
+    });
+
+    const fetchData = async () => {
+      const response = await fetch("api/user/register", {
+        body: signUpModel,
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+      }
+      });
+
+      const data = await response.json();
+      if (data.succeeded) return data;
+      else throw new Error(data.message);
+    };
+
+    fetchData()
+      .then((data) => {
+        setLoading(false);
+        SnackBar(`We've signed you up!`, "success")();
+        console.log(data);
+        navigate("/sign-in");
+      })
+      .catch((err) => {
+        setLoading(false);
+        SnackBar(`${err.message}`, "error")();
+        console.error(err.message);
+      });
+
+    console.log(signUpModel);
   };
 
   const onError = (error, e) => {
@@ -137,14 +175,16 @@ export function SignUp() {
                 />
               </Grid> */}
               </Grid>
-              <Button
+              <LoadingButton
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                loading={loading}
+                loadingIndicator="Signing you up..."
               >
                 Sign Up
-              </Button>
+              </LoadingButton>
             </FormContainer>
             <Divider>or</Divider>
             <Stack direction="row" spacing={2} sx={{ mt: 2, mb: 3 }}>

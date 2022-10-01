@@ -5,6 +5,7 @@ using Model.Database;
 using Model.Request;
 using Model.Response;
 using Service.APIServices;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,7 +32,25 @@ namespace pairLegendsCore.Controllers.api
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get()
         {
-            var result = await _userService.GetByUserName(User.Identity!.Name!);
+            var result = await _userService.GetById(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+            if (result.Succeeded)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        /// Update User Profile
+        /// </summary>
+        /// <param name="updateUserRequest">Update Information</param>
+        /// <returns>Update Status</returns>
+        [HttpPut("@me")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _userService.Update(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value, updateUserRequest);
             if (result.Succeeded)
                 return Ok(result);
             return BadRequest(result);
@@ -42,7 +61,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="pagingRequest">Paging params</param>
         /// <returns>The User paged list</returns>
-        [HttpGet("get-paged-list")]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetPagedList([FromQuery] PagingRequest pagingRequest)
@@ -59,7 +78,7 @@ namespace pairLegendsCore.Controllers.api
         /// <param name="signUpModel">Register information</param>
         /// <returns>Register Status</returns>
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest signUpModel)
@@ -67,6 +86,25 @@ namespace pairLegendsCore.Controllers.api
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _userService.Register(signUpModel);
+            if (result.Succeeded)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        /// Get User information by UserName
+        /// </summary>
+        /// <param name="userName">UserName</param>
+        /// <returns>User's information</returns>
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetById(string id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _userService.GetById(id);
             if (result.Succeeded)
                 return Ok(result);
             return BadRequest(result);
@@ -89,24 +127,6 @@ namespace pairLegendsCore.Controllers.api
             if (string.IsNullOrEmpty(authResult.ResultObject))
                 return BadRequest(authResult);
             return Ok(authResult);
-        }
-
-        /// <summary>
-        /// Update User Profile
-        /// </summary>
-        /// <param name="updateUserRequest">Update Information</param>
-        /// <returns>Update Status</returns>
-        [HttpPut("update")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _userService.Update(updateUserRequest);
-            if (result.Succeeded)
-                return Ok(result);
-            return BadRequest(result);
         }
 
         /// <summary>
@@ -133,7 +153,7 @@ namespace pairLegendsCore.Controllers.api
         /// <param name="userName">UserName</param>
         /// <returns>User's information</returns>
         [AllowAnonymous]
-        [HttpGet("get-by-username/{userName}")]
+        [HttpGet("username/{userName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByUserName(string userName)
@@ -154,7 +174,7 @@ namespace pairLegendsCore.Controllers.api
         /// <returns>Assign Status</returns>
         // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
         //[Authorize(Roles = "Admin")]
-        [HttpPut("role-assign")]
+        [HttpPut("@me/Role")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleAssign(RoleAssignRequest roleAssignRequest)

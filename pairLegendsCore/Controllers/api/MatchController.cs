@@ -28,7 +28,7 @@ namespace pairLegendsCore.Controllers.api
         /// <param name="pagingRequest">Paging Resquest</param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet("get-list")]
+        [HttpGet()]
         public IActionResult Get([FromQuery] PagingRequest pagingRequest)
         {
             if (!ModelState.IsValid)
@@ -73,7 +73,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="matchRequest">Create Match Request</param>
         /// <returns>Create Status</returns>
-        [HttpPost("create")]
+        [HttpPost()]
         public async Task<IActionResult> Create([FromBody] MatchRequest matchRequest)
         {
             if (!ModelState.IsValid)
@@ -101,21 +101,21 @@ namespace pairLegendsCore.Controllers.api
         //     return BadRequest();
         // }
 
-        // /// <summary>
-        // /// Delete Results by Id
-        // /// </summary>
-        // /// <param name="id">Id</param>
-        // /// <param name="deleteResultRequest">Delete Request Params</param>
-        // /// <returns>Delete Status</returns>
-        // [HttpDelete("delete-by-id/{id}")]
-        // public async Task<IActionResult> DeleteById(Guid id, DeleteResultRequest deleteResultRequest)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var deleteResult = await _matchService.DeleteResultById(id, deleteResultRequest);
-        //     if (deleteResult.Succeeded)
-        //         return Ok(deleteResult);
-        //     return BadRequest();
-        // }
+        ///// <summary>
+        ///// Delete Results by Id
+        ///// </summary>
+        ///// <param name="id">Id</param>
+        ///// <param name="deleteResultRequest">Delete Request Params</param>
+        ///// <returns>Delete Status</returns>
+        //[HttpDelete("delete-by-id/{id}")]
+        //public async Task<IActionResult> DeleteById(Guid id, DeleteResultRequest deleteResultRequest)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+        //    var deleteResult = await _matchService.DeleteResultById(id, deleteResultRequest);
+        //    if (deleteResult.Succeeded)
+        //        return Ok(deleteResult);
+        //    return BadRequest();
+        //}
     }
 }
