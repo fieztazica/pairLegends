@@ -60,15 +60,18 @@ namespace pairLegendsCore
                 };
                 options.AddSecurityRequirement(securityRequirement);
             });
+            
+            // Db Context
             builder.Services.AddDbContextFactory<PLContext>(options =>
             {
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey));
             });
+            
+            // Authentication Stuffs
             builder.Services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<PLContext>()
                 .AddDefaultTokenProviders();
-
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
