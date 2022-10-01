@@ -1,8 +1,6 @@
-﻿
-# Pair Legends
+﻿# Pair Legends
 
 A pikachu alike game with League of Legends champions.
-
 
 ## Tech Stack
 
@@ -10,11 +8,9 @@ A pikachu alike game with League of Legends champions.
 
 **Server:** .NET Core, Entity Framework
 
-
 ## Acknowledgements
 
 - [Admired Repo](https://github.com/duonghan/pikachu-react)
-
 
 ## Authors
 
