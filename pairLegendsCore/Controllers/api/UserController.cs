@@ -12,6 +12,7 @@ namespace pairLegendsCore.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
