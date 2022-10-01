@@ -32,6 +32,7 @@
 		<PackageReference Include="Microsoft.OpenApi" Version="1.4.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -23,6 +23,21 @@ namespace pairLegendsCore.Controllers.api
         }
 
         /// <summary>
+        /// Get User
+        /// </summary>
+        /// <returns>The User</returns>
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Get()
+        {
+            var result = await _userService.GetByUserName(User.Identity!.Name!);
+            if (result.Succeeded)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
         /// Get User paged list
         /// </summary>
         /// <param name="pagingRequest">Paging params</param>
@@ -118,6 +133,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="userName">UserName</param>
         /// <returns>User's information</returns>
+        [AllowAnonymous]
         [HttpGet("get-by-username/{userName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -66,7 +66,6 @@ public class UserService : IUserService
         var userResponse = _mapper.Map<UserResponse>(user);
         userResponse.Roles = roles;
         return new ApiSuccessResult<UserResponse>(userResponse);
-
     }
 
     public async Task<ApiResult<UserResponse>> GetByUserName(string userName)
