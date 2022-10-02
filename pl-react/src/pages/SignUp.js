@@ -55,8 +55,8 @@ export function SignUp() {
         body: signUpModel,
         method: "POST",
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
-      }
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
 
       const data = await response.json();
@@ -67,7 +67,7 @@ export function SignUp() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`We've signed you up!`, "success")();
+        SnackBar("We've signed you up!", "success")();
         console.log(data);
         navigate("/sign-in");
       })

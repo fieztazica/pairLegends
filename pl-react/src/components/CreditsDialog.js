@@ -36,7 +36,7 @@ const CreditsDialog = ({ openState, onClose, dRef }) => (
                 </ListSubheader>
               }
             >
-                <ListItem>Client</ListItem>
+              <ListItem>Client</ListItem>
               <ListItemText>React, MUI</ListItemText>
             </List>
             <dl>
@@ -54,6 +54,7 @@ const CreditsDialog = ({ openState, onClose, dRef }) => (
                   href="https://github.com/duonghan/pikachu-react"
                   underline="none"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Admired Repo
                 </Link>

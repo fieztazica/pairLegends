@@ -57,9 +57,9 @@ export function SignIn() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`Signed you in!`, "success")();
+        SnackBar("Signed you in!", "success")();
         console.log(data);
-        localStorage.setItem('jwtToken',data.resultObject)
+        localStorage.setItem("jwtToken", data.resultObject);
         fetchUser();
         navigate("/");
       })

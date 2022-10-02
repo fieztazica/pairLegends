@@ -217,7 +217,7 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
             return new ApiErrorResult<bool>("User is not exist.");
-       
+
         if (request.Email != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
             return new ApiErrorResult<bool>("UserName already existed.");
 

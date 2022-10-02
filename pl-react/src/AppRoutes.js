@@ -38,14 +38,14 @@ const AppRoutes = [
     element: <SignIn />,
     excludeAppBar: true,
     name: "Sign In",
-    lock: true
+    lock: true,
   },
   {
     path: "/sign-up",
     element: <SignUp />,
     excludeAppBar: true,
     name: "Sign Up",
-    lock: true
+    lock: true,
   },
   {
     path: "/game",
