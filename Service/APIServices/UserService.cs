@@ -59,7 +59,7 @@ public class UserService : IUserService
 
     public async Task<ApiResult<UserResponse>> GetById(string id)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
             return new ApiErrorResult<UserResponse>("User does not exist!");
         var roles = await _userManager.GetRolesAsync(user);
