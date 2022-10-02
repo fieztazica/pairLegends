@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,18 +18,56 @@ import {
   PasswordElement,
   CheckboxElement,
 } from "react-hook-form-mui";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
+import { useUser } from "../components/contexts/UserContext";
 
 export function SignIn() {
+  const { user, fetchUser } = useUser();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const formContext = useForm();
+  const [loading, setLoading] = React.useState(false);
 
   const { handleSubmit } = formContext;
 
-  const onSubmit = (data, e) => {
-    console.log(data);
-    inDevelopment()();
+  const onSubmit = (submit, e) => {
+    setLoading(true);
+    const signInModel = JSON.stringify({
+      email: `${submit.email}`,
+      password: `${submit.password}`,
+      rememberMe: submit.remember,
+    });
+
+    const fetchData = async () => {
+      const response = await fetch("api/user/authenticate", {
+        body: signInModel,
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      const data = await response.json();
+      if (data.succeeded) return data;
+      else throw new Error(data.message);
+    };
+
+    fetchData()
+      .then((data) => {
+        setLoading(false);
+        SnackBar(`Signed you in!`, "success")();
+        console.log(data);
+        localStorage.setItem('jwtToken',data.resultObject)
+        fetchUser();
+        navigate("/");
+      })
+      .catch((err) => {
+        setLoading(false);
+        SnackBar(`${err.message}`, "error")();
+        console.error(err.message);
+      });
   };
 
   const onError = (error, e) => {
@@ -96,14 +135,16 @@ export function SignIn() {
                 autoComplete="current-password"
               />
               <CheckboxElement name="remember" label="Remember me" />
-              <Button
+              <LoadingButton
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                loading={loading}
+                loadingIndicator="Signing you in..."
               >
                 Sign In
-              </Button>
+              </LoadingButton>
             </FormContainer>
             <Grid container>
               <Grid item xs>

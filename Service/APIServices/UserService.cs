@@ -24,7 +24,7 @@ public class UserService : IUserService
     }
     public async Task<ApiResult<string>> Authenticate(LoginRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.UserName);
+        var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
             return new ApiErrorResult<string>("User does not exist!");
         var result = await _userManager.CheckPasswordAsync(user, request.Password);

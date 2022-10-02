@@ -51,7 +51,7 @@ export function SignUp() {
     });
 
     const fetchData = async () => {
-      const response = await fetch("api/user/register", {
+      const response = await fetch("api/user", {
         body: signUpModel,
         method: "POST",
         headers: {
@@ -76,8 +76,6 @@ export function SignUp() {
         SnackBar(`${err.message}`, "error")();
         console.error(err.message);
       });
-
-    console.log(signUpModel);
   };
 
   const onError = (error, e) => {
