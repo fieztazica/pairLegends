@@ -1,10 +1,7 @@
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import {
-  Link as RouterLink,
-  useLocation,
-} from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import AppRoutes from "../../AppRoutes";
 
 const breadcrumbNameMap = {};
