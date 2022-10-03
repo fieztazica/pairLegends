@@ -9,52 +9,21 @@ import { theme } from "./theme/devias";
 import { Helmet } from "react-helmet";
 import { SnackbarProvider } from "notistack";
 import SnackbarAction from "./components/SnackbarAction";
-import { useUser } from "./components/contexts/UserContext";
+import { UserProvider } from "./components/contexts/UserContext";
+import HelmetElement from "./components/routes/HelmetElement";
+import PrivateRoute from "./components/routes/PrivateRoute";
+import GuestRoute from "./components/routes/GuestRoute";
 
 export default function App() {
   const resTheme = responsiveFontSizes(theme);
-  const { user } = useUser();
 
   return (
     <ThemeProvider theme={resTheme}>
       <div className="App">
         <CssBaseline />
-        <Routes>
-          <Route element={<Layout />}>
-            {AppRoutes.map((route, index) => {
-              const { element, name, lock, ...rest } = route;
-
-              return (
-                <Route
-                  key={index}
-                  {...rest}
-                  element={
-                    name ? (
-                      user && lock ? (
-                        <Navigate to="/" replace />
-                      ) : (
-                        <>
-                          <Helmet>
-                            <meta charSet="utf-8" />
-                            <title>Pair Legends | {name}</title>
-                          </Helmet>
-                          <SnackbarProvider
-                            maxSnack={3}
-                            action={(key) => SnackbarAction(key)}
-                          >
-                            {element}
-                          </SnackbarProvider>
-                        </>
-                      )
-                    ) : (
-                      element
-                    )
-                  }
-                />
-              );
-            })}
-          </Route>
-        </Routes>
+        <UserProvider>
+          <AppRoutes />
+        </UserProvider>
       </div>
     </ThemeProvider>
   );

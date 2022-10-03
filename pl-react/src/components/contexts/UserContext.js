@@ -11,7 +11,6 @@ export const UserProvider = ({ children }) => {
 
     let response = await fetch("/api/user/@me", {
       headers: {
-        "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });

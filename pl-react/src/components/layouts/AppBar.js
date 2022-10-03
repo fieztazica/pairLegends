@@ -19,7 +19,7 @@ import {
 import { useLocation } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AppRoutes from "../../AppRoutes";
+import { appRoutes } from "../../AppRoutes";
 import { useUser } from "../contexts/UserContext";
 
 // const pages = [];
@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
     window.location.href = "/";
   };
 
-  const excludePathname = AppRoutes.filter((route) => route.excludeAppBar).map(
+  const excludePathname = appRoutes.filter((route) => route.excludeAppBar).map(
     (route) => route.path
   );
   const isInExclude = excludePathname.some(
