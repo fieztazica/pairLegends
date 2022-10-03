@@ -12,12 +12,20 @@ import {
   MenuItem,
   Tooltip,
   Link,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { useLocation } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { appRoutes } from "../../AppRoutes";
 import { useUser } from "../contexts/UserContext";
+import PersonIcon from "@mui/icons-material/Person";
+import HistoryIcon from "@mui/icons-material/History";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 // const pages = [];
 // const settings = ["Logout"];
@@ -40,9 +48,9 @@ const ResponsiveAppBar = () => {
     window.location.href = "/";
   };
 
-  const excludePathname = appRoutes.filter((route) => route.excludeAppBar).map(
-    (route) => route.path
-  );
+  const excludePathname = appRoutes
+    .filter((route) => route.excludeAppBar)
+    .map((route) => route.path);
   const isInExclude = excludePathname.some(
     (pathname) => pathname === location.pathname
   );
@@ -100,22 +108,43 @@ const ResponsiveAppBar = () => {
               component={RouterLink}
               onClick={handleCloseUserMenu}
             >
-              <Typography textAlign="center">{user.userName}</Typography>
+              <ListItemIcon>
+                <PersonIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText>{user.userName}</ListItemText>
             </MenuItem>
-            <Divider />
+            <MenuItem
+              to="/history"
+              component={RouterLink}
+              onClick={handleCloseUserMenu}
+            >
+              <ListItemIcon>
+                <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText>History</ListItemText>
+            </MenuItem>
+            <Divider variant="middle" component="li" />
             <MenuItem onClick={logout} component={RouterLink}>
-              <Typography textAlign="center">Logout</Typography>
+              <ListItemIcon>
+                <LogoutIcon color="error" />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
             </MenuItem>
           </MenuList>
         )}
         {!user && (
-          <MenuItem
-            to="/sign-in"
-            component={RouterLink}
-            onClick={handleCloseUserMenu}
-          >
-            <Typography textAlign="center">Login</Typography>
-          </MenuItem>
+          <MenuList>
+            <MenuItem
+              to="/sign-in"
+              component={RouterLink}
+              onClick={handleCloseUserMenu}
+            >
+              <ListItemIcon>
+                <LoginIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText>Login</ListItemText>
+            </MenuItem>
+          </MenuList>
         )}
       </Menu>
     </Box>

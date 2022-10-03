@@ -14,6 +14,8 @@ export const UserProvider = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (!response.ok) throw new Error(response.statusText);
     
     response = await response.json();
     setUser(response.resultObject);

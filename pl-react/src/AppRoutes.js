@@ -11,6 +11,7 @@ import HelmetElement from "./components/routes/HelmetElement";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import { Layout } from "./components/layouts/Layout";
+import { History } from "./pages/History";
 
 export const appRoutes = [
   {
@@ -59,8 +60,13 @@ export const appRoutes = [
   {
     path: "/profile",
     element: <Profile />,
-    excludeAppBar: true,
     name: "Profile",
+    private: true,
+  },
+  {
+    path: "/history",
+    element: <History />,
+    name: "History",
     private: true,
   },
 ];

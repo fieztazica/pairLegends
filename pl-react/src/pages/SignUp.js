@@ -43,21 +43,23 @@ export function SignUp() {
 
   const onSubmit = (submit, e) => {
     setLoading(true);
-    const signUpModel = JSON.stringify({
+    const signUpModel = {
       userName: `${submit.username}`,
       password: `${submit.password}`,
       confirmPassword: `${submit["password-repeat"]}`,
       email: `${submit.email}`,
-    });
+    };
 
     const fetchData = async () => {
       const response = await fetch("api/user", {
-        body: signUpModel,
+        body: JSON.stringify(signUpModel),
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8"
       }
       });
+
+      if (!response.ok) throw new Error(response.statusText);
 
       const data = await response.json();
       if (data.succeeded) return data;
@@ -68,7 +70,6 @@ export function SignUp() {
       .then((data) => {
         setLoading(false);
         SnackBar(`We've signed you up!`, "success")();
-        console.log(data);
         navigate("/sign-in");
       })
       .catch((err) => {
