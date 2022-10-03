@@ -17,7 +17,7 @@ export function Layout() {
   appRoutes
     .filter((route) => !route.index)
     .forEach((route) => (breadcrumbNameMap[route.path] = route.name));
-    
+
   return (
     <Box
       sx={{

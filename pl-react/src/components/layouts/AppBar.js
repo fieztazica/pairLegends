@@ -43,9 +43,9 @@ const ResponsiveAppBar = () => {
     window.location.href = "/";
   };
 
-  const excludePathname = appRoutes.filter((route) => route.excludeAppBar).map(
-    (route) => route.path
-  );
+  const excludePathname = appRoutes
+    .filter((route) => route.excludeAppBar)
+    .map((route) => route.path);
   const isInExclude = excludePathname.some(
     (pathname) => pathname === location.pathname
   );
