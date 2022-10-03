@@ -59,10 +59,10 @@ export function SignIn() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`Signed you in!`, "success");
+        SnackBar("Signed you in!", "success");
         localStorage.setItem("jwtToken", data.resultObject);
         fetchUser();
-        window.location.href = "/"
+        window.location.href = "/";
         // navigate("/");
       })
       .catch((err) => {

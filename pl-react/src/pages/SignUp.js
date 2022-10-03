@@ -55,8 +55,8 @@ export function SignUp() {
         body: JSON.stringify(signUpModel),
         method: "POST",
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
-      }
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
 
       if (!response.ok) throw new Error(response.statusText);
@@ -69,7 +69,7 @@ export function SignUp() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`We've signed you up!`, "success")();
+        SnackBar("We've signed you up!", "success")();
         navigate("/sign-in");
       })
       .catch((err) => {

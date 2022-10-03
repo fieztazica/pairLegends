@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
     });
 
     if (!response.ok) throw new Error(response.statusText);
-    
+
     response = await response.json();
     setUser(response.resultObject);
   };
