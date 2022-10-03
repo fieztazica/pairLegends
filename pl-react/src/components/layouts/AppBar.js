@@ -5,7 +5,6 @@ import {
   IconButton,
   Menu,
   MenuList,
-  Button,
   Toolbar,
   Typography,
   Avatar,
@@ -13,8 +12,6 @@ import {
   MenuItem,
   Tooltip,
   Link,
-  SvgIcon,
-  ListItemButton,
 } from "@mui/material";
 import { useLocation } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
@@ -52,6 +49,7 @@ const ResponsiveAppBar = () => {
 
   React.useEffect(() => {
     if (!user) fetchUser();
+    // eslint-disable-next-line
   }, []);
 
   const AvatarMenu = isInExclude ? (

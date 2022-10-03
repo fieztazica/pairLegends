@@ -5,7 +5,7 @@ import ResponsiveAppBar from "./AppBar";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Route, Routes, MemoryRouter, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { appRoutes } from "../../AppRoutes";
 import LinkRouter from "../LinkRouter";
 
@@ -13,11 +13,11 @@ export function Layout() {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  const breadcrumbNameMap = new Object();
+  const breadcrumbNameMap = {};
   appRoutes
     .filter((route) => !route.index)
     .forEach((route) => (breadcrumbNameMap[route.path] = route.name));
-    
+
   return (
     <Box
       sx={{
