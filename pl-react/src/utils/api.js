@@ -1,6 +1,6 @@
 export async function getToken(body) {
   const response = await fetch("api/user/authenticate", {
-    body: body,
+    body,
     method: "POST",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
@@ -16,7 +16,7 @@ export async function getToken(body) {
 
 export async function register(body) {
   const response = await fetch("api/user", {
-    body: body,
+    body,
     method: "POST",
     headers: {
       "Content-type": "application/json; charset=UTF-8",

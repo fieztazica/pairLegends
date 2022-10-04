@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
 
   const fetchUser = async () => {
-    let data = await getUser();
+    const data = await getUser();
     setUser(data.resultObject);
   };
 
