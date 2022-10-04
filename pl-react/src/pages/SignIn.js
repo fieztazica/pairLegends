@@ -52,7 +52,7 @@ export function SignIn() {
       });
 
       if (response.status >= 500) throw new Error(response.statusText);
-      
+
       const data = await response.json();
       if (data.succeeded) return data;
       else throw new Error(data.message);
@@ -61,7 +61,7 @@ export function SignIn() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`Signed you in!`, "success")();
+        SnackBar("Signed you in!", "success")();
         localStorage.setItem("jwtToken", data.resultObject);
         fetchUser();
         window.location.href = "/";

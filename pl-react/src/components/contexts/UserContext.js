@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
     });
 
     if (response.status >= 500) throw new Error(response.statusText);
-    
+
     response = await response.json();
     setUser(response.resultObject);
   };
