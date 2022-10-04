@@ -1,49 +1,86 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import { useUser } from "../components/contexts/UserContext";
+import { getMatchesById } from "../utils/api";
+import { useSnackbar } from "notistack";
+import Duration from "duration";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "id", headerName: "Begin At", width: 200 },
+  { field: "endAt", headerName: "End At", width: 200 },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
+    field: "tiles",
+    headerName: "Tiles",
     width: 90,
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
+    field: "tilesDone",
+    headerName: "Tiles Done",
+    width: 90,
+  },
+  {
+    field: "champs",
+    headerName: "Champions",
+    width: 90,
+  },
+  {
+    field: "duration",
+    headerName: "Duration",
+    width: 250,
     valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+      new Duration(
+        new Date(params.row.id),
+        new Date(params.row.endAt)
+      ).toString(1, 1),
   },
 ];
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-
 export function History() {
+  const { user, fetchUser } = useUser();
+  const [rows, setRows] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+
+  React.useEffect(() => {
+    getMatchesById(user.id)
+      .then((data) => {
+        setLoading(false);
+        const dataObject = [...data.resultObject].map((match) => {
+          const { id, beginAt, endAt, ...props } = match;
+          return {
+            id: `${new Date(beginAt).toLocaleString()}`,
+            endAt: `${new Date(endAt).toLocaleString()}`,
+            ...props,
+          };
+        });
+        setRows(dataObject);
+      })
+      .catch((err) => {
+        setLoading(false);
+        SnackBar(`${err.message}`, "error")();
+        console.error(err.message);
+      });
+  }, []);
+
+  const SnackBar =
+    (message, variant, ...props) =>
+    () => {
+      enqueueSnackbar(message, {
+        variant,
+        ...props,
+      });
+    };
+
   return (
-    <Box style={{ height: '80vh', width: '100%' }}>
+    <Box style={{ height: "80vh", width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        loading={loading}
       />
     </Box>
   );

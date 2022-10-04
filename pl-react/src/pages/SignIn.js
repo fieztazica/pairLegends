@@ -22,6 +22,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
 import { useUser } from "../components/contexts/UserContext";
+import { getToken } from "../utils/api";
 
 export function SignIn() {
   const { user, fetchUser } = useUser();
@@ -34,31 +35,13 @@ export function SignIn() {
 
   const onSubmit = (submit, e) => {
     setLoading(true);
-    let signInModel = {
+    const signInModel = JSON.stringify({
       email: `${submit.email}`,
       password: `${submit.password}`,
       rememberMe: submit.remember,
-    };
+    });
 
-    signInModel = JSON.stringify(signInModel);
-
-    const fetchData = async () => {
-      const response = await fetch("api/user/authenticate", {
-        body: signInModel,
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-
-      if (response.status >= 500) throw new Error(response.statusText);
-      
-      const data = await response.json();
-      if (data.succeeded) return data;
-      else throw new Error(data.message);
-    };
-
-    fetchData()
+    getToken(signInModel)
       .then((data) => {
         setLoading(false);
         SnackBar(`Signed you in!`, "success")();

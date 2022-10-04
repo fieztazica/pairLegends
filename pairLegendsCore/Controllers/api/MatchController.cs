@@ -27,7 +27,7 @@ namespace pairLegendsCore.Controllers.api
         /// Get All Matches in this game
         /// </summary>
         /// <param name="pagingRequest">Paging Resquest</param>
-        /// <returns></returns>
+        /// <returns>>All Matches List</returns>
         [AllowAnonymous]
         [HttpGet()]
         public IActionResult Get([FromQuery] PagingRequest request)
@@ -40,34 +40,23 @@ namespace pairLegendsCore.Controllers.api
             return BadRequest(matches);
         }
 
-        // /// <summary>
-        // /// Get Results by UserName
-        // /// </summary>
-        // /// <param name="userName">UserName</param>
-        // /// <param name="pagingRequest">Paging Request</param>
-        // /// <returns>Result List</returns>
-        // [AllowAnonymous]
-        // [HttpGet("get-by-username/{userName}")]
-        // public async Task<IActionResult> Get(string userName, [FromQuery] PagingRequest pagingRequest)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var results = await _matchService.ge(userName, pagingRequest);
-        //     if (results.Succeeded)
-        //         return Ok(results);
-        //     return BadRequest(results);
-        // }
-
-        // [HttpGet("get-history-by-username/{userName}")]
-        // public async Task<IActionResult> GetHistory(string userName, [FromQuery] PagingRequest pagingRequest)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var results = await _matchService.GetHistoryByUserName(userName, pagingRequest);
-        //     if (results.Succeeded)
-        //         return Ok(results);
-        //     return BadRequest(results);
-        // }
+        /// <summary>
+        /// Get Matches by Id
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <param name="pagingRequest">Paging Request</param>
+        /// <returns>User Matches List</returns>
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id, [FromQuery] PagingRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var matches = _matchService.GetMatchesById(id, request);
+            if (matches.Succeeded)
+                return Ok(matches);
+            return BadRequest(matches);
+        }
 
         /// <summary>
         /// Create a match
@@ -90,8 +79,10 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="deleteResultRequest">Delete Match Request</param>
         /// <returns>Delete Status</returns>
+        // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
+        //[Authorize(Roles = "Admin")]
         [HttpDelete()]
-        public async Task<IActionResult> DeleteByUserName(DeleteMatchRequest deleteMatchRequest)
+        public async Task<IActionResult> DeleteByBeginAt(DeleteMatchRequest deleteMatchRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -101,21 +92,5 @@ namespace pairLegendsCore.Controllers.api
             return BadRequest();
         }
 
-        ///// <summary>
-        ///// Delete Results by Id
-        ///// </summary>
-        ///// <param name="id">Id</param>
-        ///// <param name="deleteResultRequest">Delete Request Params</param>
-        ///// <returns>Delete Status</returns>
-        //[HttpDelete("delete-by-id/{id}")]
-        //public async Task<IActionResult> DeleteById(Guid id, DeleteResultRequest deleteResultRequest)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-        //    var deleteResult = await _matchService.DeleteResultById(id, deleteResultRequest);
-        //    if (deleteResult.Succeeded)
-        //        return Ok(deleteResult);
-        //    return BadRequest();
-        //}
     }
 }

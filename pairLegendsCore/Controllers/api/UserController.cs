@@ -139,16 +139,18 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Delete an account
         /// </summary>
-        /// <param name="userName">UserName</param>
+        /// <param name="id">Id</param>
         /// <returns>Delete Status</returns>
-        [HttpDelete("delete/{userName}")]
+        // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(string userName)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _userService.Delete(userName);
+            var result = await _userService.Delete(id);
             if (result.Succeeded)
                 return Ok(result);
             return BadRequest(result);

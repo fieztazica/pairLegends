@@ -98,4 +98,25 @@ public class MatchService : IMatchService
         var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
         return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
     }
+
+    public ApiResult<IEnumerable<MatchResponse>> GetMatchesById(Guid id, PagingRequest request)
+    {
+        const int defaultPageSize = 10;
+        const int defaultPageIndex = 1;
+        var pageSize = defaultPageSize;
+        var pageIndex = defaultPageIndex;
+
+        if (request.PageSize > 0) pageSize = request.PageSize;
+        if (request.PageIndex > 0) pageIndex = request.PageIndex;
+
+        var matchList = _matchRepo.GetList(
+            filter: (match) => match.Id == id,
+            skip: pageSize * (pageIndex - 1),
+            take: pageSize
+        );
+        if (!matchList.Any())
+            return new ApiErrorResult<IEnumerable<MatchResponse>>("Get match list failed!");
+        var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
+        return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
+    }
 }

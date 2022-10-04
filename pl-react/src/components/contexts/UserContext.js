@@ -1,4 +1,5 @@
 import * as React from "react";
+import { getUser } from "../../utils/api";
 
 export const UserContext = React.createContext();
 
@@ -6,19 +7,8 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
 
   const fetchUser = async () => {
-    const token = localStorage.getItem("jwtToken");
-    if (!token) throw new Error("No Token.");
-
-    let response = await fetch("/api/user/@me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.status >= 500) throw new Error(response.statusText);
-    
-    response = await response.json();
-    setUser(response.resultObject);
+    let data = await getUser();
+    setUser(data.resultObject);
   };
 
   return (

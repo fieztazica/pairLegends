@@ -30,6 +30,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { register } from "../utils/api";
 
 const DiscordIcon = () => <SvgIcon component={DiscordSvg} inheritViewBox />;
 
@@ -43,30 +44,14 @@ export function SignUp() {
 
   const onSubmit = (submit, e) => {
     setLoading(true);
-    const signUpModel = {
+    const signUpModel = JSON.stringify({
       userName: `${submit.username}`,
       password: `${submit.password}`,
       confirmPassword: `${submit["password-repeat"]}`,
       email: `${submit.email}`,
-    };
+    });
 
-    const fetchData = async () => {
-      const response = await fetch("api/user", {
-        body: JSON.stringify(signUpModel),
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-      }
-      });
-
-      if (response.status >= 500) throw new Error(response.statusText);
-
-      const data = await response.json();
-      if (data.succeeded) return data;
-      else throw new Error(data.message);
-    };
-
-    fetchData()
+    register(signUpModel)
       .then((data) => {
         setLoading(false);
         SnackBar(`We've signed you up!`, "success")();
