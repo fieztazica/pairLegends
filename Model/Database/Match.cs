@@ -8,8 +8,8 @@ namespace Model.Database
 {
     public class Match
     {
-        public Guid PLUserId { get; set; }
-        public AppUser PLUser { get; set; }
+        public Guid Id { get; set; }
+        public AppUser? PLUser { get; set; }
         public DateTime BeginAt { get; set; }
         public DateTime EndAt { get; set; }
         public int Tiles { get; set; }

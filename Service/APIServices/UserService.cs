@@ -31,7 +31,7 @@ public class UserService : IUserService
         if (!result)
             return new ApiErrorResult<string>("Username or password Incorrect!");
         var roles = await _userManager.GetRolesAsync(user);
-        var token = _jwtManager.Authenticate(user, roles);
+        var token = _jwtManager.Authenticate(user, roles, request.RememberMe);
         return new ApiSuccessResult<string>(token);
     }
 
@@ -57,9 +57,9 @@ public class UserService : IUserService
         return new ApiErrorResult<bool>("Delete failed!");
     }
 
-    public async Task<ApiResult<UserResponse>> GetById(string id)
+    public async Task<ApiResult<UserResponse>> GetById(Guid id)
     {
-        var user = await _userManager.FindByIdAsync(id);
+        var user = await _userManager.FindByIdAsync(id.ToString());
         if (user == null)
             return new ApiErrorResult<UserResponse>("User does not exist!");
         var roles = await _userManager.GetRolesAsync(user);
@@ -151,7 +151,7 @@ public class UserService : IUserService
 
     public async Task<ApiResult<bool>> ChangePassword(ChangePasswordRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.UserName);
+        var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
             return new ApiErrorResult<bool>("User does not exist.");
         var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
@@ -195,7 +195,7 @@ public class UserService : IUserService
 
     public async Task<ApiResult<bool>> RoleAssign(RoleAssignRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.UserName);
+        var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
             return new ApiErrorResult<bool>("User Does Not Exist");
         var removedRoles = request.Roles.Where(x => !x.Selected).Select(x => x.Name).ToList();
@@ -212,13 +212,13 @@ public class UserService : IUserService
         return new ApiSuccessResult<bool>(true);
     }
 
-    public async Task<ApiResult<bool>> Update(string id, UpdateUserRequest request)
+    public async Task<ApiResult<bool>> Update(UpdateUserRequest request)
     {
-        var user = await _userManager.FindByIdAsync(id);
+        var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
             return new ApiErrorResult<bool>("User is not exist.");
-       
-        if (request.Email != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
+
+        if (request.UserName != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
             return new ApiErrorResult<bool>("UserName already existed.");
 
         if (request.Email != null && await _userManager.Users.AnyAsync(x => x.Email == request.Email))

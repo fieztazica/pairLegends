@@ -13,12 +13,12 @@ public class MatchConfiguration : IEntityTypeConfiguration<Match>
         builder
             .HasKey(match => new
             {
-                match.PLUserId,
+                match.Id,
                 match.BeginAt
             });
         builder
             .HasOne(match => match.PLUser)
             .WithMany(user => user.Matches)
-            .HasForeignKey(match => match.PLUserId);
+            .HasForeignKey(match => match.Id);
     }
 }

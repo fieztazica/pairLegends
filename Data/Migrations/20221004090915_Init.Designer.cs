@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PLContext))]
-    [Migration("20220930170456_Initial")]
-    partial class Initial
+    [Migration("20221004090915_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,16 +161,16 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c8b97c22-c237-4036-8348-609aa6482f51"),
-                            ConcurrencyStamp = "a760759f-6674-4c58-ae8b-5bd64276283d",
+                            Id = new Guid("b203850e-f09a-46c5-9c1e-918d85184aaf"),
+                            ConcurrencyStamp = "94b9b0ff-fad4-4a82-a973-1a911126890d",
                             Description = "Admin Role",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("07a4606f-61d9-4665-a55d-8c5ec992124b"),
-                            ConcurrencyStamp = "2e017b0c-0968-40d7-b290-e66501c9f058",
+                            Id = new Guid("70219fc1-9651-4c64-85ef-6e112fc84de4"),
+                            ConcurrencyStamp = "acc40bfc-d8ac-4efc-ab82-9cbd35cdc0b1",
                             Description = "Manager Role",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
@@ -245,7 +245,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Model.Database.Match", b =>
                 {
-                    b.Property<Guid>("PLUserId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("BeginAt")
@@ -263,7 +263,7 @@ namespace Data.Migrations
                     b.Property<int>("TilesDone")
                         .HasColumnType("int");
 
-                    b.HasKey("PLUserId", "BeginAt");
+                    b.HasKey("Id", "BeginAt");
 
                     b.ToTable("Match", "dbo");
                 });
@@ -323,7 +323,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Model.Database.AppUser", "PLUser")
                         .WithMany("Matches")
-                        .HasForeignKey("PLUserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -7,8 +7,8 @@ module.exports = function (app) {
         target: `${process.env.API_HOST}`,
         secure: false,
         changeOrigin: true,
-        // router: {
-        //     'localhost:3000/api': 'https://localhost:5001',
-        // },
+        router: {
+            'localhost:3000/api': 'https://localhost:5001',
+        },
     }));
 };

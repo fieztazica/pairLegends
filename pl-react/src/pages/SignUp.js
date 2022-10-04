@@ -59,7 +59,7 @@ export function SignUp() {
       }
       });
 
-      if (!response.ok) throw new Error(response.statusText);
+      if (response.status >= 500) throw new Error(response.statusText);
 
       const data = await response.json();
       if (data.succeeded) return data;

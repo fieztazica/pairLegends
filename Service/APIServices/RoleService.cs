@@ -39,7 +39,7 @@ public class RoleService : IRoleService
         var roleList = await _roleManager.Roles.ToListAsync();
         if (roleList == null)
         {
-            return new ApiErrorResult<IEnumerable<RoleResponse>>("Get Result list failure");
+            return new ApiErrorResult<IEnumerable<RoleResponse>>("Get Role list failed.");
         }
         var roleResponseList = _mapper.Map<IEnumerable<RoleResponse>>(roleList);
         return new ApiSuccessResult<IEnumerable<RoleResponse>>(roleResponseList);

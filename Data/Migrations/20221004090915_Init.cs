@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -163,7 +163,7 @@ namespace Data.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    PLUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeginAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Tiles = table.Column<int>(type: "int", nullable: false),
@@ -172,10 +172,10 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Match", x => new { x.PLUserId, x.BeginAt });
+                    table.PrimaryKey("PK_Match", x => new { x.Id, x.BeginAt });
                     table.ForeignKey(
-                        name: "FK_Match_AspNetUsers_PLUserId",
-                        column: x => x.PLUserId,
+                        name: "FK_Match_AspNetUsers_Id",
+                        column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -184,12 +184,12 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("07a4606f-61d9-4665-a55d-8c5ec992124b"), "2e017b0c-0968-40d7-b290-e66501c9f058", "Manager Role", "Manager", "MANAGER" });
+                values: new object[] { new Guid("70219fc1-9651-4c64-85ef-6e112fc84de4"), "acc40bfc-d8ac-4efc-ab82-9cbd35cdc0b1", "Manager Role", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("c8b97c22-c237-4036-8348-609aa6482f51"), "a760759f-6674-4c58-ae8b-5bd64276283d", "Admin Role", "Admin", "ADMIN" });
+                values: new object[] { new Guid("b203850e-f09a-46c5-9c1e-918d85184aaf"), "94b9b0ff-fad4-4a82-a973-1a911126890d", "Admin Role", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -21,16 +21,7 @@ public class AutoMapperProfile : Profile
         CreateMap<RoleRequest, AppRole>();
         CreateMap<AppRole, RoleResponse>();
         CreateMap<RegisterRequest, AppUser>();
-        CreateMap<MatchRequest, Match>()
-            .ForMember(des => des.BeginAt, act => act.MapFrom(src => DateTime.Now))
-            .ForMember(
-                des => des.EndAt,
-                act => act.MapFrom(
-                    src => DateTime.Now
-                        .AddHours(src.Hour)
-                        .AddMinutes(src.Minute)
-                        .AddSeconds(src.Second)
-                ));
+        CreateMap<MatchRequest, Match>();
         CreateMap<Match, MatchResponse>();
         CreateMap<RegisterRequest, LoginRequest>();
         CreateMap<RegisterModel, LoginModel>()
@@ -38,10 +29,5 @@ public class AutoMapperProfile : Profile
             {
                 des.Input = context.Mapper.Map<LoginRequest>(src.Input);
             });
-        //CreateMap<PagedList<ResultResponse>, PagedList<HistoryModel>>()
-        //    .AfterMap((src, des, context) =>
-        //    {
-        //        des.Items = context.Mapper.Map<IEnumerable<HistoryModel>>(src.Items);
-        //    });
     }
 }

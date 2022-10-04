@@ -2,7 +2,7 @@
 
 public class ChangePasswordRequest
 {
-    public string UserName { get; set; } = String.Empty;
+    public Guid Id { get; set; } = Guid.Empty;
     public string CurrentPassword { get; set; } = string.Empty;
     public string NewPassword { get; set; } = string.Empty;
 }

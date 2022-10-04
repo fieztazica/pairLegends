@@ -34,23 +34,25 @@ export function SignIn() {
 
   const onSubmit = (submit, e) => {
     setLoading(true);
-    const signInModel = {
+    let signInModel = {
       email: `${submit.email}`,
       password: `${submit.password}`,
       rememberMe: submit.remember,
     };
 
+    signInModel = JSON.stringify(signInModel);
+
     const fetchData = async () => {
       const response = await fetch("api/user/authenticate", {
-        body: JSON.stringify(signInModel),
+        body: signInModel,
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
 
-      if (!response.ok) throw new Error(response.statusText);
-
+      if (response.status >= 500) throw new Error(response.statusText);
+      
       const data = await response.json();
       if (data.succeeded) return data;
       else throw new Error(data.message);
@@ -59,16 +61,16 @@ export function SignIn() {
     fetchData()
       .then((data) => {
         setLoading(false);
-        SnackBar(`Signed you in!`, "success");
+        SnackBar(`Signed you in!`, "success")();
         localStorage.setItem("jwtToken", data.resultObject);
         fetchUser();
-        window.location.href = "/"
+        window.location.href = "/";
         // navigate("/");
       })
       .catch((err) => {
         setLoading(false);
         SnackBar(`${err.message}`, "error")();
-        console.error(err.message);
+        console.error(err);
       });
   };
 

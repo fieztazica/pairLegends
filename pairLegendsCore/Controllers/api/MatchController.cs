@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,11 +30,11 @@ namespace pairLegendsCore.Controllers.api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet()]
-        public IActionResult Get([FromQuery] PagingRequest pagingRequest)
+        public IActionResult Get([FromQuery] PagingRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var matches = _matchService.GetMatches(pagingRequest);
+            var matches = _matchService.GetMatches(request);
             if (matches.Succeeded)
                 return Ok(matches);
             return BadRequest(matches);
@@ -74,32 +75,31 @@ namespace pairLegendsCore.Controllers.api
         /// <param name="matchRequest">Create Match Request</param>
         /// <returns>Create Status</returns>
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] MatchRequest matchRequest)
+        public async Task<IActionResult> Create([FromBody] MatchRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var serviceResult = await _matchService.AddMatch(matchRequest);
+            var serviceResult = await _matchService.AddMatch(request);
             if (serviceResult.Succeeded)
                 return Ok(serviceResult);
             return BadRequest(serviceResult);
         }
 
-        // /// <summary>
-        // /// Delete Results by UserName
-        // /// </summary>
-        // /// <param name="userName">UserName</param>
-        // /// <param name="deleteResultRequest">Delete Result Request</param>
-        // /// <returns>Delete Status</returns>
-        // [HttpDelete("delete-by-username/{userName}")]
-        // public async Task<IActionResult> DeleteByUserName(string userName, DeleteMatchRequest deleteMatchRequest)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var deleteResult = await _matchService.(userName, deleteMatchRequest);
-        //     if (deleteResult.Succeeded)
-        //         return Ok(deleteResult);
-        //     return BadRequest();
-        // }
+        /// <summary>
+        /// Delete Match by BeginAt
+        /// </summary>
+        /// <param name="deleteResultRequest">Delete Match Request</param>
+        /// <returns>Delete Status</returns>
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteByUserName(DeleteMatchRequest deleteMatchRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var deleteResult = await _matchService.DeleteMatchByBeginAt(deleteMatchRequest);
+            if (deleteResult.Succeeded)
+                return Ok(deleteResult);
+            return BadRequest();
+        }
 
         ///// <summary>
         ///// Delete Results by Id
