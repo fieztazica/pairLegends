@@ -7,6 +7,5 @@ public class SystemConstants
     {
         public const string Token = "Token";
         public const string BaseAddress = "PLAPIBaseUrl";
-        public const string GameConnectionStringKey = "GameSqliteDb";
     }
 }

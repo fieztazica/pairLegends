@@ -16,11 +16,9 @@
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
   </ItemGroup>
-
+    
   <ItemGroup>
-    <Folder Include="Migrations" />
     <Folder Include="Configurations\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
