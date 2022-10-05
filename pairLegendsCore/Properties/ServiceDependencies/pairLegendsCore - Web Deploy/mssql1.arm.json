@@ -39,9 +39,7 @@
       "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('pairLegendsCore_db', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
-      "dependsOn": [
-        "[parameters('resourceGroupName')]"
-      ],
+      "dependsOn": ["[parameters('resourceGroupName')]"],
       "properties": {
         "mode": "Incremental",
         "template": {
@@ -66,9 +64,7 @@
               "name": "pairlegendscoredbserver/pairLegendsCore_db",
               "type": "Microsoft.Sql/servers/databases",
               "apiVersion": "2017-10-01-preview",
-              "dependsOn": [
-                "pairlegendscoredbserver"
-              ]
+              "dependsOn": ["pairlegendscoredbserver"]
             }
           ]
         }
