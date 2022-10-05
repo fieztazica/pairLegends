@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{90D21EBC-EB13-4E7F-A675-993D3CCBEE21}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{B0CBBCBD-CDF6-40AB-A575-F566079F2032}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pairLegendsCore", "pairLegendsCore\pairLegendsCore.csproj", "{F8F15556-7786-4BD0-856D-88517E7974B2}"
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90D21EBC-EB13-4E7F-A675-993D3CCBEE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90D21EBC-EB13-4E7F-A675-993D3CCBEE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90D21EBC-EB13-4E7F-A675-993D3CCBEE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90D21EBC-EB13-4E7F-A675-993D3CCBEE21}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0CBBCBD-CDF6-40AB-A575-F566079F2032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0CBBCBD-CDF6-40AB-A575-F566079F2032}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0CBBCBD-CDF6-40AB-A575-F566079F2032}.Release|Any CPU.ActiveCfg = Release|Any CPU
