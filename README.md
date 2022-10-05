@@ -1,8 +1,8 @@
 [![DeepSource](https://deepsource.io/gh/fiezt1492/pairLegends.svg/?label=active+issues&show_trend=true&token=uEL3FhMg5ri0rFM--0vZ_msu)](https://deepsource.io/gh/fiezt1492/pairLegends/?ref=repository-badge)[![DeepSource](https://deepsource.io/gh/fiezt1492/pairLegends.svg/?label=resolved+issues&show_trend=true&token=uEL3FhMg5ri0rFM--0vZ_msu)](https://deepsource.io/gh/fiezt1492/pairLegends/?ref=repository-badge)
+
 # Pair Legends
 
 A pikachu alike game with League of Legends champions.
-
 
 ## Tech Stack
 
@@ -10,11 +10,9 @@ A pikachu alike game with League of Legends champions.
 
 **Server:** .NET Core, Entity Framework
 
-
 ## Acknowledgements
 
 - [Admired Repo](https://github.com/duonghan/pikachu-react)
-
 
 ## Authors
 
