@@ -22,11 +22,17 @@ namespace Data
             builder.Entity<AppRole>().HasData(
                 new AppRole
                 {
-                    Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN", Description = "Admin Role"
+                    Id = Guid.NewGuid(),
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    Description = "Admin Role"
                 },
                 new AppRole
                 {
-                    Id = Guid.NewGuid(), Name = "Manager", NormalizedName = "MANAGER", Description = "Manager Role"
+                    Id = Guid.NewGuid(),
+                    Name = "Manager",
+                    NormalizedName = "MANAGER",
+                    Description = "Manager Role"
                 }
             );
         }

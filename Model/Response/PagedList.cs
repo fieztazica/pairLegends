@@ -7,13 +7,13 @@ public class PagedList<T>
     public bool HasPrevious => PageIndex > 1;
     public int PageSize { get; set; }
     public int TotalCount { get; set; }
-    public int PageCount 
+    public int PageCount
     {
         get
         {
             var pageCount = (double)TotalCount / PageSize;
-            return (int)Math.Ceiling(pageCount);    
-        } 
+            return (int)Math.Ceiling(pageCount);
+        }
     }
     public IEnumerable<T> Items { get; set; } = new List<T>();
 }

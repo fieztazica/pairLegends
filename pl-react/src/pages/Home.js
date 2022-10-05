@@ -17,10 +17,10 @@ import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 
 export function Home() {
   const [openHtpDialog, setOpenHtpDialog] = React.useState(false);
-//   const [openCreditsDialog, setOpenCreditsDialog] = React.useState(false);
+  //   const [openCreditsDialog, setOpenCreditsDialog] = React.useState(false);
 
   const htpDescriptionElementRef = React.useRef(null);
-//   const credDescriptionElementRef = React.useRef(null);
+  //   const credDescriptionElementRef = React.useRef(null);
   React.useEffect(() => {
     if (openHtpDialog) {
       const { current: descriptionElement } = htpDescriptionElementRef;
@@ -57,7 +57,7 @@ export function Home() {
         m: 1,
         "a:hover": {
           color: "primary.contrastText",
-        }
+        },
       }}
     >
       <Button to="/game" component={RouterLink} startIcon={<PlayArrowIcon />}>

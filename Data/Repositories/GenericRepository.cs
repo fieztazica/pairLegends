@@ -58,10 +58,10 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
 
     public virtual IEnumerable<TEntity> GetList(
-        Expression<Func<TEntity, bool>> filter = null!, 
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!, 
-        string includeProperties = "", 
-        int skip = 0, 
+        Expression<Func<TEntity, bool>> filter = null!,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!,
+        string includeProperties = "",
+        int skip = 0,
         int take = 0)
     {
         var query = _dbSet.AsQueryable();

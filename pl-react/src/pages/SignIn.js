@@ -44,7 +44,7 @@ export function SignIn() {
     getToken(signInModel)
       .then((data) => {
         setLoading(false);
-        SnackBar(`Signed you in!`, "success")();
+        SnackBar("Signed you in!", "success")();
         localStorage.setItem("jwtToken", data.resultObject);
         fetchUser();
         window.location.href = "/";

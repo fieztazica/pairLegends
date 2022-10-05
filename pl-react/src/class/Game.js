@@ -1,7 +1,7 @@
 class Game {
-    tiles
+  tiles;
 
-    constructor() {
-        this.tiles = [[]]
-    }
+  constructor() {
+    this.tiles = [[]];
+  }
 }

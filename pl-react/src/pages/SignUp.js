@@ -54,7 +54,7 @@ export function SignUp() {
     register(signUpModel)
       .then((data) => {
         setLoading(false);
-        SnackBar(`We've signed you up!`, "success")();
+        SnackBar("We've signed you up!", "success")();
         navigate("/sign-in");
       })
       .catch((err) => {
