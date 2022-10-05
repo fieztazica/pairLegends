@@ -32,7 +32,6 @@ const HowToPlayDialog = ({ openState, onClose, dRef }) => (
         - Khi không còn nước di chuyển trò chơi sẽ tự động đảo lại hình, số lần
         đảo là có giới hạn. Khi kết thúc trò chơi, điểm số được cộng thêm số lần
         đảo.
-        <br />
       </DialogContentText>
     </DialogContent>
     <DialogActions>

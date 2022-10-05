@@ -5,10 +5,20 @@ namespace Model.Request;
 public class MatchRequest
 {
     [Required]
-    public string UserName { get; set; } = string.Empty;
-    public int Hour { get; set; } = 0;
-    [Range(0, 60)]
-    public int Minute { get; set; } = 0;
-    [Range(0, 60)]
-    public int Second { get; set; } = 0;
+    public Guid Id { get; set; } = Guid.Empty;
+
+    [Required]
+    public DateTime BeginAt { get; set; } = DateTime.Now;
+
+    [Required]
+    public DateTime EndAt { get; set; } = DateTime.Now;
+
+    [Required]
+    public int Tiles { get; set; }
+
+    [Required]
+    public int TilesDone { get; set; }
+
+    [Required]
+    public int Champs { get; set; }
 }

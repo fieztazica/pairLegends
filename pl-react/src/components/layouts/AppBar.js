@@ -4,7 +4,7 @@ import {
   Box,
   IconButton,
   Menu,
-  Button,
+  MenuList,
   Toolbar,
   Typography,
   Avatar,
@@ -12,49 +12,59 @@ import {
   MenuItem,
   Tooltip,
   Link,
-  SvgIcon,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { useLocation } from "react-router";
+import { Link as RouterLink } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AppRoutes from "../../AppRoutes";
-import LinkRouter from "../LinkRouter";
+import { appRoutes } from "../../AppRoutes";
+import { useUser } from "../contexts/UserContext";
+import PersonIcon from "@mui/icons-material/Person";
+import HistoryIcon from "@mui/icons-material/History";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 // const pages = [];
 // const settings = ["Logout"];
 
-const ResponsiveAppBar = ({ user }) => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+const ResponsiveAppBar = () => {
+  const { user, fetchUser } = useUser();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const location = useLocation();
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
-  const excludePathname = AppRoutes.filter((route) => route.excludeAppBar).map(
-    (route) => route.path
-  );
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
+
+  const excludePathname = appRoutes
+    .filter((route) => route.excludeAppBar)
+    .map((route) => route.path);
   const isInExclude = excludePathname.some(
     (pathname) => pathname === location.pathname
   );
+
+  React.useEffect(() => {
+    if (!user) fetchUser();
+    // eslint-disable-next-line
+  }, []);
 
   const AvatarMenu = isInExclude ? (
     <></>
   ) : (
     <Box>
-      <Tooltip title={`${user ? "Go Further" : "Login here"}`}>
+      <Tooltip title={`${user ? user.userName : "Login here"}`}>
         <IconButton
           size="large"
           edge="end"
@@ -91,24 +101,55 @@ const ResponsiveAppBar = ({ user }) => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {user?.displayName && (
-          <LinkRouter to="/profile" underline="none">
-            <MenuItem key="profile" onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{user.displayName}</Typography>
+        {user && (
+          <MenuList>
+            <MenuItem
+              to="/profile"
+              component={RouterLink}
+              onClick={handleCloseUserMenu}
+            >
+              <ListItemIcon>
+                <PersonIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText>{user.userName}</ListItemText>
             </MenuItem>
-          </LinkRouter>
+            <MenuItem
+              to="/history"
+              component={RouterLink}
+              onClick={handleCloseUserMenu}
+            >
+              <ListItemIcon>
+                <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText>History</ListItemText>
+            </MenuItem>
+            <Divider variant="middle" component="li" />
+            <MenuItem onClick={logout} component={RouterLink}>
+              <ListItemIcon>
+                <LogoutIcon color="error" />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </MenuItem>
+          </MenuList>
         )}
-        <Divider />
-        <LinkRouter to={`${user ? "/logout" : "/sign-in"}`} underline="none">
-          <MenuItem key="loginout" onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">
-              {user ? "Logout" : "Login"}
-            </Typography>
-          </MenuItem>
-        </LinkRouter>
+        {!user && (
+          <MenuList>
+            <MenuItem
+              to="/sign-in"
+              component={RouterLink}
+              onClick={handleCloseUserMenu}
+            >
+              <ListItemIcon>
+                <LoginIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText>Login</ListItemText>
+            </MenuItem>
+          </MenuList>
+        )}
       </Menu>
     </Box>
   );
+
   return (
     <Box>
       <AppBar position="static" color="primary">
