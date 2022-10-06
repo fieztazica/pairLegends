@@ -6,7 +6,6 @@ export async function getToken(body) {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
-  console.log(response);
   return checkData(response);
 }
 
@@ -18,7 +17,6 @@ export async function register(body) {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
-
   return checkData(response);
 }
 
@@ -36,7 +34,6 @@ export async function getUser() {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response);
   return checkData(response);
 }
 
@@ -80,10 +77,16 @@ function dataFetch(url, parameters) {
 }
 
 async function checkData(response) {
+  console.log(response)
   if (response.status >= 500) throw new Error(response.statusText);
 
   const string = await response.text();
-  if (!string || string === "") throw new Error("[API] Return empty body.");
+  if (!string || string === "") {
+    console.error(response, string)
+    if (!response.status)
+    throw new Error("[API] Response failed");
+    else throw new Error(response.statusText);
+  }
   const data = JSON.parse(string);
   if (data.succeeded) return data;
   else throw new Error(data.message);
