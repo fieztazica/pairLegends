@@ -58,27 +58,6 @@ public class MatchService : IMatchService
         return new ApiErrorResult<string>("Delete match fail!");
     }
 
-    // Not working yet
-    // public async Task<ApiResult<string>> DeleteResultByUserName(string userName, DeleteMatchRequest resultRequest)
-    // {
-    //     var user = await _userManager.FindByNameAsync(userName);
-    //     if (user == null)
-    //     {
-    //         return new ApiErrorResult<string>("Cannot found user!");
-    //     }
-    //     var resultIdList = _resultRepo.GetList(
-    //         includeProperties: "UserResults",
-    //         filter: result => result.UserResults.Any(userResult => userResult.UserId == user.Id)
-    //     ).Select(result => result.Id);
-    //     _resultRepo.Delete(res => resultIdList.Contains(res.Id));
-    //     var affectRowNumber = _unitOfWork.Commit();
-    //
-    //
-    //     if (affectRowNumber > 0)
-    //         return new ApiSuccessResult<string>("Delete result successfully!");
-    //     return new ApiErrorResult<string>("Delete result fail!");
-    // }
-
     public ApiResult<IEnumerable<MatchResponse>> GetMatches(PagingRequest request)
     {
         const int defaultPageSize = 10;
@@ -94,7 +73,7 @@ public class MatchService : IMatchService
             take: pageSize
         );
         if (!matchList.Any())
-            return new ApiErrorResult<IEnumerable<MatchResponse>>("Get match list failed!");
+            return new ApiErrorResult<IEnumerable<MatchResponse>>("Cannot find any match!");
         var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
         return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
     }
@@ -115,7 +94,7 @@ public class MatchService : IMatchService
             take: pageSize
         );
         if (!matchList.Any())
-            return new ApiErrorResult<IEnumerable<MatchResponse>>("Get match list failed!");
+            return new ApiErrorResult<IEnumerable<MatchResponse>>("Cannot find any match!");
         var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
         return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
     }

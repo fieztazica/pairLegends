@@ -2,7 +2,7 @@
 
 public class SystemConstants
 {
-    public const string ConnectionStringKey = "DefaultConnection";
+    public const string ConnectionStringKey = "DeployConnection";
     public static class AppSettings
     {
         public const string Token = "Token";

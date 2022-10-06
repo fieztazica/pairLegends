@@ -29,7 +29,7 @@ public class UserService : IUserService
             return new ApiErrorResult<string>("User does not exist!");
         var result = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!result)
-            return new ApiErrorResult<string>("Username or password Incorrect!");
+            return new ApiErrorResult<string>("Username or password incorrect!");
         var roles = await _userManager.GetRolesAsync(user);
         var token = _jwtManager.Authenticate(user, roles, request.RememberMe);
         return new ApiSuccessResult<string>(token);
@@ -197,7 +197,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
-            return new ApiErrorResult<bool>("User Does Not Exist");
+            return new ApiErrorResult<bool>("User does not Exist");
         var removedRoles = request.Roles.Where(x => !x.Selected).Select(x => x.Name).ToList();
         foreach (var roleName in removedRoles)
             if (await _userManager.IsInRoleAsync(user, roleName))

@@ -1,10 +1,7 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -25,8 +22,8 @@ import { useUser } from "../components/contexts/UserContext";
 import { getToken } from "../utils/api";
 
 export function SignIn() {
-  const { user, fetchUser } = useUser();
-  const navigate = useNavigate();
+  const {  fetchUser } = useUser();
+  // const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const formContext = useForm();
   const [loading, setLoading] = React.useState(false);
@@ -43,12 +40,11 @@ export function SignIn() {
 
     getToken(signInModel)
       .then((data) => {
+        localStorage.setItem("jwtToken", data.resultObject);
+        fetchUser()
+        window.location.href = "/";
         setLoading(false);
         SnackBar(`Signed you in!`, "success")();
-        localStorage.setItem("jwtToken", data.resultObject);
-        fetchUser();
-        window.location.href = "/";
-        // navigate("/");
       })
       .catch((err) => {
         setLoading(false);
@@ -62,9 +58,9 @@ export function SignIn() {
     SnackBar(`${Object.keys(error).length} errors occured.`, "error")();
   };
 
-  const ForgotPwdFunc = () => {
-    SnackBar("Who know?", "info")();
-  };
+  // const ForgotPwdFunc = () => {
+  //   SnackBar("Who know?", "info")();
+  // };
 
   const SnackBar =
     (message, variant, ...props) =>

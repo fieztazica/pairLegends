@@ -37,7 +37,7 @@ const columns = [
 ];
 
 export function History() {
-  const { user, fetchUser } = useUser();
+  const { user } = useUser();
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const { enqueueSnackbar } = useSnackbar();
@@ -61,6 +61,7 @@ export function History() {
         SnackBar(`${err.message}`, "error")();
         console.error(err.message);
       });
+      // eslint-disable-next-line
   }, []);
 
   const SnackBar =
@@ -81,6 +82,7 @@ export function History() {
         rowsPerPageOptions={[5]}
         checkboxSelection
         loading={loading}
+        autoHeight
       />
     </Box>
   );

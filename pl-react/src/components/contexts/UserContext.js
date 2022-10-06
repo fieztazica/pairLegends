@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const fetchUser = async () => {
     let data = await getUser();
     setUser(data.resultObject);
+    return data;
   };
 
   return (

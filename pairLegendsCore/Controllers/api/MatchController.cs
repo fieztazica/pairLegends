@@ -37,7 +37,7 @@ namespace pairLegendsCore.Controllers.api
             var matches = _matchService.GetMatches(request);
             if (matches.Succeeded)
                 return Ok(matches);
-            return BadRequest(matches);
+            return NotFound(matches);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace pairLegendsCore.Controllers.api
             var matches = _matchService.GetMatchesById(id, request);
             if (matches.Succeeded)
                 return Ok(matches);
-            return BadRequest(matches);
+            return NotFound(matches);
         }
 
         /// <summary>
