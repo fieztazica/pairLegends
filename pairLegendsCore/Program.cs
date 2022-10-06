@@ -21,7 +21,7 @@ namespace pairLegendsCore
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddCors();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -60,14 +60,14 @@ namespace pairLegendsCore
                 };
                 options.AddSecurityRequirement(securityRequirement);
             });
-            
+
             // Db Context
             builder.Services.AddDbContextFactory<PLContext>(options =>
             {
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey));
             });
-            
+
             // Authentication Stuffs
             builder.Services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<PLContext>()
@@ -109,6 +109,11 @@ namespace pairLegendsCore
             if (app.Environment.IsDevelopment())
             {
             }
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
