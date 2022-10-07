@@ -1,7 +1,7 @@
 const rootUrl =
   process.env.REACT_APP_VERCEL_ENV === "production" ||
   process.env.NODE_ENV === "production"
-    ? process.env.API_HOST
+    ? `${process.env.API_HOST}`
     : "";
 
 export async function getToken(body) {
