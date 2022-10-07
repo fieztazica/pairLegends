@@ -1,5 +1,11 @@
+const rootUrl =
+  process.env.REACT_APP_VERCEL_ENV === "production" ||
+  process.env.NODE_ENV === "production"
+    ? process.env.API_HOST
+    : "";
+
 export async function getToken(body) {
-  const response = await fetch("api/user/authenticate", {
+  const response = await fetch(`${rootUrl}/api/user/authenticate`, {
     body: body,
     method: "POST",
     headers: {
@@ -10,7 +16,7 @@ export async function getToken(body) {
 }
 
 export async function register(body) {
-  const response = await fetch("api/user", {
+  const response = await fetch(`${rootUrl}/api/user`, {
     body: body,
     method: "POST",
     headers: {
@@ -29,7 +35,7 @@ export async function register(body) {
 export async function getUser() {
   const token = localStorage.getItem("jwtToken");
   if (!token) throw new Error("No Token Provided");
-  const response = await fetch("/api/user/@me", {
+  const response = await fetch(`${rootUrl}/api/user/@me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -40,7 +46,7 @@ export async function getUser() {
 export async function getMatchesById(id) {
   const token = localStorage.getItem("jwtToken");
   if (!token) throw new Error("No Token Provided");
-  const response = await fetch("/api/match/" + id, {
+  const response = await fetch(`${rootUrl}/api/match/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -52,7 +58,7 @@ export async function getMatchesById(id) {
 export async function getMatches() {
   const token = localStorage.getItem("jwtToken");
   if (!token) throw new Error("No Token Provided");
-  const response = await fetch("/api/match", {
+  const response = await fetch(`${rootUrl}/api/match`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -77,14 +83,13 @@ function dataFetch(url, parameters) {
 }
 
 async function checkData(response) {
-  console.log(response)
+  console.log(response);
   if (response.status >= 500) throw new Error(response.statusText);
 
   const string = await response.text();
   if (!string || string === "") {
-    console.error(response, string)
-    if (!response.status)
-    throw new Error("[API] Response failed");
+    console.error(response, string);
+    if (!response.status) throw new Error("[API] Response failed");
     else throw new Error(response.statusText);
   }
   const data = JSON.parse(string);
