@@ -1,11 +1,10 @@
 import * as React from "react";
-import {
-  Button,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./champion.css";
 // eslint-disable-next-line
 import { getChampName, mixChampions } from "../utils/index";
+import { useGame } from "../pages/Game";
 
 const BootstrapButton = styled(Button)({
   padding: "1px 0px",
@@ -19,8 +18,9 @@ const BootstrapButton = styled(Button)({
   },
 });
 
-const Champion = ({ value, onClick, selected = false, from }) => {
-  if (!from) from = require("../utils/champions.json");
+const Champion = ({ value, onClick, selected = false }) => {
+  const { fromChamps } = useGame();
+  const from = fromChamps || require("../utils/champions.json");
   return (
     <BootstrapButton
       style={selected ? { border: "2px solid #D14343" } : null}

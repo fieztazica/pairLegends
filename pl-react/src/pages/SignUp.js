@@ -60,7 +60,7 @@ export function SignUp() {
   };
 
   const onError = (error, e) => {
-    console.log(error);
+    console.error(error);
     SnackBar(`${Object.keys(error).length} errors occured.`, "error")();
   };
   const SnackBar =

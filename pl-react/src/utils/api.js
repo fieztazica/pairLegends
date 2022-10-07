@@ -85,14 +85,7 @@ function dataFetch(url, parameters) {
 async function checkData(response) {
   console.log(response);
   if (response.status >= 500) throw new Error(response.statusText);
-
-  const string = await response.text();
-  if (!string || string === "") {
-    console.error(response, string);
-    if (!response.status) throw new Error("[API] Response failed");
-    else throw new Error(response.statusText);
-  }
-  const data = JSON.parse(string);
+  const data = await response.json();
   if (data.succeeded) return data;
   else throw new Error(data.message);
 }
