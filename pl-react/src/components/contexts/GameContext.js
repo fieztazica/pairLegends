@@ -5,20 +5,20 @@ import { getListPosItem } from "../../utils/Binder";
 import { getBoard, reloadBoard } from "../../utils/Generator";
 import { useUser } from "./UserContext";
 
+let i, j, k; // iterator
+
 function getExpiredTime(duration) {
   const time = new Date();
   time.setSeconds(time.getSeconds() + duration / 1000);
   return time;
 }
 
-let i, j, k; // iterator
-
 export const GameContext = React.createContext();
 
 export const GameProvider = ({ children }) => {
   const duration = 15 * 1000;
-  let lines = [];
-  let lastLines = [];
+  //   let lines = [];
+  //   let lastLines = [];
   let count = 0;
   let newTiles = [];
 
@@ -43,17 +43,22 @@ export const GameProvider = ({ children }) => {
       onExpire: () => timerOnExpired(),
     });
 
-  let hasLine = false;
-  let doneLine = false;
+  //   let hasLine = false;
+  //   let doneLine = false;
   let listPosItem = [];
   let satisfiableItems = [];
 
   const timerOnExpired = () => {
     setStatus("end");
     setLastExpiredTime(new Date());
+  };
+
+  const saveScore = () => {
     localStorage.setItem("lastGame", {
-      endAt: new Date(),
+      endAt: lastExpiredTime.toJSON(),
       champs: champs,
+      tiles: 8 * parseInt(colNum),
+      tilesDone: parseInt(tilesDone),
     });
   };
 
@@ -70,8 +75,8 @@ export const GameProvider = ({ children }) => {
   };
 
   const handleOnPlay = () => {
-    const _newItems = getBoard(8, colNum, champs);
-    setTiles(_newItems);
+    const _new = getBoard(8, colNum, champs);
+    setTiles(_new);
     setStatus("play");
     setChamp1(null);
     setChamp2(null);
@@ -79,7 +84,25 @@ export const GameProvider = ({ children }) => {
     setFromChamps(mixChampions());
     setTilesDone(0);
     if (timer) restart(getExpiredTime(duration));
-    listPosItem = getListPosItem(_newItems, 8, colNum, champs);
+    // hasLine = false;
+    // doneLine = false;
+    listPosItem = getListPosItem(_new, 8, colNum, champs);
+    satisfiableItems = new Array(champs + 1);
+  };
+
+  const renew = () => {
+    const _new = getBoard(8, colNum, champs);
+    setTiles(_new);
+    setStatus("play");
+    setChamp1(null);
+    setChamp2(null);
+    setIsNew(true);
+    setFromChamps(mixChampions());
+    setTilesDone(0);
+    if (timer) restart(getExpiredTime(duration));
+    // hasLine = false;
+    // doneLine = false;
+    listPosItem = getListPosItem(_new, 8, colNum, champs);
     satisfiableItems = new Array(champs + 1);
   };
 
@@ -97,17 +120,17 @@ export const GameProvider = ({ children }) => {
     }
   };
 
-  const handleOnReload = () => {
+  const handleOnIdle = () => {
+    setStatus("idle");
+    pause();
+  };
+
+  const reloadHandler = () => {
     const oldItems = tiles.slice();
     const _newItems = reloadBoard(oldItems, 8, colNum, champs);
     setTiles(_newItems);
     listPosItem = getListPosItem(_newItems, 8, colNum, champs);
     setIsJustReloaded(true);
-  };
-
-  const handleOnIdle = () => {
-    setStatus("idle");
-    pause();
   };
 
   /**
@@ -120,32 +143,32 @@ export const GameProvider = ({ children }) => {
   const checkLineX = (y1, y2, x) => {
     const yleft = Math.min(y1, y2);
     const yright = Math.max(y1, y2);
-    const tmp = [];
+    // const tmp = [];
 
     for (let yi = yleft + 1; yi < yright; yi++) {
       if (tiles[x][yi] !== 0) {
         return false;
       }
 
-      tmp.push({ x: x, y: yi, value: "horizontal" });
+      //   tmp.push({ x: x, y: yi, value: "horizontal" });
     }
 
-    lines.push(...tmp);
+    // lines.push(...tmp);
     return true;
   };
   const checkLineY = (x1, x2, y) => {
     const xup = Math.min(x1, x2);
     const xdown = Math.max(x1, x2);
-    const tmp = [];
+    // const tmp = [];
 
     for (let xi = xup + 1; xi < xdown; xi++) {
       if (tiles[xi][y] !== 0) {
         return false;
       }
-      tmp.push({ x: xi, y: y, value: "vertical" });
+      //   tmp.push({ x: xi, y: y, value: "vertical" });
     }
 
-    lines.push(...tmp);
+    // lines.push(...tmp);
     return true;
   };
 
@@ -164,7 +187,7 @@ export const GameProvider = ({ children }) => {
       pright = p1;
     }
 
-    lines = [];
+    // lines = [];
     for (let yi = pleft.y + 1; yi < pright.y; yi++) {
       if (
         checkLineX(pleft.y, yi, pleft.x) &&
@@ -173,17 +196,17 @@ export const GameProvider = ({ children }) => {
         tiles[pleft.x][yi] === 0 &&
         tiles[pright.x][yi] === 0
       ) {
-        if (pleft.x > pright.x) {
-          lines.push(
-            { x: pleft.x, y: yi, value: "top_left" },
-            { x: pright.x, y: yi, value: "bottom_right" }
-          );
-        } else {
-          lines.push(
-            { x: pleft.x, y: yi, value: "bottom_left" },
-            { x: pright.x, y: yi, value: "top_right" }
-          );
-        }
+        // if (pleft.x > pright.x) {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "top_left" },
+        //     { x: pright.x, y: yi, value: "bottom_right" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "bottom_left" },
+        //     { x: pright.x, y: yi, value: "top_right" }
+        //   );
+        // }
 
         return true;
       }
@@ -200,7 +223,7 @@ export const GameProvider = ({ children }) => {
       pdown = p1;
     }
 
-    lines = [];
+    // lines = [];
     for (let xi = pup.x + 1; xi < pdown.x; xi++) {
       if (
         checkLineY(pup.x, xi, pup.y) &&
@@ -209,17 +232,17 @@ export const GameProvider = ({ children }) => {
         tiles[xi][pup.y] === 0 &&
         tiles[xi][pdown.y] === 0
       ) {
-        if (pup.y > pdown.y) {
-          lines.push(
-            { x: xi, y: pup.y, value: "top_left" },
-            { x: xi, y: pdown.y, value: "bottom_right" }
-          );
-        } else {
-          lines.push(
-            { x: xi, y: pup.y, value: "top_right" },
-            { x: xi, y: pdown.y, value: "bottom_left" }
-          );
-        }
+        // if (pup.y > pdown.y) {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "top_left" },
+        //     { x: xi, y: pdown.y, value: "bottom_right" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "top_right" },
+        //     { x: xi, y: pdown.y, value: "bottom_left" }
+        //   );
+        // }
 
         return true;
       }
@@ -245,28 +268,28 @@ export const GameProvider = ({ children }) => {
 
     let p = { x: pright.x, y: pleft.y };
     if (tiles[p.x][p.y] === 0) {
-      lines = [];
+      //   lines = [];
 
       if (checkLineX(p.y, pright.y, p.x) && checkLineY(p.x, pleft.x, p.y)) {
-        if (pleft.x > pright.x) {
-          lines.push({ x: p.x, y: p.y, value: "bottom_right" });
-        } else {
-          lines.push({ x: p.x, y: p.y, value: "top_right" });
-        }
+        // if (pleft.x > pright.x) {
+        //   lines.push({ x: p.x, y: p.y, value: "bottom_right" });
+        // } else {
+        //   lines.push({ x: p.x, y: p.y, value: "top_right" });
+        // }
         return true;
       }
     }
 
-    lines = [];
+    // lines = [];
     p = { x: pleft.x, y: pright.y };
     if (tiles[p.x][p.y] !== 0) return false;
 
     if (checkLineX(p.y, pleft.y, p.x) && checkLineY(p.x, pright.x, p.y)) {
-      if (pleft.x > pright.x) {
-        lines.push({ x: p.x, y: p.y, value: "top_left" });
-      } else {
-        lines.push({ x: p.x, y: p.y, value: "bottom_left" });
-      }
+      //   if (pleft.x > pright.x) {
+      //     lines.push({ x: p.x, y: p.y, value: "top_left" });
+      //   } else {
+      //     lines.push({ x: p.x, y: p.y, value: "bottom_left" });
+      //   }
       return true;
     }
 
@@ -290,16 +313,16 @@ export const GameProvider = ({ children }) => {
     }
 
     // left to right
-    lines = [];
-    for (let yi = pleft.y + 1; yi <= pright.y; yi++) {
-      lines.push({ x: pleft.x, y: yi, value: "horizontal" });
-    }
+    // lines = [];
+    // for (let yi = pleft.y + 1; yi <= pright.y; yi++) {
+    //   lines.push({ x: pleft.x, y: yi, value: "horizontal" });
+    // }
 
     for (let yi = pright.y + 1; yi <= maxY + 1; yi++) {
-      lines.push(
-        { x: pleft.x, y: yi, value: "horizontal" },
-        { x: pright.x, y: yi, value: "horizontal" }
-      );
+      //   lines.push(
+      //     { x: pleft.x, y: yi, value: "horizontal" },
+      //     { x: pright.x, y: yi, value: "horizontal" }
+      //   );
 
       if (
         checkLineX(pleft.y, yi, pleft.x) &&
@@ -308,32 +331,32 @@ export const GameProvider = ({ children }) => {
         tiles[pleft.x][yi] === 0 &&
         tiles[pright.x][yi] === 0
       ) {
-        if (pleft.x > pright.x) {
-          lines.push(
-            { x: pleft.x, y: yi, value: "top_left" },
-            { x: pright.x, y: yi, value: "bottom_left" }
-          );
-        } else {
-          lines.push(
-            { x: pleft.x, y: yi, value: "bottom_left" },
-            { x: pright.x, y: yi, value: "top_left" }
-          );
-        }
+        // if (pleft.x > pright.x) {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "top_left" },
+        //     { x: pright.x, y: yi, value: "bottom_left" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "bottom_left" },
+        //     { x: pright.x, y: yi, value: "top_left" }
+        //   );
+        // }
 
         return true;
       }
     }
 
     // right to left
-    lines = [];
-    for (let yi = pright.y - 1; yi >= pleft.y; yi--) {
-      lines.push({ x: pright.x, y: yi, value: "horizontal" });
-    }
+    // lines = [];
+    // for (let yi = pright.y - 1; yi >= pleft.y; yi--) {
+    //   lines.push({ x: pright.x, y: yi, value: "horizontal" });
+    // }
     for (let yi = pleft.y - 1; yi >= 0; yi--) {
-      lines.push(
-        { x: pleft.x, y: yi, value: "horizontal" },
-        { x: pright.x, y: yi, value: "horizontal" }
-      );
+      //   lines.push(
+      //     { x: pleft.x, y: yi, value: "horizontal" },
+      //     { x: pright.x, y: yi, value: "horizontal" }
+      //   );
 
       if (
         checkLineX(pleft.y, yi, pleft.x) &&
@@ -342,17 +365,17 @@ export const GameProvider = ({ children }) => {
         tiles[pleft.x][yi] === 0 &&
         tiles[pright.x][yi] === 0
       ) {
-        if (pleft.x > pright.x) {
-          lines.push(
-            { x: pleft.x, y: yi, value: "top_right" },
-            { x: pright.x, y: yi, value: "bottom_right" }
-          );
-        } else {
-          lines.push(
-            { x: pleft.x, y: yi, value: "bottom_right" },
-            { x: pright.x, y: yi, value: "top_right" }
-          );
-        }
+        // if (pleft.x > pright.x) {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "top_right" },
+        //     { x: pright.x, y: yi, value: "bottom_right" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: pleft.x, y: yi, value: "bottom_right" },
+        //     { x: pright.x, y: yi, value: "top_right" }
+        //   );
+        // }
         return true;
       }
     }
@@ -369,16 +392,16 @@ export const GameProvider = ({ children }) => {
     }
 
     // up to down
-    lines = [];
-    for (let xi = pup.x + 1; xi <= pdown.x; xi++) {
-      lines.push({ x: xi, y: pup.y, value: "vertical" });
-    }
+    // lines = [];
+    // for (let xi = pup.x + 1; xi <= pdown.x; xi++) {
+    //   lines.push({ x: xi, y: pup.y, value: "vertical" });
+    // }
 
     for (let xi = pdown.x + 1; xi <= maxX + 1; xi++) {
-      lines.push(
-        { x: xi, y: pup.y, value: "vertical" },
-        { x: xi, y: pdown.y, value: "vertical" }
-      );
+      //   lines.push(
+      //     { x: xi, y: pup.y, value: "vertical" },
+      //     { x: xi, y: pdown.y, value: "vertical" }
+      //   );
       if (
         checkLineY(pup.x, xi, pup.y) &&
         checkLineY(pdown.x, xi, pdown.y) &&
@@ -386,31 +409,31 @@ export const GameProvider = ({ children }) => {
         tiles[xi][pup.y] === 0 &&
         tiles[xi][pdown.y] === 0
       ) {
-        if (pup.y > pdown.y) {
-          lines.push(
-            { x: xi, y: pup.y, value: "top_left" },
-            { x: xi, y: pdown.y, value: "top_right" }
-          );
-        } else {
-          lines.push(
-            { x: xi, y: pup.y, value: "top_right" },
-            { x: xi, y: pdown.y, value: "top_left" }
-          );
-        }
+        // if (pup.y > pdown.y) {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "top_left" },
+        //     { x: xi, y: pdown.y, value: "top_right" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "top_right" },
+        //     { x: xi, y: pdown.y, value: "top_left" }
+        //   );
+        // }
         return true;
       }
     }
 
     // down to up
-    lines = [];
-    for (let xi = pdown.x - 1; xi >= pup.x; xi--) {
-      lines.push({ x: xi, y: pdown.y, value: "vertical" });
-    }
+    // lines = [];
+    // for (let xi = pdown.x - 1; xi >= pup.x; xi--) {
+    //   lines.push({ x: xi, y: pdown.y, value: "vertical" });
+    // }
     for (let xi = pup.x - 1; xi >= 0; xi--) {
-      lines.push(
-        { x: xi, y: pup.y, value: "vertical" },
-        { x: xi, y: pdown.y, value: "vertical" }
-      );
+      //   lines.push(
+      //     { x: xi, y: pup.y, value: "vertical" },
+      //     { x: xi, y: pdown.y, value: "vertical" }
+      //   );
       if (
         checkLineY(pup.x, xi, pup.y) &&
         checkLineY(pdown.x, xi, pdown.y) &&
@@ -418,17 +441,17 @@ export const GameProvider = ({ children }) => {
         tiles[xi][pup.y] === 0 &&
         tiles[xi][pdown.y] === 0
       ) {
-        if (pup.y > pdown.y) {
-          lines.push(
-            { x: xi, y: pup.y, value: "bottom_left" },
-            { x: xi, y: pdown.y, value: "bottom_right" }
-          );
-        } else {
-          lines.push(
-            { x: xi, y: pup.y, value: "bottom_right" },
-            { x: xi, y: pdown.y, value: "bottom_left" }
-          );
-        }
+        // if (pup.y > pdown.y) {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "bottom_left" },
+        //     { x: xi, y: pdown.y, value: "bottom_right" }
+        //   );
+        // } else {
+        //   lines.push(
+        //     { x: xi, y: pup.y, value: "bottom_right" },
+        //     { x: xi, y: pdown.y, value: "bottom_left" }
+        //   );
+        // }
         return true;
       }
     }
@@ -489,12 +512,12 @@ export const GameProvider = ({ children }) => {
       // Case 2: 2, 4, 6... items
       for (j = 0; j < listPosItem[i].length; j++) {
         for (k = j + 1; k < listPosItem[i].length; k++) {
-          lines = [];
+          //   lines = [];
           if (isPair(listPosItem[i][j], listPosItem[i][k])) {
             satisfiableItems[i].push({
               champ1: listPosItem[i][j],
               champ2: listPosItem[i][k],
-              lines: lines,
+              //   lines: lines,
               item1: j,
               item2: k,
             });
@@ -504,136 +527,139 @@ export const GameProvider = ({ children }) => {
       }
     }
 
-    console.log(listPosItem, satisfiableItems);
-
     return count > 0;
   }
 
   //   React.useEffect(() => {
   //     if (status === "play") {
   //       if (!isExist()) {
-  //         handleOnReload();
+  //         reloadHandler();
   //       }
   //     }
   //   }, [status]);
-  const componentDidMount = () => {
-    if (!isExist()) {
-      handleOnReload();
-    }
-  };
+  //   const componentDidMount = () => {
+  //     if (!isExist()) {
+  //       reloadHandler();
+  //     }
+  //   };
 
-  const componentDidUpdate = () => {
-    // When board is renew
-    if (isNew === true) {
-      if (!isExist()) {
-        handleOnReload();
-      }
-      setIsNew(false);
-    }
+  //   const componentDidUpdate = () => {
+  //     // When board is renew
+  //     if (isNew === true) {
+  //       if (!isExist()) {
+  //         reloadHandler();
+  //       }
+  //       setIsNew(false);
+  //     }
 
-    // When board is reloaded
-    if (isJustReloaded === true) {
-      if (!isExist()) {
-        handleOnReload();
-      }
-      setIsJustReloaded(false);
-    }
+  //     // When board is reloaded
+  //     if (isJustReloaded === true) {
+  //       if (!isExist()) {
+  //         reloadHandler();
+  //       }
+  //       setIsJustReloaded(false);
+  //     }
 
-    // Round 5: Check reload board
-    if (isWillReload === true) {
-      // update item's position array
-      listPosItem = getListPosItem(newTiles, 8, colNum, champs);
+  //     // Round 5: Check reload board
+  //     if (isWillReload === true) {
+  //       // update item's position array
+  //       listPosItem = getListPosItem(newTiles, 8, colNum, champs);
 
-      if (!isExist()) {
-        handleOnReload();
-      }
-      setIsWillReload(false);
+  //       if (!isExist()) {
+  //         reloadHandler();
+  //       }
+  //       setIsWillReload(false);
 
-      return;
-    }
+  //       return;
+  //     }
 
-    // Round 4: Remove line from board
-    if (doneLine) {
-      lastLines.map((line) => (newTiles[line.x][line.y] = 0));
+  //     // Round 4: Remove line from board
+  //     if (doneLine) {
+  //       lastLines.map((line) => (newTiles[line.x][line.y] = 0));
 
-      newTiles[champ1.x][champ1.y] = newTiles[champ2.x][champ2.y] = 0;
-      lastLines = [];
+  //       newTiles[champ1.x][champ1.y] = newTiles[champ2.x][champ2.y] = 0;
+  //       lastLines = [];
 
-      setTimeout(() => {
-        setTiles(newTiles);
-        setChamp1(null);
-        setChamp2(null);
-        setIsWillReload(true);
-      }, 500);
+  //       setTimeout(() => {
+  //         setTiles(newTiles);
+  //         setChamp1(null);
+  //         setChamp2(null);
+  //         setIsWillReload(true);
+  //       }, 500);
 
-      doneLine = false;
-      return;
-    }
+  //       doneLine = false;
+  //       return;
+  //     }
 
-    // Round 3: Display connected line
-    if (hasLine) {
-      hasLine = false;
-      doneLine = true;
-      setTiles(newTiles);
-      return;
-    }
+  //     // Round 3: Display connected line
+  //     if (hasLine) {
+  //       hasLine = false;
+  //       doneLine = true;
+  //       setTiles(newTiles);
+  //       return;
+  //     }
 
-    // Round 1: Check if 2 items is valid (not null) or not
-    if (champ1 && champ2) {
-      newTiles = tiles.slice();
-      const value = newTiles[champ1.x][champ1.y];
-      // Round 2: Check if 2 items is satisfiable or not. If yes then update score and assign lastLines value
-      for (i = 0; i < satisfiableItems[value].length; i++) {
-        // compare two object
-        if (
-          (satisfiableItems[value][i].champ1.x === champ1.x &&
-            satisfiableItems[value][i].champ1.y === champ1.y &&
-            satisfiableItems[value][i].champ2.x === champ2.x &&
-            satisfiableItems[value][i].champ2.y === champ2.y) ||
-          (satisfiableItems[value][i].champ2.x === champ1.x &&
-            satisfiableItems[value][i].champ2.y === champ1.y &&
-            satisfiableItems[value][i].champ1.x === champ2.x &&
-            satisfiableItems[value][i].champ1.y === champ2.y)
-        ) {
-          lastLines = satisfiableItems[value][i].lines.slice();
+  //     // Round 1: Check if 2 items is valid (not null) or not
+  //     if (champ1 && champ2) {
+  //       newTiles = tiles.slice();
+  //       const value = newTiles[champ1.x][champ1.y];
+  //       // Round 2: Check if 2 items is satisfiable or not. If yes then update score and assign lastLines value
+  //       for (i = 0; i < satisfiableItems[value].length; i++) {
+  //         // compare two object
+  //         if (
+  //           (satisfiableItems[value][i].champ1.x === champ1.x &&
+  //             satisfiableItems[value][i].champ1.y === champ1.y &&
+  //             satisfiableItems[value][i].champ2.x === champ2.x &&
+  //             satisfiableItems[value][i].champ2.y === champ2.y) ||
+  //           (satisfiableItems[value][i].champ2.x === champ1.x &&
+  //             satisfiableItems[value][i].champ2.y === champ1.y &&
+  //             satisfiableItems[value][i].champ1.x === champ2.x &&
+  //             satisfiableItems[value][i].champ1.y === champ2.y)
+  //         ) {
+  //           lastLines = satisfiableItems[value][i].lines.slice();
 
-          if (lastLines.length > 0) {
-            lastLines.map((line) => (newTiles[line.x][line.y] = line.value));
-          }
+  //           if (lastLines.length > 0) {
+  //             lastLines.map((line) => (newTiles[line.x][line.y] = line.value));
+  //           }
 
-          setTilesDone((prev) => prev + 2);
+  //           setTilesDone((prev) => prev + 2);
 
-          hasLine = true;
+  //           hasLine = true;
 
-          // Remove from listPosItems
-          listPosItem[value][satisfiableItems[value][i].item1] =
-            listPosItem[value][listPosItem[value].length - 1];
-          listPosItem[value].pop();
-          listPosItem[value][satisfiableItems[value][i].item2] =
-            listPosItem[value][listPosItem[value].length - 1];
-          listPosItem[value].pop();
+  //           // Remove from listPosItems
+  //           listPosItem[value][satisfiableItems[value][i].item1] =
+  //             listPosItem[value][listPosItem[value].length - 1];
+  //           listPosItem[value].pop();
+  //           listPosItem[value][satisfiableItems[value][i].item2] =
+  //             listPosItem[value][listPosItem[value].length - 1];
+  //           listPosItem[value].pop();
 
-          // Remove couple from satisfiableItems array
-          satisfiableItems[value][i] =
-            satisfiableItems[value][satisfiableItems[value].length - 1];
-          satisfiableItems[value].pop();
+  //           // Remove couple from satisfiableItems array
+  //           satisfiableItems[value][i] =
+  //             satisfiableItems[value][satisfiableItems[value].length - 1];
+  //           satisfiableItems[value].pop();
 
-          count--;
+  //           count--;
 
-          return;
-        }
-      }
+  //           return;
+  //         }
+  //       }
 
-      lines = [];
-      setChamp1(null);
-      setChamp2(null);
-    }
-  };
+  //       lines = [];
+  //       setChamp1(null);
+  //       setChamp2(null);
+  //     }
+  //   };
 
   return (
     <GameContext.Provider
       value={{
         // variables
+        duration,
+        // lines,
+        // lastLines,
+        count,
+        newTiles,
         tiles,
         champs,
         timer,
@@ -648,6 +674,10 @@ export const GameProvider = ({ children }) => {
         isRunning,
         duration,
         lastExpiredTime,
+        // hasLine,
+        // doneLine,
+        listPosItem,
+        satisfiableItems,
         // functions
         start,
         pause,
@@ -659,8 +689,15 @@ export const GameProvider = ({ children }) => {
         champsChange,
         handleOnPlay,
         handleOnIdle,
-        componentDidUpdate,
-        componentDidMount,
+        reloadHandler,
+        isExist,
+        setIsNew,
+        setIsJustReloaded,
+        setIsWillReload,
+        setTiles,
+        setChamp1,
+        setChamp2,
+        setTilesDone,
       }}
     >
       {children}

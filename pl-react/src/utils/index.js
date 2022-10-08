@@ -60,12 +60,12 @@ function getChampName(id, from) {
 function mixChampions() {
     var json = require('./champions.json');
     return json
-    let clonedJson = { ...json }
-    const ChampionsValues = Object.values(clonedJson).sort(() => Math.random() - 0.5);
-    Object.keys(clonedJson).forEach((v, i) => {
-        clonedJson[v] = ChampionsValues[i];
-    })
-    return clonedJson;
+    // let clonedJson = { ...json }
+    // const ChampionsValues = Object.values(clonedJson).sort(() => Math.random() - 0.5);
+    // Object.keys(clonedJson).forEach((v, i) => {
+    //     clonedJson[v] = ChampionsValues[i];
+    // })
+    // return clonedJson;
 }
 
 function camelize(str) {

@@ -10,12 +10,21 @@ export default function PlayAble({ children }) {
   const isMobile = navigator.userAgent.match(
     /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
   );
+
+  const isDev = !(
+    process.env.REACT_APP_VERCEL_ENV === "production" ||
+    process.env.NODE_ENV === "production"
+  );
+
   const screen = {
     width: 800,
     height: 600,
   };
 
-  return isMobile || width <= screen.width || height <= screen.height ? (
+  return isDev ||
+    !(isMobile || width <= screen.width || height <= screen.height) ? (
+    children
+  ) : (
     <>
       <Typography variant="h5" component="h5">
         {isMobile ? (
@@ -44,7 +53,5 @@ export default function PlayAble({ children }) {
         Home
       </Button>
     </>
-  ) : (
-    children
   );
 }
