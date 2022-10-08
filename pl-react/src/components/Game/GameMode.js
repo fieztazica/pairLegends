@@ -12,7 +12,7 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
-import { useGame } from "../pages/Game";
+import { useGame } from "../contexts/GameContext";
 
 const GameMode = () => {
   const {

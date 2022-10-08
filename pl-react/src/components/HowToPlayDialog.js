@@ -28,10 +28,8 @@ const HowToPlayDialog = ({ openState, onClose, dRef }) => (
         - Mỗi lần loại bỏ được hai hình bạn sẽ ghi điểm, trò chơi hoàn thành khi
         bạn loại bỏ được hết các hình trước khi hết giờ, thời gian còn lại càng
         nhiều điểm của bạn càng cao.
-        <br />
-        - Khi không còn nước di chuyển trò chơi sẽ tự động đảo lại hình, số lần
-        đảo là có giới hạn. Khi kết thúc trò chơi, điểm số được cộng thêm số lần
-        đảo.
+        <br />- Khi không còn nước di chuyển trò chơi sẽ tự động đảo lại hình,
+        số lần đảo là khong giới hạn.
       </DialogContentText>
     </DialogContent>
     <DialogActions>

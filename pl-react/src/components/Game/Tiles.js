@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Stack, IconButton, SvgIcon, Box, Typography } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import Champion from "./Champion";
-// import { getChampName, mixChampions } from "../utils/index";
-import { useGame } from "../pages/Game";
+import { useGame } from "../contexts/GameContext";
 
 const Tiles = () => {
   const { tiles, champ1, champ2, handleClickTiles } = useGame();

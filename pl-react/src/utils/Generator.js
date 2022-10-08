@@ -44,7 +44,7 @@ export function getBoard(row, col, amount) {
     let remain = row * col;
     const table = [...Array(row + 2)]
         .fill(-1)
-        .map((_) => [...Array(col + 2)].fill(-1));
+        .map((_) => [...Array(col + 2)].fill(0));
     let pos, pair_pos, index;
 
     while (remain > 0) {
@@ -67,7 +67,7 @@ export function getBoard(row, col, amount) {
             ] = i;
         }
     }
-    console.log(table)
+
     return table;
 }
 
@@ -82,7 +82,7 @@ export function reloadBoard(sourceArr, row, col, amount) {
 
     for (let i = 1; i <= row; i++) {
         for (let j = 1; j <= col; j++) {
-            if (sourceArr[i][j] !== -1) {
+            if (sourceArr[i][j] !== 0) {
                 tmpIndex.push({ i, j });
                 tmpItems.push(sourceArr[i][j]);
             }

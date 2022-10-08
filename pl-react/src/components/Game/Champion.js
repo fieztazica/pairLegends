@@ -3,10 +3,10 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./champion.css";
 // eslint-disable-next-line
-import { getChampName, mixChampions } from "../utils/index";
-import { useGame } from "../pages/Game";
+import { getChampName, mixChampions } from "../../utils/index";
+import { useGame } from "../contexts/GameContext";
 
-const BootstrapButton = styled(Button)({
+const GameButton = styled(Button)({
   padding: "1px 0px",
   height: "63px",
   borderRadius: 0,
@@ -20,30 +20,35 @@ const BootstrapButton = styled(Button)({
 
 const Champion = ({ value, onClick, selected = false }) => {
   const { fromChamps } = useGame();
-  const from = fromChamps || require("../utils/champions.json");
+  const from = fromChamps || require("../../utils/champions.json");
   return (
-    <BootstrapButton
+    <GameButton
       style={selected ? { border: "2px solid #D14343" } : null}
       onClick={onClick}
-      alt=""
-      disabled={value === -1}
+      alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
+      disabled={value === 0}
     >
       <img
         src={
-          value === -1 ? "" : `/static/images/${getChampName(value, from)}.png`
+          value === 0
+            ? ""
+            : `/static/images/${
+                isNaN(value) ? value : getChampName(value, from)
+              }.png`
         }
         width={60}
         height={60}
         style={
-          value === -1
+          value === 0
             ? { display: "none" }
             : selected
             ? { border: "6px solid #FFB020" }
             : null
         }
-        alt={value === -1 ? "barrier" : `${getChampName(value, from)}`}
+        alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
+        title={value === 0 ? "barrier" : `${from[value]}`}
       />
-    </BootstrapButton>
+    </GameButton>
   );
 };
 

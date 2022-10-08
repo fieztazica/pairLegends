@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useGame } from "../pages/Game";
+import { useGame } from "../contexts/GameContext";
 
 const DevStatus = () => {
   const {
@@ -17,23 +17,18 @@ const DevStatus = () => {
     fromChamps,
     champ2,
   } = useGame();
-  
+
   return (
     <>
       <Typography>
-        {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} ${
-          timer
-            ? ` | Timer: ${hours}:${minutes}:${seconds} - ${
-                isRunning ? "Running" : "Not running"
-              } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`
-            : ""
-        }`}
+        {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} ${` | Timer: ${hours}:${minutes}:${seconds} - ${
+          isRunning ? "Running" : "Not running"
+        } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}`}
       </Typography>
-      {status === "play" && (
-        <Typography>
-          {`${
-            tiles
-              ? `
+      <Typography>
+        {`${
+          tiles
+            ? `
                              Champ1: ${
                                champ1 &&
                                `${
@@ -48,10 +43,9 @@ const DevStatus = () => {
                                } (${champ2.x}.${champ2.y})`
                              }
                             `
-              : "Tiles empty"
-          }`}
-        </Typography>
-      )}
+            : "Tiles empty"
+        }`}
+      </Typography>
     </>
   );
 };

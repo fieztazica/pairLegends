@@ -65,22 +65,6 @@ export async function getMatches() {
   });
   return checkData(response);
 }
-// eslint-disable-next-line
-function dataFetch(url, parameters) {
-  return fetch(url, parameters)
-    .then((response) => {
-      console.log(response);
-      return response.text();
-    })
-    .then((string) => {
-      console.log(string);
-      return !string || string === "" ? {} : JSON.parse(string);
-    })
-    .catch((error) => {
-      console.error(error);
-      throw new Error(error);
-    });
-}
 
 async function checkData(response) {
   console.log(response);
