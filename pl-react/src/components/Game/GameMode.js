@@ -24,6 +24,7 @@ const GameMode = () => {
     timer,
     timerChange,
   } = useGame();
+  
   return (
     <>
       <Box p={2}>

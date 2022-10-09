@@ -7,23 +7,23 @@ import PlayAble from "../components/Game/PlayAble";
 import DevStatus from "../components/Game/DevStatus";
 import GameCase from "../components/Game/GameCase";
 import { GameProvider } from "../components/contexts/GameContext";
-import Gameplay from "../components/Game";
+import Gameplay from "../components/Game/Gameplay";
 
 export function Game() {
   return (
-    <GameProvider>
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <Container maxWidth="md">
-          <Box alignItems="center" display="flex" flexDirection="column">
-            <PlayAble>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Container maxWidth="md">
+        <Box alignItems="center" display="flex" flexDirection="column">
+          <PlayAble>
+            <GameProvider>
               <DevStatus />
               <GameCase>
                 <Gameplay />
               </GameCase>
-            </PlayAble>
-          </Box>
-        </Container>
-      </Box>
-    </GameProvider>
+            </GameProvider>
+          </PlayAble>
+        </Box>
+      </Container>
+    </Box>
   );
 }

@@ -25,8 +25,8 @@ const Champion = ({ value, onClick, selected = false }) => {
     <GameButton
       style={selected ? { border: "2px solid #D14343" } : null}
       onClick={onClick}
-      alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
-      disabled={value === 0}
+      alt={value === 0 ? "barrier" : `${isNaN(value) ? value : getChampName(value, from)}`}
+      disabled={value === 0 || isNaN(value)}
     >
       <img
         src={
@@ -45,7 +45,7 @@ const Champion = ({ value, onClick, selected = false }) => {
             ? { border: "6px solid #FFB020" }
             : null
         }
-        alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
+        alt={value === 0 ? "barrier" : `${isNaN(value) ? value : getChampName(value, from)}`}
         title={value === 0 ? "barrier" : `${from[value]}`}
       />
     </GameButton>

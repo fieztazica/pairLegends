@@ -13,7 +13,7 @@ import {
   Tooltip,
   Link,
   ListItemIcon,
-  ListItem,
+  // ListItem,
   ListItemText,
 } from "@mui/material";
 import { useLocation } from "react-router";
@@ -25,7 +25,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import HistoryIcon from "@mui/icons-material/History";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 // const pages = [];
 // const settings = ["Logout"];
@@ -156,7 +155,7 @@ const ResponsiveAppBar = () => {
         <Toolbar>
           <Tooltip title="Home">
             <IconButton size="small" color="inherit" href="/">
-              <img src="favicon.png" alt="" height={32} />
+              <img src="/favicon.png" alt="" height={32} />
             </IconButton>
           </Tooltip>
           <Typography

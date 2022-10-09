@@ -6,7 +6,7 @@ const DevStatus = () => {
     status,
     colNum,
     champs,
-    timer,
+    // timer,
     hours,
     minutes,
     seconds,
@@ -16,6 +16,7 @@ const DevStatus = () => {
     champ1,
     fromChamps,
     champ2,
+    tilesDone
   } = useGame();
 
   return (
@@ -23,7 +24,7 @@ const DevStatus = () => {
       <Typography>
         {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} ${` | Timer: ${hours}:${minutes}:${seconds} - ${
           isRunning ? "Running" : "Not running"
-        } | Last Play EndAt:  ${lastExpiredTime?.toLocaleString()}`}`}
+        } | EndAt:  ${lastExpiredTime?.toLocaleString()}`} | TilesDone: ${tilesDone}`}
       </Typography>
       <Typography>
         {`${

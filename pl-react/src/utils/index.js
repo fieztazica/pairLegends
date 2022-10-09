@@ -1,5 +1,5 @@
 import * as React from "react";
-import passwordValidator from "password-validator";
+import PasswordValidator from "password-validator";
 
 function validateEmail(email) {
     const res =
@@ -8,7 +8,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    const schema = new passwordValidator();
+    const schema = new PasswordValidator();
 
     schema
         .is()
@@ -58,18 +58,17 @@ function getChampName(id, from) {
 }
 
 function mixChampions() {
-    var json = require('./champions.json');
-    return json
-    // let clonedJson = { ...json }
-    // const ChampionsValues = Object.values(clonedJson).sort(() => Math.random() - 0.5);
-    // Object.keys(clonedJson).forEach((v, i) => {
-    //     clonedJson[v] = ChampionsValues[i];
-    // })
-    // return clonedJson;
+    const json = require('./champions.json');
+    let clonedJson = { ...json }
+    const ChampionsValues = Object.values(clonedJson).sort(() => Math.random() - 0.5);
+    Object.keys(clonedJson).forEach((v, i) => {
+        clonedJson[v] = ChampionsValues[i];
+    })
+    return clonedJson;
 }
 
 function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+    return str.replace(/^\w|[A-Z]|\b\w/g, function (word, index) {
         return index === 0 ? word.toLowerCase() : word.toUpperCase();
     }).replace(/\s+/g, '');
 }
