@@ -365,7 +365,7 @@ export default function Gameplay() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [champ1, champ2, tiles, tilesDone]);
 
-  const handleOnIdle = () => () => {
+  const handleOnIdle = () => {
     setStatus("idle");
     pause();
   };

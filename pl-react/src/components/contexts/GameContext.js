@@ -138,6 +138,7 @@ export const GameProvider = ({ children }) => {
         // setIsWillReload,
         // setIsJustReloaded,
         setIsNew,
+        setStatus,
         onEnd,
         renew,
       }}
