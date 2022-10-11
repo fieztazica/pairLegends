@@ -20,10 +20,12 @@ const GameMode = () => {
     colNumChange,
     champs,
     champsChange,
-    handleOnPlay,
+    renew,
     timer,
     timerChange,
   } = useGame();
+
+  const handleOnPlay = () => renew();
   
   return (
     <>
@@ -80,7 +82,7 @@ const GameMode = () => {
         spacing={2}
         divider={<Divider orientation="vertical" flexItem />}
       >
-        <Button variant="contained" onClick={() => handleOnPlay()}>
+        <Button variant="contained" onClick={handleOnPlay}>
           Play
         </Button>
         <FormControl>

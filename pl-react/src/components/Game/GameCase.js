@@ -3,7 +3,12 @@ import GameMode from "./GameMode";
 
 const GameCase = ({ children }) => {
   const { status } = useGame();
-  return status === "idle" ? <GameMode /> : children;
+  switch (status) {
+    case "idle":
+      return <GameMode />;
+    default:
+      return children;
+  }
 };
 
 export default GameCase;
