@@ -8,7 +8,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import LinkRouter from "../components/LinkRouter";
-import HowToPlayDialog from "../components/HowToPlayDialog";
+import HowToPlayDialog from "../components/Home/HowToPlayDialog";
 // import CreditsDialog from "../components/CreditsDialog";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";

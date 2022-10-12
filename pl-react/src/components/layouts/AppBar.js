@@ -57,15 +57,14 @@ const ResponsiveAppBar = () => {
   React.useEffect(() => {
     if (!user) fetchUser();
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   const AvatarMenu = isInExclude ? (
     <></>
   ) : (
     <Box>
-      <Tooltip title={`${user ? user.userName : "Login here"}`}>
+      <Tooltip placement="left" arrow title={`${user ? user.userName : "Login here"}`}>
         <IconButton
-          size="large"
           edge="end"
           sx={{ ml: 1 }}
           onClick={handleOpenUserMenu}
@@ -78,9 +77,10 @@ const ResponsiveAppBar = () => {
                   ? user.displayAvatarURL
                   : "/broken-image.jpg"
               }
+              alt={user.userName.toUpperCase()}
             />
           ) : (
-            <AccountCircleIcon />
+            <AccountCircleIcon fontSize="large" />
           )}
         </IconButton>
       </Tooltip>
@@ -103,7 +103,7 @@ const ResponsiveAppBar = () => {
         {user && (
           <MenuList>
             <MenuItem
-              to="/profile"
+              to={`/profile`}
               component={RouterLink}
               onClick={handleCloseUserMenu}
             >

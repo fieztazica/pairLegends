@@ -61,7 +61,7 @@ export function History() {
         SnackBar(`${err.message}`, "error")();
         console.error(err.message);
       });
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const SnackBar =
@@ -74,7 +74,7 @@ export function History() {
     };
 
   return (
-    <Box style={{ height: "80vh", width: "100%" }}>
+    <Box style={{ width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}

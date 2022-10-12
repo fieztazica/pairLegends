@@ -22,7 +22,7 @@ import { useUser } from "../components/contexts/UserContext";
 import { getToken } from "../utils/api";
 
 export function SignIn() {
-  const {  fetchUser } = useUser();
+  const { fetchUser } = useUser();
   // const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const formContext = useForm();
@@ -41,7 +41,7 @@ export function SignIn() {
     getToken(signInModel)
       .then((data) => {
         localStorage.setItem("jwtToken", data.resultObject);
-        fetchUser()
+        fetchUser();
         window.location.href = "/";
         setLoading(false);
         SnackBar(`Signed you in!`, "success")();

@@ -1,7 +1,7 @@
 const rootUrl =
   process.env.REACT_APP_VERCEL_ENV === "production" ||
   process.env.NODE_ENV === "production"
-        ? `${process.env.REACT_APP_API_HOST || process.env.API_HOST}`
+    ? `${process.env.REACT_APP_API_HOST || process.env.API_HOST}`
     : "";
 
 export async function getToken(body) {
@@ -36,6 +36,31 @@ export async function getUser() {
   const token = localStorage.getItem("jwtToken");
   if (!token) throw new Error("No Token Provided");
   const response = await fetch(`${rootUrl}/api/user/@me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return checkData(response);
+}
+
+export async function updateUser(body) {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) throw new Error("No Token Provided");
+  const response = await fetch(`${rootUrl}/api/user/@me`, {
+    body: body,
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  return checkData(response);
+}
+
+export async function getUserById(id) {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) throw new Error("No Token Provided");
+  const response = await fetch(`${rootUrl}/api/user/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

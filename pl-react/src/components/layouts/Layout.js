@@ -1,5 +1,5 @@
 import React from "react";
-import { CssBaseline, Box } from "@mui/material";
+import { CssBaseline, Box, Paper } from "@mui/material";
 import { Outlet } from "react-router";
 import ResponsiveAppBar from "./AppBar";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -57,7 +57,11 @@ export function Layout() {
                 })}
               </Breadcrumbs>
             </Box>
-            <Outlet />
+            <Paper>
+              <Box p={2}>
+                <Outlet />
+              </Box>
+            </Paper>
           </Container>
         </Box>
       </main>

@@ -23,18 +23,14 @@ const Champion = ({ value, onClick, selected = false }) => {
   const from = fromChamps || require("../../utils/champions.json");
   return (
     <GameButton
-      style={selected ? { border: "2px solid #D14343" } : null}
+      // style={selected ? { border: "2px solid #D14343" } : null}
       onClick={onClick}
-      alt={value === 0 ? "barrier" : `${isNaN(value) ? value : getChampName(value, from)}`}
-      disabled={value === 0 || isNaN(value)}
+      alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
+      disabled={value === 0}
     >
       <img
         src={
-          value === 0
-            ? ""
-            : `/static/images/${
-                isNaN(value) ? value : getChampName(value, from)
-              }.png`
+          value === 0 ? "" : `/static/images/${getChampName(value, from)}.png`
         }
         width={60}
         height={60}
@@ -45,7 +41,7 @@ const Champion = ({ value, onClick, selected = false }) => {
             ? { border: "6px solid #FFB020" }
             : null
         }
-        alt={value === 0 ? "barrier" : `${isNaN(value) ? value : getChampName(value, from)}`}
+        alt={value === 0 ? "barrier" : `${getChampName(value, from)}`}
         title={value === 0 ? "barrier" : `${from[value]}`}
       />
     </GameButton>
