@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("jwtToken");
     window.location.href = "/";
   };
 
@@ -63,7 +63,11 @@ const ResponsiveAppBar = () => {
     <></>
   ) : (
     <Box>
-      <Tooltip placement="left" arrow title={`${user ? user.userName : "Login here"}`}>
+      <Tooltip
+        placement="left"
+        arrow
+        title={`${user ? user.userName : "Login here"}`}
+      >
         <IconButton
           edge="end"
           sx={{ ml: 1 }}

@@ -13,6 +13,7 @@ A pikachu alike game with League of Legends champions.
 ## Acknowledgements
 
 - [Admired Repo](https://github.com/duonghan/pikachu-react)
+- [Admired .NET API](https://github.com/Slimaeus/CaroOnline)
 
 
 ## Authors

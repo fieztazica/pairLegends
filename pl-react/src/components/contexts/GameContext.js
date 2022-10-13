@@ -12,47 +12,33 @@ export function getExpiredTime(duration) {
 export const GameContext = React.createContext();
 
 export const GameProvider = ({ children }) => {
-  const duration = 15 * 1000;
+  const duration = 300 * 1000;
   const [colNum, setColNum] = React.useState(10);
   const [champs, setChamps] = React.useState(10);
   const [fromChamps, setFromChamps] = React.useState(mixChampions());
   const [status, setStatus] = React.useState("idle");
   const [tiles, setTiles] = React.useState();
-  const [tilesDone, setTilesDone] = React.useState(0);
-  const [timer, setTimer] = React.useState(false);
+  const [timer, setTimer] = React.useState(true);
   const [champ1, setChamp1] = React.useState(null);
   const [champ2, setChamp2] = React.useState(null);
-  const [isNew, setIsNew] = React.useState(false);
-  const [lastExpiredTime, setLastExpiredTime] = React.useState(null);
+  const [tilesDone, setTilesDone] = React.useState(0);
+  const [beginAt, setBeginAt] = React.useState(null);
+  const [endAt, setEndAt] = React.useState(null);
+  const [openEndDialog, setOpenEndDialog] = React.useState(false);
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
       expiryTimestamp: getExpiredTime(duration),
       autoStart: false,
-      onExpire: () => timerOnExpired(),
+      onExpire: () => onEnd(),
     });
-
-  const timerOnExpired = () => {
-    setStatus("end");
-    setLastExpiredTime(new Date());
-  };
 
   const onEnd = () => {
     setChamp1(null);
     setChamp2(null);
     setStatus("end");
-    setLastExpiredTime(new Date());
-  };
-
-  const saveScore = (endAt) => {
-    localStorage.setItem(
-      "lastGame",
-      JSON.stringify({
-        endAt: new Date(endAt).toJSON(),
-        champs: champs,
-        tiles: 8 * colNum,
-        tilesDone: tilesDone,
-      })
-    );
+    setEndAt(new Date());
+    pause();
+    setOpenEndDialog(true);
   };
 
   const colNumChange = (event, newValue) => {
@@ -71,10 +57,12 @@ export const GameProvider = ({ children }) => {
     const _newTiles = getBoard(8, colNum, champs);
     setTiles(_newTiles);
     setStatus("play");
+    setBeginAt(new Date());
     setChamp1(null);
     setChamp2(null);
     setFromChamps(mixChampions());
     setTilesDone(0);
+    setOpenEndDialog(false);
     if (timer) restart(getExpiredTime(duration));
   };
 
@@ -91,12 +79,6 @@ export const GameProvider = ({ children }) => {
       setChamp2({ x, y });
     }
   };
-
-  // const reloadHandler = () => {
-  //   const oldTiles = [...tiles];
-  //   const _newTiles = reloadBoard(oldTiles, 8, colNum, champs);
-  //   setTiles(_newTiles);
-  // };
 
   return (
     <GameContext.Provider
@@ -116,11 +98,11 @@ export const GameProvider = ({ children }) => {
         minutes,
         hours,
         isRunning,
-        // isWillReload,
-        // isJustReloaded,
-        isNew,
-        lastExpiredTime,
+        beginAt,
+        endAt,
+        openEndDialog,
         // functions
+        setOpenEndDialog,
         start,
         pause,
         resume,
@@ -129,18 +111,15 @@ export const GameProvider = ({ children }) => {
         timerChange,
         colNumChange,
         champsChange,
-        // reloadHandler,
         setTiles,
         setChamp1,
         setChamp2,
         setTilesDone,
-        saveScore,
-        // setIsWillReload,
-        // setIsJustReloaded,
-        setIsNew,
         setStatus,
         onEnd,
         renew,
+        setBeginAt,
+        setEndAt,
       }}
     >
       {children}

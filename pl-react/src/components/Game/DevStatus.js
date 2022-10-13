@@ -10,7 +10,8 @@ const DevStatus = () => {
     hours,
     minutes,
     seconds,
-    lastExpiredTime,
+    beginAt,
+    endAt,
     isRunning,
     tiles,
     champ1,
@@ -24,7 +25,7 @@ const DevStatus = () => {
       <Typography>
         {`Status: ${status} | Tiles: 8x${colNum} Champs: ${champs} ${` | Timer: ${hours}:${minutes}:${seconds} - ${
           isRunning ? "Running" : "Not running"
-        } | EndAt:  ${lastExpiredTime?.toLocaleString()}`} | TilesDone: ${tilesDone}`}
+        } | BeginAt:  ${beginAt?.toLocaleString()}  | EndAt:  ${endAt?.toLocaleString()}`} | TilesDone: ${tilesDone}`}
       </Typography>
       <Typography>
         {`${

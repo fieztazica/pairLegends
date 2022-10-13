@@ -8,7 +8,7 @@ import {
   PasswordElement,
   PasswordRepeatElement,
 } from "react-hook-form-mui";
-import { updateUser } from "../../utils/api";
+import { changePassword } from "../../utils/api";
 import { validatePassword } from "../../utils";
 
 export default function PasswordTab({ user }) {
@@ -31,19 +31,17 @@ export default function PasswordTab({ user }) {
       newPassword: `${submit["new-password"]}`,
     });
 
-    // updateUser(changePasswordModel)
-    //   .then((data) => {
-    //     setLoading(false);
-    //     SnackBar(`Success! Relogin to get update!`, "success")();
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     SnackBar(`${err.message}`, "error")();
-    //     console.error(err.message);
-    //   });
+    changePassword(changePasswordModel)
+      .then((data) => {
+        setLoading(false);
+        SnackBar(`Successfully updated your password!`, "success")();
+      })
+      .catch((err) => {
+        setLoading(false);
+        SnackBar(`${err.message}`, "error")();
+        console.error(err.message);
+      });
     console.log(submit);
-
-    setLoading(false);
   };
 
   const onError = (error, e) => {

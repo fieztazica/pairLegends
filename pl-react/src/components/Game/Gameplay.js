@@ -303,6 +303,10 @@ export default function Gameplay() {
     return count > 0;
   }
 
+  const isEmpty = (array2d) => {
+    return array2d.every((row) => !row.length);
+  };
+
   const reloadHandler = () => {
     const oldTiles = [...tiles];
     const _newTiles = reloadBoard(oldTiles, 8, colNum, champs);
@@ -317,12 +321,14 @@ export default function Gameplay() {
       reloadHandler();
     }
 
-    if (tilesDone >= 8 * colNum) {
+    if (
+      tilesDone >= 8 * colNum ||
+      isEmpty(listPosItem) ||
+      isEmpty(satisfiableItems)
+    ) {
       onEnd();
       return;
     }
-
-    console.log(listPosItem, satisfiableItems);
 
     // Round 1: Check if 2 items is valid (not null) or not
     if (champ1 && champ2) {
@@ -343,38 +349,29 @@ export default function Gameplay() {
         ) {
           newTiles[champ1.x][champ1.y] = newTiles[champ2.x][champ2.y] = 0;
           setTilesDone((prev) => prev + 2);
-
-          // Remove from listPosItems
-          listPosItem[value][satisfiableItems[value][i].item1] =
-            listPosItem[value][listPosItem[value].length - 1];
-          listPosItem[value].pop();
-          listPosItem[value][satisfiableItems[value][i].item2] =
-            listPosItem[value][listPosItem[value].length - 1];
-          listPosItem[value].pop();
-
-          // Remove couple from satisfiableItems array
-          satisfiableItems[value][i] =
-            satisfiableItems[value][satisfiableItems[value].length - 1];
-          satisfiableItems[value].pop();
           return;
         }
       }
       setChamp1(null);
       setChamp2(null);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [champ1, champ2, tiles, tilesDone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, champ1, champ2, tiles, tilesDone]);
 
   const handleOnIdle = () => {
     setStatus("idle");
     pause();
   };
-
   return (
     <Box sx={{ width: "100%" }}>
-      <Button variant="contained" onClick={handleOnIdle}>
-        Idle
-      </Button>
+      {!(
+        process.env.REACT_APP_VERCEL_ENV === "production" ||
+        process.env.NODE_ENV === "production"
+      ) && (
+        <Button variant="contained" onClick={handleOnIdle}>
+          Idle
+        </Button>
+      )}
       {timer && <GameTimer />}
       <Box alignItems="center" display="flex" flexDirection="column" p={2}>
         <Tiles />

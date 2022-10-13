@@ -11,8 +11,6 @@ namespace Service.APIServices
         Task<ApiResult<string>> Authenticate(LoginRequest request);
         Task<ApiResult<bool>> Register(RegisterRequest request);
         Task<ApiResult<bool>> ChangePassword(ChangePasswordRequest request);
-        // Task<ApiResult<string>> GetConfirmCode(GetConfirmCodeRequest request);
-        // Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailRequest request);
         Task<ApiResult<bool>> Update(UpdateUserRequest request);
         Task<ApiResult<UserResponse>> GetById(Guid id);
         Task<ApiResult<UserResponse>> GetByUserName(string userName);

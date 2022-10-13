@@ -11,6 +11,8 @@ import {
   Switch,
   Stack,
   Divider,
+  Paper,
+  Typography,
 } from "@mui/material";
 import { useGame } from "../contexts/GameContext";
 
@@ -26,9 +28,14 @@ const GameMode = () => {
   } = useGame();
 
   const handleOnPlay = () => renew();
-  
+
   return (
     <>
+      <Paper variant="outlined">
+        <Typography p={2} align="center" color="primary" variant="h3">
+          DIFFICULTY
+        </Typography>
+      </Paper>
       <Box p={2}>
         <FormControl>
           <FormLabel id="tiles-controlled-radio-buttons-group">Tiles</FormLabel>
@@ -85,14 +92,19 @@ const GameMode = () => {
         <Button variant="contained" onClick={handleOnPlay}>
           Play
         </Button>
-        <FormControl>
-          <FormControlLabel
-            control={<Switch />}
-            label="Timer"
-            checked={timer}
-            onChange={timerChange}
-          />
-        </FormControl>
+        {!(
+          process.env.REACT_APP_VERCEL_ENV === "production" ||
+          process.env.NODE_ENV === "production"
+        ) && (
+          <FormControl>
+            <FormControlLabel
+              control={<Switch />}
+              label="Timer"
+              checked={timer}
+              onChange={timerChange}
+            />
+          </FormControl>
+        )}
       </Stack>
     </>
   );

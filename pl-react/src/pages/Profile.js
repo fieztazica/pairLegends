@@ -9,6 +9,7 @@ import {
   Tabs,
   Tooltip,
   Typography,
+  Badge,
 } from "@mui/material";
 import OverviewTab from "../components/Profile/OverviewTab";
 import PasswordTab from "../components/Profile/PasswordTab";
@@ -32,6 +33,8 @@ export function Profile() {
     setTabIndex(newValue);
   };
 
+  console.log(user.roles);
+
   React.useEffect(() => {
     if (!user) fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +52,15 @@ export function Profile() {
           alignItems="center"
         >
           <Grid item xs>
-            <Tooltip followCursor arrow title={`${user?.userName}`}>
+            <Badge
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              color="secondary"
+              badgeContent={`${user?.roles.join(", ")}`}
+              invisible={user?.roles.length <= 0}
+            >
               <Avatar
                 src={
                   user?.displayAvatarURL
@@ -59,7 +70,7 @@ export function Profile() {
                 sx={{ width: 96, height: 96 }}
                 alt={user?.userName.toUpperCase()}
               />
-            </Tooltip>
+            </Badge>
           </Grid>
           <Grid item xs>
             <Tooltip placement="right" arrow title={user?.id}>

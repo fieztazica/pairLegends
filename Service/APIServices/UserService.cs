@@ -161,38 +161,6 @@ public class UserService : IUserService
         return new ApiErrorResult<bool>(errorMessages);
     }
 
-    // public async Task<ApiResult<string>> GetConfirmCode(GetConfirmCodeRequest request)
-    // {
-    //     if (string.IsNullOrEmpty(request.Email))
-    //         return new ApiErrorResult<string>("Email cannot Null or Empty!");
-    //     var user = await _userManager.FindByEmailAsync(request.Email);
-    //     if (user == null)
-    //         return new ApiErrorResult<string>($"Cannot find user with email: {request.Email}");
-    //     
-    //     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-    //     if (code == null) 
-    //         return new ApiErrorResult<string>("Generate code failure!");
-    //     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-    //     return new ApiSuccessResult<string>(code);
-    // }
-
-    // public async Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailRequest request)
-    // {
-    //     if (string.IsNullOrEmpty(request.Email))
-    //         return new ApiErrorResult<bool>("Email cannot be Null or Empty!");
-    //     if (string.IsNullOrEmpty(request.Code))
-    //         return new ApiErrorResult<bool>("Code cannot be Null or Empty!");
-    //     var user = await _userManager.FindByEmailAsync(request.Email);
-    //     if (user == null)
-    //         return new ApiErrorResult<bool>("Cannot find User! ");
-    //
-    //     var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Code));
-    //     var result = await _userManager.ConfirmEmailAsync(user, code);
-    //     if (!result.Succeeded)
-    //         return new ApiErrorResult<bool>("Confirmation Failure!");
-    //     return new ApiSuccessResult<bool>(true);
-    // }
-
     public async Task<ApiResult<bool>> RoleAssign(RoleAssignRequest request)
     {
         var user = await _userManager.FindByIdAsync(request.Id.ToString());
@@ -228,14 +196,6 @@ public class UserService : IUserService
             user.Email = request.Email;
         if (!string.IsNullOrEmpty(request.UserName))
             user.UserName = request.UserName;
-        // if (!string.IsNullOrEmpty(request.PhoneNumber))
-        //     user.PhoneNumber = request.PhoneNumber;
-        // if (request.Level != -1)
-        //     user.Level = request.Level;
-        // if (request.Exp != -1)
-        //     user.Exp = request.Exp;
-        // if (request.Score != -1)
-        //     user.Score = request.Score;
 
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)

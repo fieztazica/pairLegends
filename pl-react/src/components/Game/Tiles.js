@@ -5,6 +5,7 @@ import { useGame } from "../contexts/GameContext";
 
 const Tiles = () => {
   const { tiles, champ1, champ2, handleClickTiles } = useGame();
+  
   const getTile = (x, y, selected) => (
     <Champion
       key={`${x}.${y}`}

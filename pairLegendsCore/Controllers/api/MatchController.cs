@@ -79,8 +79,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="deleteResultRequest">Delete Match Request</param>
         /// <returns>Delete Status</returns>
-        // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete()]
         public async Task<IActionResult> DeleteByBeginAt(DeleteMatchRequest deleteMatchRequest)
         {

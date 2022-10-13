@@ -57,6 +57,20 @@ export async function updateUser(body) {
   return checkData(response);
 }
 
+export async function changePassword(body) {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) throw new Error("No Token Provided");
+  const response = await fetch(`${rootUrl}/api/user/@me/password`, {
+    body: body,
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  return checkData(response);
+}
+
 export async function getUserById(id) {
   const token = localStorage.getItem("jwtToken");
   if (!token) throw new Error("No Token Provided");
@@ -86,6 +100,20 @@ export async function getMatches() {
   const response = await fetch(`${rootUrl}/api/match`, {
     headers: {
       Authorization: `Bearer ${token}`,
+    },
+  });
+  return checkData(response);
+}
+
+export async function postMatch(body) {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) throw new Error("No Token Provided");
+  const response = await fetch(`${rootUrl}/api/Match`, {
+    body: body,
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json; charset=UTF-8",
     },
   });
   return checkData(response);

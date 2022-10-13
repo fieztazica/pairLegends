@@ -43,6 +43,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="roleRequest">Role Create Model</param>
         /// <returns>Create Status</returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

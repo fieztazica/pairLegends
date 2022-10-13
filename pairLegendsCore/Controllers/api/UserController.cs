@@ -64,6 +64,24 @@ namespace pairLegendsCore.Controllers.api
         }
 
         /// <summary>
+        /// Change Password
+        /// </summary>
+        /// <param name="request">Change Password Request</param>
+        /// <returns>Change Password Status</returns>
+        [HttpPut("@me/password")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _userService.ChangePassword(request);
+            if (result.Succeeded)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
         /// Get User paged list
         /// </summary>
         /// <param name="pagingRequest">Paging params</param>
@@ -99,7 +117,7 @@ namespace pairLegendsCore.Controllers.api
         }
 
         /// <summary>
-        /// Get User information by UserName
+        /// Get User information by id
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns>User's information</returns>
@@ -126,6 +144,7 @@ namespace pairLegendsCore.Controllers.api
         [HttpPost("authenticate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
@@ -141,8 +160,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns>Delete Status</returns>
-        // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -180,8 +198,7 @@ namespace pairLegendsCore.Controllers.api
         /// </summary>
         /// <param name="roleAssignRequest">Role Assign Information</param>
         /// <returns>Assign Status</returns>
-        // WARNING: AFTER DEPLOY MUST UNCOMMENT THIS
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("@me/Role")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -194,36 +211,5 @@ namespace pairLegendsCore.Controllers.api
                 return Ok(result);
             return BadRequest(result);
         }
-
-        // /// <summary>
-        // /// Get Email Confirm Code
-        // /// </summary>
-        // /// <param name="request">Get Confirm Code</param>
-        // /// <returns>Confirm Code</returns>
-        // [HttpPost("get-confirm-code")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // public async Task<IActionResult> GetConfirmCode(GetConfirmCodeRequest request)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var result = await _userService.GetConfirmCode(request);
-        //     if (result.Succeeded)
-        //         return Ok(result);
-        //     return BadRequest(result);
-        // }
-
-        // [HttpPost("confirm-email")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // public async Task<IActionResult> ConfirmEmail(ConfirmEmailRequest request)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
-        //     var result = await _userService.ConfirmEmail(request);
-        //     if (result.Succeeded)
-        //         return Ok(result);
-        //     return BadRequest(result);
-        // }
     }
 }
