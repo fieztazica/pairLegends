@@ -78,8 +78,26 @@ public class MatchService : IMatchService
         return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
     }
 
-    public ApiResult<IEnumerable<MatchResponse>> GetMatchesById(Guid id, PagingRequest request)
+    public ApiResult<IEnumerable<MatchResponse>> GetMatchesById(Guid id)
     {
+        var matchList = _matchRepo.GetList(
+            filter: match => match.Id == id
+        );
+        if (!matchList.Any())
+            return new ApiErrorResult<IEnumerable<MatchResponse>>("Cannot find any match!");
+        var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
+        return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
+    }
+
+    public async Task<ApiResult<PagedList<MatchResponse>>> GetPagingMatchesById(Guid id, PagingRequest request)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+
+        if (user == null)
+        {
+            return new ApiErrorResult<PagedList<MatchResponse>>("User not found!");
+        }
+
         const int defaultPageSize = 10;
         const int defaultPageIndex = 1;
         var pageSize = defaultPageSize;
@@ -87,15 +105,27 @@ public class MatchService : IMatchService
 
         if (request.PageSize > 0) pageSize = request.PageSize;
         if (request.PageIndex > 0) pageIndex = request.PageIndex;
+        var matches = (await _matchRepo.GetListAsync(
+            filter: match => match.Id == id,
+            skip: (request.PageIndex - 1) * request.PageSize,
+            take: request.PageSize
+        )).Select(match => new MatchResponse() { Id = match.Id, BeginAt = match.BeginAt, EndAt = match.EndAt, Champs = match.Champs, Tiles = match.Tiles, TilesDone = match.TilesDone }
+        ).ToList();
 
-        var matchList = _matchRepo.GetList(
-            filter: (match) => match.Id == id,
-            skip: pageSize * (pageIndex - 1),
-            take: pageSize
-        );
-        if (!matchList.Any())
-            return new ApiErrorResult<IEnumerable<MatchResponse>>("Cannot find any match!");
-        var response = _mapper.Map<IEnumerable<MatchResponse>>(matchList);
-        return new ApiSuccessResult<IEnumerable<MatchResponse>>(response);
+        if (matches == null)
+            return new ApiErrorResult<PagedList<MatchResponse>>("Get Matches by Id list failed!");
+
+        var totalCount = _matchRepo.GetList(
+            filter: match => match.Id == id
+        ).Count();
+
+        PagedList<MatchResponse> histories = new()
+        {
+            TotalCount = totalCount,
+            PageIndex = pageIndex,
+            PageSize = pageSize,
+            Items = matches!
+        };
+        return new ApiSuccessResult<PagedList<MatchResponse>>(histories!);
     }
 }

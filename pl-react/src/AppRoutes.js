@@ -1,7 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { NotFound } from "./pages/NotFound";
-import { Counter } from "./pages/Counter";
-import { FetchData } from "./pages/FetchData";
 import { Game } from "./pages/Game";
 import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
@@ -27,16 +25,6 @@ export const appRoutes = [
     path: "/not-found",
     element: <NotFound />,
     name: "Not Found",
-  },
-  {
-    path: "/counter",
-    element: <Counter />,
-    name: "Counter",
-  },
-  {
-    path: "/fetch-data",
-    element: <FetchData />,
-    name: "Fetch Data",
   },
   {
     path: "/sign-in",

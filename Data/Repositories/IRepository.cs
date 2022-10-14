@@ -17,6 +17,13 @@ public interface IRepository<TEntity> where TEntity : class
         int skip = 0,
         int take = 0
     );
+    Task<IEnumerable<TEntity>> GetListAsync(
+       Expression<Func<TEntity, bool>> filter = null!,
+       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!,
+       string includeProperties = "",
+       int skip = 0,
+       int take = 0
+   );
     bool Any(Expression<Func<TEntity, bool>> filter);
     TEntity GetById(object id);
     Task<TEntity> GetByIdAsync(object id);

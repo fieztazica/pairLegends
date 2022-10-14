@@ -41,18 +41,35 @@ namespace pairLegendsCore.Controllers.api
         }
 
         /// <summary>
-        /// Get Matches by Id
+        /// Get All Matches by Id
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="pagingRequest">Paging Request</param>
         /// <returns>User Matches List</returns>
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id, [FromQuery] PagingRequest request)
+        public IActionResult Get(Guid id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var matches = _matchService.GetMatchesById(id, request);
+            var matches = _matchService.GetMatchesById(id);
+            if (matches.Succeeded)
+                return Ok(matches);
+            return NotFound(matches);
+        }
+
+        /// <summary>
+        /// Get Paged Matches by Id
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <param name="pagingRequest">Paging Request</param>
+        /// <returns>User Matches List with Pages</returns>
+        [AllowAnonymous]
+        [HttpGet("page/{id}")]
+        public async Task<IActionResult> GetPages(Guid id, [FromQuery] PagingRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var matches = await _matchService.GetPagingMatchesById(id, request);
             if (matches.Succeeded)
                 return Ok(matches);
             return NotFound(matches);

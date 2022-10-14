@@ -73,4 +73,8 @@ function camelize(str) {
     }).replace(/\s+/g, '');
 }
 
-export { validateEmail, validatePassword, useWindowSize, getChampName, camelize, mixChampions };
+function makeScore(tilesDone, tiles, champs, timeLeft) {
+    return Math.ceil(((tilesDone / tiles) * tilesDone * champs) * (timeLeft + 0.5))
+}
+
+export { validateEmail, validatePassword, useWindowSize, getChampName, camelize, mixChampions, makeScore };

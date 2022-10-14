@@ -33,8 +33,6 @@ export function Profile() {
     setTabIndex(newValue);
   };
 
-  console.log(user.roles);
-
   React.useEffect(() => {
     if (!user) fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
