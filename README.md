@@ -1,3 +1,5 @@
+[![Website](https://img.shields.io/website?style=flat&url=https%3A%2F%2Fpair-legends.vercel.app%2F)](https://pair-legends.vercel.app/) ![GitHub top language](https://img.shields.io/github/languages/top/fiezt1492/pairLegends?style=flat) ![GitHub language count](https://img.shields.io/github/languages/count/fiezt1492/pairLegends?style=flat) ![Discord](https://img.shields.io/discord/830110554604961824?style=flat) ![GitHub](https://img.shields.io/github/license/fiezt1492/pairLegends?style=flat)
+
 # Pair Legends
 
 A pikachu alike game with League of Legends champions.
