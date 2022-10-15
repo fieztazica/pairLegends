@@ -5,15 +5,15 @@ A pikachu alike game with League of Legends champions.
 
 ## Tech Stack
 
-**Client:** [ReactJS](https://reactjs.org/) - [MUI](https://mui.com/)
+**Client:** [![ReactJS](https://img.shields.io/badge/18.2.0-61DAFB?style=for-the-badge&logo=react&label=ReactJS&labelColor=20232A)](https://reactjs.org/) - [![MUI](https://img.shields.io/badge/5.0-0081CB?style=for-the-badge&logo=mui&label=MUI&labelColor=FFFFFF)](https://mui.com/)
 
-**Server:** [ASP.NET Core API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis) - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+**Server:** [![Asp.Net Core API](https://img.shields.io/badge/6.0.9-999999?style=for-the-badge&logo=Asp.Net Core API&label=Asp.Net Core API&labelColor=333333)](https://dotnet.microsoft.com/en-us/apps/aspnet/apis) - [![Entity Framework Core](https://img.shields.io/badge/6.0.9-999999?style=for-the-badge&logo=Entity Framework Core&label=Entity Framework Core&labelColor=333333)](https://learn.microsoft.com/en-us/ef/core/)
 
-**Security, Authorization:** [JWT](https://jwt.io/)
+**Authentication:** [![Jwt](https://img.shields.io/badge/Version-999999?style=for-the-badge&logo=Jwt&label=Jwt&labelColor=333333)](https://jwt.io/)
 
-**Database:** [Azure SQL](https://azure.microsoft.com/en-us/products/azure-sql/#product-overview)
+**Database:** [![Azure SQL](https://img.shields.io/badge/Version-999999?style=for-the-badge&logo=Azure SQL&label=Azure SQL&labelColor=333333)](https://azure.microsoft.com/en-us/products/azure-sql/#product-overview)
 
-**Hosting:** [Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/overview/), [Vercel](https://vercel.app/)
+**Hosting:** [![Azure App Service](https://img.shields.io/badge/Version-999999?style=for-the-badge&logo=Azure App Service&label=Azure App Service&labelColor=333333)](https://learn.microsoft.com/en-us/azure/app-service/overview/) [![Vercel](https://img.shields.io/badge/Version-999999?style=for-the-badge&logo=Vercel&label=Vercel&labelColor=333333)](https://vercel.app/)
 
 ## Acknowledgements
 
