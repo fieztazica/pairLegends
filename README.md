@@ -17,6 +17,7 @@ A pikachu alike game with League of Legends champions.
 
 ## Acknowledgements
 
+- [API Swagger Documentation](https://pairlegendscore.azurewebsites.net/)
 - [duonghan Pikachu Algorithm  - React Repo](https://github.com/duonghan/pikachu-react)
 - [hoangtuanhedspi Pikachu Algorithm -  Java](https://github.com/hoangtuanhedspi/Pika)
 - [Pikachu Algorithm](https://cachhoc.net/2014/03/25/thuat-toan-game-pokemon-pikachu/)
