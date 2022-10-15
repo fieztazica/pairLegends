@@ -95,7 +95,7 @@ function EndDialog() {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleOnBack}>Back</Button>
-                <Button autoFocus onClick={handleOnPlayAgain}>
+                <Button variant="contained" autoFocus onClick={handleOnPlayAgain}>
                     Play again
                 </Button>
             </DialogActions>
