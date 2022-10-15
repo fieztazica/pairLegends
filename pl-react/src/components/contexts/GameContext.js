@@ -12,7 +12,7 @@ export function getExpiredTime(duration) {
 export const GameContext = React.createContext();
 
 export const GameProvider = ({ children }) => {
-    const duration = 15 * 1000;
+    const duration = 10 * 1000;
     const [colNum, setColNum] = React.useState(10);
     const [champs, setChamps] = React.useState(10);
     const [fromChamps, setFromChamps] = React.useState(mixChampions());
@@ -24,6 +24,7 @@ export const GameProvider = ({ children }) => {
     const [tilesDone, setTilesDone] = React.useState(0);
     const [beginAt, setBeginAt] = React.useState(null);
     const [endAt, setEndAt] = React.useState(null);
+
     const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
         useTimer({
             expiryTimestamp: getExpiredTime(duration),
@@ -62,10 +63,6 @@ export const GameProvider = ({ children }) => {
         setTilesDone(0);
         if (timer) restart(getExpiredTime(duration));
     };
-
-    const getScore = () => {
-        return Math.ceil(((tilesDone / (8 * colNum)) * tilesDone * champs) * ((60 * minutes + seconds) + 0.5))
-    }
 
     const handleClickTiles = (x, y) => {
         if (status === "play") {
@@ -119,7 +116,6 @@ export const GameProvider = ({ children }) => {
                 renew,
                 setBeginAt,
                 setEndAt,
-                getScore,
             }}
         >
             {children}

@@ -124,7 +124,6 @@ export function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 loading={loading}
-                loadingIndicator="Signing you in..."
               >
                 Sign In
               </LoadingButton>

@@ -35,6 +35,10 @@ public class MatchService : IMatchService
         {
             return new ApiErrorResult<string>("Cannot find player!");
         }
+
+        if (DateTime.Compare(matchRequest.BeginAt, matchRequest.EndAt) >= 0)
+            return new ApiErrorResult<string>("Times are not suited!");
+
         var match = _mapper.Map<Match>(matchRequest);
         _matchRepo.Add(match);
 

@@ -94,6 +94,19 @@ export async function getMatchesById(id) {
     return checkData(response);
 }
 
+
+export async function getMatchesPageById(id, pageIndex = 1, pageSize = 10) {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) throw new Error("No Token Provided");
+    const response = await fetch(`${rootUrl}/api/match/page/${id}?PageIndex=${pageIndex}&PageSize=${pageSize}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return checkData(response);
+}
+
 export async function getMatches() {
     const token = localStorage.getItem("jwtToken");
     if (!token) throw new Error("No Token Provided");
@@ -121,6 +134,7 @@ export async function postMatch(body) {
 
 async function checkData(response) {
     if (response.status >= 500) throw new Error(response.statusText);
+    if (response.status == 401) throw new Error("The session is expired!");
     const data = await response.json();
     if (data.succeeded) return data;
     else throw new Error(data.message);

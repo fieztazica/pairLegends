@@ -14,10 +14,10 @@ const HowToPlayDialog = ({ openState, onClose }) => (
         open={openState}
         onClose={onClose}
     >
-        <DialogTitle >How to play</DialogTitle>
+        <DialogTitle>How To Play</DialogTitle>
         <DialogContent dividers>
             <Typography align="center" variant="h6" component="h6" gutterBottom>
-                Your duty
+                YOUR DUTY
             </Typography>
             <DialogContentText
                 tabIndex={-1}
@@ -31,7 +31,7 @@ const HowToPlayDialog = ({ openState, onClose }) => (
                 <Chip color="primary" label="ENG / VIE" />
             </Divider>
             <Typography align="center" variant="h6" component="h6" gutterBottom>
-                Nhiệm vụ của bạn
+                NHIỆM VỤ
             </Typography>
             <DialogContentText
                 tabIndex={-1}

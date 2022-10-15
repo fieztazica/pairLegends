@@ -10,6 +10,7 @@ import {
 import { useSnackbar } from "notistack";
 import React from "react";
 import { postMatch } from "../../utils/api";
+import { makeScore } from "../../utils/index";
 import { useGame } from "../contexts/GameContext";
 import { useUser } from "../contexts/UserContext";
 
@@ -24,8 +25,7 @@ function EndDialog() {
         tilesDone,
         colNum,
     } = useGame();
-    //const [loading, setLoading] = React.useState(false);
-    //const [saved, setSaved] = React.useState(false);
+
     const { user } = useUser();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -44,7 +44,6 @@ function EndDialog() {
             tiles: 8 * colNum,
             tilesDone: tilesDone,
         });
-        //setLoading(true);
 
         if (!user) {
             localStorage.setItem("lastGame", matchModel);
@@ -52,19 +51,20 @@ function EndDialog() {
                 "You haven't login yet. Saved your score to local! Login to push your last score to cloud!",
                 "warning"
             )();
-            //setLoading(false);
         } else {
             postMatch(matchModel)
                 .then((data) => {
-                    //setLoading(false);
-                    //setSaved(true);
                     localStorage.removeItem("lastGame");
                     SnackBar(`Saved!`, "success")();
                 })
                 .catch((err) => {
-                    //setLoading(false);
                     SnackBar(`${err.message}`, "error")();
                     console.error(err.message);
+                    localStorage.setItem("lastGame", matchModel);
+                    SnackBar(
+                        "Saved your score to local! Relogin to push your last score to cloud!",
+                        "error"
+                    )();
                 });
         }
     };
@@ -78,6 +78,8 @@ function EndDialog() {
                 });
             };
 
+    const score = () => makeScore(tilesDone, (8 * colNum), champs, (300 - (new Date(endAt) - new Date(beginAt)) / 1000)) || 0;
+
     React.useEffect(() => {
         if (status === "end")
             handleOnSave();
@@ -87,13 +89,12 @@ function EndDialog() {
         <Dialog open={status === "end"}>
             <DialogTitle>{"The game has ended!"}</DialogTitle>
             <DialogContent>
-                <DialogContentText>abc dat de di ia</DialogContentText>
+                <DialogContentText>
+                    You scored {`${score()}`}!
+                </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleOnBack}>Back</Button>
-                {/*<LoadingButton loading={loading} onClick={handleOnSave} disabled={saved}>*/}
-                {/*    Save*/}
-                {/*</LoadingButton>*/}
                 <Button autoFocus onClick={handleOnPlayAgain}>
                     Play again
                 </Button>

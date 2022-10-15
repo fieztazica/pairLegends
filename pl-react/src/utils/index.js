@@ -74,7 +74,7 @@ function camelize(str) {
 }
 
 function makeScore(tilesDone, tiles, champs, timeLeft) {
-    return Math.ceil(((tilesDone / tiles) * tilesDone * champs) * (timeLeft + 0.5))
+    return Math.ceil(((tilesDone / tiles) * tilesDone * (champs/10) * (tiles/8)) * (timeLeft + 0.5))
 }
 
 export { validateEmail, validatePassword, useWindowSize, getChampName, camelize, mixChampions, makeScore };

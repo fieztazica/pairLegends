@@ -26,7 +26,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 
 const ResponsiveAppBar = () => {
-    const { user, fetchUser } = useUser();
+    const { user } = useUser();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const location = useLocation();
 
@@ -49,11 +49,6 @@ const ResponsiveAppBar = () => {
     const isInExclude = excludePathname.some(
         (pathname) => pathname === location.pathname
     );
-
-    React.useEffect(() => {
-        if (!user) fetchUser();
-        // eslint-disable-next-line
-    }, [user]);
 
     const AvatarMenu = isInExclude ? (
         <></>
