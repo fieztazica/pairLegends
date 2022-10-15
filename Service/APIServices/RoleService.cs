@@ -31,7 +31,7 @@ public class RoleService : IRoleService
         {
             return new ApiSuccessResult<bool>(true);
         }
-        return new ApiErrorResult<bool>("Role created failure!");
+        return new ApiErrorResult<bool>("Failed to create role!");
     }
 
     public async Task<ApiResult<IEnumerable<RoleResponse>>> GetList()

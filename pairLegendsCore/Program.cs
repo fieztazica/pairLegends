@@ -69,7 +69,18 @@ namespace pairLegendsCore
             });
 
             // Authentication Stuffs
-            builder.Services.AddIdentity<AppUser, AppRole>()
+            builder.Services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+            })
                 .AddEntityFrameworkStores<PLContext>()
                 .AddDefaultTokenProviders();
             builder.Services.AddAuthentication(options =>

@@ -57,6 +57,7 @@ export const GameProvider = ({ children }) => {
         setTiles(_newTiles);
         setStatus("play");
         setBeginAt(new Date());
+        setEndAt(null);
         setChamp1(null);
         setChamp2(null);
         setFromChamps(mixChampions());

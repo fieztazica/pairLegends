@@ -33,7 +33,7 @@ public class MatchService : IMatchService
         var user = await _userManager.FindByIdAsync(matchRequest.Id.ToString());
         if (user == null)
         {
-            return new ApiErrorResult<string>("Cannot find player!");
+            return new ApiErrorResult<string>("Cannot find any player!");
         }
 
         if (DateTime.Compare(matchRequest.BeginAt, matchRequest.EndAt) >= 0)
@@ -59,7 +59,7 @@ public class MatchService : IMatchService
 
         if (affectRowNumber > 0)
             return new ApiSuccessResult<string>("Delete match successfully!");
-        return new ApiErrorResult<string>("Delete match fail!");
+        return new ApiErrorResult<string>("Failed to delete match!");
     }
 
     public ApiResult<IEnumerable<MatchResponse>> GetMatches(PagingRequest request)
@@ -117,7 +117,7 @@ public class MatchService : IMatchService
         ).ToList();
 
         if (matches == null)
-            return new ApiErrorResult<PagedList<MatchResponse>>("Get Matches by Id list failed!");
+            return new ApiErrorResult<PagedList<MatchResponse>>("Failed to get matches pagelist by Id!");
 
         var totalCount = _matchRepo.GetList(
             filter: match => match.Id == id

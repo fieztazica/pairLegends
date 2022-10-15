@@ -136,9 +136,9 @@ public class UserService : IUserService
         var isEmailExists = findEmail != null;
 
         if (isUserNameExists)
-            return new ApiErrorResult<bool>("This username already used.");
+            return new ApiErrorResult<bool>("This username is already in used.");
         if (isEmailExists)
-            return new ApiErrorResult<bool>("This email already used.");
+            return new ApiErrorResult<bool>("This email is already in used");
         if (request.Password != request.ConfirmPassword)
             return new ApiErrorResult<bool>("Password and confirm password are not the same.");
         var user = _mapper.Map<AppUser>(request);
@@ -165,7 +165,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
-            return new ApiErrorResult<bool>("User does not Exist");
+            return new ApiErrorResult<bool>("User does not exist");
         var removedRoles = request.Roles.Where(x => !x.Selected).Select(x => x.Name).ToList();
         foreach (var roleName in removedRoles)
             if (await _userManager.IsInRoleAsync(user, roleName))
@@ -184,13 +184,13 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
-            return new ApiErrorResult<bool>("User is not exist.");
+            return new ApiErrorResult<bool>("User does not exist.");
 
         if (request.UserName != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
-            return new ApiErrorResult<bool>("UserName already existed.");
+            return new ApiErrorResult<bool>("Username is already existed.");
 
         if (request.Email != null && await _userManager.Users.AnyAsync(x => x.Email == request.Email))
-            return new ApiErrorResult<bool>("Email already existed.");
+            return new ApiErrorResult<bool>("Email is already existed.");
 
         if (!string.IsNullOrEmpty(request.Email))
             user.Email = request.Email;
