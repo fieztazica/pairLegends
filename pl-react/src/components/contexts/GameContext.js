@@ -12,7 +12,7 @@ export function getExpiredTime(duration) {
 export const GameContext = React.createContext();
 
 export const GameProvider = ({ children }) => {
-    const duration = 10 * 1000;
+    const duration = 300 * 1000;
     const [colNum, setColNum] = React.useState(10);
     const [champs, setChamps] = React.useState(10);
     const [fromChamps, setFromChamps] = React.useState(mixChampions());
