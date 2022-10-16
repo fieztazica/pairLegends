@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Model.Action;
 using Model.Database;
 using Model.Request;
 using Model.Response;
@@ -24,10 +23,5 @@ public class AutoMapperProfile : Profile
         CreateMap<MatchRequest, Match>();
         CreateMap<Match, MatchResponse>();
         CreateMap<RegisterRequest, LoginRequest>();
-        CreateMap<RegisterModel, LoginModel>()
-            .AfterMap((src, des, context) =>
-            {
-                des.Input = context.Mapper.Map<LoginRequest>(src.Input);
-            });
     }
 }
