@@ -102,7 +102,6 @@ export function History() {
                 rows={rows}
                 columns={columns}
                 density="compact"
-                checkboxSelection
                 loading={loading}
                 disableSelectionOnClick
                 pagination
