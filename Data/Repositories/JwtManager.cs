@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Model.Database;
 
@@ -17,7 +16,6 @@ public class JwtManager : IJwtManager
         _configuration = configuration;
     }
 
-    // API
     public string Authenticate(AppUser user, IList<string> roles, bool rememberMe)
     {
         var tokenClaims = new List<Claim>
@@ -45,23 +43,6 @@ public class JwtManager : IJwtManager
         return tokenHandler.WriteToken(token);
     }
 
-    // View
-    public ClaimsPrincipal Validate(string token)
-    {
-        IdentityModelEventSource.ShowPII = true;
-
-        TokenValidationParameters validationParameters = new()
-        {
-            ValidateLifetime = true,
-            ValidAudience = _configuration["JWT:Issuer"],
-            ValidIssuer = _configuration["JWT:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]))
-        };
-
-        var principal = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out _);
-
-        return principal;
-    }
     public DateTime GetExpireDate(string token)
     {
         JwtSecurityToken jwt = new(token);
