@@ -199,7 +199,7 @@ namespace pairLegendsCore.Controllers.api
         /// <param name="roleAssignRequest">Role Assign Information</param>
         /// <returns>Assign Status</returns>
         [Authorize(Roles = "Admin")]
-        [HttpPut("@me/Role")]
+        [HttpPut("Role")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
