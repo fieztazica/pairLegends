@@ -4,14 +4,17 @@
     "ezreal",
     "Gameplay",
     "heimerdinger",
+    "homescreen",
     "labelledby",
     "notistack",
     "nunu",
     "Passw",
+    "pikachu",
     "rell",
     "rengar",
     "skarner",
-    "soraka"
+    "soraka",
+    "webfonts"
   ],
   "appService.defaultWebAppToDeploy": "/subscriptions/f4b2f6ca-5aef-4263-835d-7328ad1c1cca/AppServices/subscriptions/f4b2f6ca-5aef-4263-835d-7328ad1c1cca/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/pairLegends",
   "appService.deploySubpath": "."
