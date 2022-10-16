@@ -12,6 +12,8 @@
 appsettings.json
 appsettings.Development.json
 package-lock.json
+/.vscode
+/.idea
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
