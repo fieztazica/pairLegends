@@ -17,7 +17,7 @@ const PreloadLayout = ({ children }) => {
             };
 
     React.useEffect(() => {
-        fetchUser();
+        if (!user) fetchUser();
         if (user) {
             const localLastGame = localStorage.getItem("lastGame");
             if (localLastGame) {
@@ -36,7 +36,7 @@ const PreloadLayout = ({ children }) => {
             }
 
         }
-    }, [])
+    }, [user])
 
     return children;
 }
