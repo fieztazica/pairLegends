@@ -18,19 +18,23 @@ const PreloadLayout = ({ children }) => {
 
     React.useEffect(() => {
         if (!user) fetchUser();
-        if (user && localStorage.getItem("lastGame")) {
-            let lastGame = { ...(JSON.parse(localStorage.getItem("lastGame"))) }
-            lastGame.id = user?.id
-            SnackBar(`Found a game in your local storage!`, "info")();
-            postMatch(JSON.stringify(lastGame))
-                .then((data) => {
-                    localStorage.removeItem("lastGame");
-                    SnackBar(`Saved your last game to cloud!`, "success")();
-                })
-                .catch((err) => {
-                    SnackBar(`${err.message}`, "error")();
-                    console.error(err.message);
-                });
+        if (user) {
+            SnackBar(`Welcome, ${user?.userName || "guest"}!`, "success")();
+            if (localStorage.getItem("lastGame")) {
+                let lastGame = { ...(JSON.parse(localStorage.getItem("lastGame"))) }
+                lastGame.id = user?.id
+                SnackBar(`Found a game in your local storage!`, "warning")();
+                postMatch(JSON.stringify(lastGame))
+                    .then((data) => {
+                        localStorage.removeItem("lastGame");
+                        SnackBar(`Saved your last game to cloud!`, "success")();
+                    })
+                    .catch((err) => {
+                        SnackBar(`${err.message}`, "error")();
+                        console.error(err.message);
+                    });
+            }
+
         }
     }, [user])
 
