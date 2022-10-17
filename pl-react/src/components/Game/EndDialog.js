@@ -78,7 +78,7 @@ function EndDialog() {
                 });
             };
 
-    const score = () => makeScore(tilesDone, (8 * colNum), champs, (300 - (new Date(endAt) - new Date(beginAt)) / 1000)) || 0;
+    const score = () => makeScore(tilesDone, (8 * colNum), champs, (300 - ((new Date(endAt) - new Date(beginAt)) / 1000))) || 0;
 
     React.useEffect(() => {
         if (status === "end")
