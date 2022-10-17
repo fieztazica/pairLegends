@@ -78,7 +78,7 @@ function camelize(str) {
 }
 
 function makeScore(tilesDone, tiles, champs, timeLeft) {
-    const score = Math.ceil((tilesDone / tiles) * champs * tiles * (timeLeft + 0.5));
+    const score = Math.ceil((tilesDone / tiles) * champs * tiles + (timeLeft * champs * tiles));
     return isNaN(score) ? 0 : (score < 0 ? 0 : score);
 }
 
