@@ -1,5 +1,4 @@
 import * as React from "react";
-// components
 import {
     Box,
     Button,
@@ -11,7 +10,6 @@ import {
     Switch,
     Stack,
     Divider,
-    Paper,
     Typography,
     Tooltip
 } from "@mui/material";
@@ -37,7 +35,7 @@ const GameMode = () => {
                         DIFFICULTY
                     </Typography>
                     <Typography align="center" color="secondary" variant="subtitle2" gutterBottom>
-                        Select your game mode<br/>You have 5 mins to finish the challenge
+                        Select your game mode<br />You have 5 mins to finish the challenge
                     </Typography>
                 </Box>
             </Tooltip>

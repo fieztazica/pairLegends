@@ -16,7 +16,7 @@ import PasswordTab from "../components/Profile/PasswordTab";
 import { useSnackbar } from "notistack";
 
 export function Profile() {
-    const { user, fetchUser } = useUser();
+    const { user } = useUser();
     const [tabIndex, setTabIndex] = React.useState(0);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -32,12 +32,6 @@ export function Profile() {
     const onTabSelect = (event, newValue) => {
         setTabIndex(newValue);
     };
-
-    React.useEffect(() => {
-        fetchUser();
-        if (!user) window.location.href = "/";
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Box>

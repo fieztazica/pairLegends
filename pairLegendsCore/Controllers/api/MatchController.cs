@@ -26,7 +26,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Get All Matches in this game
         /// </summary>
-        /// <param name="pagingRequest">Paging Resquest</param>
+        /// <param name="request">Paging Resquest</param>
         /// <returns>>All Matches List</returns>
         [AllowAnonymous]
         [HttpGet()]
@@ -61,7 +61,7 @@ namespace pairLegendsCore.Controllers.api
         /// Get Paged Matches by Id
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="pagingRequest">Paging Request</param>
+        /// <param name="request">Paging Request</param>
         /// <returns>User Matches List with Pages</returns>
         [AllowAnonymous]
         [HttpGet("page/{id}")]
@@ -78,7 +78,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Create a match
         /// </summary>
-        /// <param name="matchRequest">Create Match Request</param>
+        /// <param name="request">Create Match Request</param>
         /// <returns>Create Status</returns>
         [HttpPost()]
         public async Task<IActionResult> Create([FromBody] MatchRequest request)
@@ -94,7 +94,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Delete Match by BeginAt
         /// </summary>
-        /// <param name="deleteResultRequest">Delete Match Request</param>
+        /// <param name="deleteMatchRequest">Delete Match Request</param>
         /// <returns>Delete Status</returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete()]

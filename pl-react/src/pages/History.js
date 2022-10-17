@@ -51,7 +51,7 @@ const columns = [
 ];
 
 export function History() {
-    const { user, fetchUser } = useUser();
+    const { user } = useUser();
     const [rows, setRows] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [page, setPage] = React.useState(0);
@@ -60,8 +60,6 @@ export function History() {
     const { enqueueSnackbar } = useSnackbar();
 
     React.useEffect(() => {
-        fetchUser();
-        if (!user) window.location.href = "/";
         setLoading(true);
         getMatchesPageById(user.id, page + 1, pageSize)
             .then((data) => {

@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "@mui/material/Link";
@@ -18,12 +17,9 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
-import { useUser } from "../components/contexts/UserContext";
 import { getToken } from "../utils/api";
 
 export function SignIn() {
-    const { fetchUser } = useUser();
-    // const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const formContext = useForm();
     const [loading, setLoading] = React.useState(false);
@@ -41,13 +37,11 @@ export function SignIn() {
         getToken(signInModel)
             .then((data) => {
                 localStorage.setItem("jwtToken", data.resultObject);
-                fetchUser();
                 SnackBar(`Signed you in!`, "success")()
                 setLoading(false);
                 setTimeout(() => {
                     window.location.href = "/";
-                }, 1000)
-                    ;
+                }, 3000);
             })
             .catch((err) => {
                 setLoading(false);
@@ -60,10 +54,6 @@ export function SignIn() {
         console.error(error);
         SnackBar(`${Object.keys(error).length} errors occured.`, "error")();
     };
-
-    // const ForgotPwdFunc = () => {
-    //   SnackBar("Who know?", "info")();
-    // };
 
     const SnackBar =
         (message, variant, ...props) =>

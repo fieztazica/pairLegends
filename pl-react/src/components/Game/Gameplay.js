@@ -15,17 +15,13 @@ export default function Gameplay() {
         timer,
         champ1,
         champ2,
-        // reloadHandler,
         colNum,
-        // duration,
         champs,
         setTiles,
         setChamp1,
         setChamp2,
         setTilesDone,
-        // restart,
         setStatus,
-        // setFromChamps,
         onEnd,
         pause,
     } = useGame();
@@ -330,11 +326,11 @@ export default function Gameplay() {
             return;
         }
 
-        // Round 1: Check if 2 items is valid (not null) or not
+        // Check if 2 items is valid (not null) or not
         if (champ1 && champ2) {
             let newTiles = [...tiles];
             const value = newTiles[champ1.x][champ1.y];
-            // Round 2: Check if 2 items is satisfiable or not. If yes then update score
+            // Check if 2 items is satisfiable or not. If yes then update states
             for (let i = 0; i < satisfiableItems[value].length; i++) {
                 // compare two object
                 if (

@@ -6,7 +6,6 @@ const DevStatus = () => {
     status,
     colNum,
     champs,
-    // timer,
     hours,
     minutes,
     seconds,

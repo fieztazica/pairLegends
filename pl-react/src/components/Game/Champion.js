@@ -2,8 +2,7 @@ import * as React from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./champion.css";
-// eslint-disable-next-line
-import { getChampName, mixChampions } from "../../utils/index";
+import { getChampName } from "../../utils/index";
 import { useGame } from "../contexts/GameContext";
 
 const GameButton = styled(Button)({

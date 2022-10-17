@@ -48,7 +48,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Update User Profile
         /// </summary>
-        /// <param name="updateUserRequest">Update Information</param>
+        /// <param name="request">Update Information</param>
         /// <returns>Update Status</returns>
         [HttpPut("@me")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -84,7 +84,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Get User paged list
         /// </summary>
-        /// <param name="pagingRequest">Paging params</param>
+        /// <param name="request">Paging params</param>
         /// <returns>The User paged list</returns>
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -100,7 +100,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Register an account 
         /// </summary>
-        /// <param name="signUpModel">Register information</param>
+        /// <param name="request">Register information</param>
         /// <returns>Register Status</returns>
         [AllowAnonymous]
         [HttpPost()]
@@ -138,7 +138,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Authenticate your Login
         /// </summary>
-        /// <param name="loginModel">Login Information</param>
+        /// <param name="request">Login Information</param>
         /// <returns>Your token</returns>
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -196,7 +196,7 @@ namespace pairLegendsCore.Controllers.api
         /// <summary>
         /// Assign Roles for User
         /// </summary>
-        /// <param name="roleAssignRequest">Role Assign Information</param>
+        /// <param name="request">Role Assign Information</param>
         /// <returns>Assign Status</returns>
         [Authorize(Roles = "Admin")]
         [HttpPut("Role")]

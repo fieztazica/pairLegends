@@ -1,10 +1,6 @@
 import {
-  amber,
-  deepOrange,
-  grey,
   blue,
   common,
-  purple,
 } from "@mui/material/colors";
 
 const palette = {
