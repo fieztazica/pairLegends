@@ -19,9 +19,9 @@ const PreloadLayout = ({ children }) => {
     React.useEffect(() => {
         if (!user) fetchUser();
         if (user) {
-            SnackBar(`Welcome, ${user?.userName || "guest"}!`, "success")();
-            if (localStorage.getItem("lastGame")) {
-                let lastGame = { ...(JSON.parse(localStorage.getItem("lastGame"))) }
+            const localLastGame = localStorage.getItem("lastGame");
+            if (localLastGame) {
+                let lastGame = { ...(JSON.parse(localLastGame)) }
                 lastGame.id = user?.id
                 SnackBar(`Found a game in your local storage!`, "warning")();
                 postMatch(JSON.stringify(lastGame))
