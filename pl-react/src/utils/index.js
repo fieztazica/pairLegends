@@ -16,19 +16,8 @@ function validatePassword(password) {
         .is()
         .max(100, "no longer than 100 chars")
         .has()
-        .uppercase(1, "at least 1 uppercase")
-        .has()
-        .lowercase(1, "at least 1 lowercase")
-        .has()
-        .symbols(1, "at least 1 symbol")
-        .has()
-        .digits(1, "at least 1 digit")
-        .has()
         .not()
-        .spaces(1, "no spaces")
-        .is()
-        .not()
-        .oneOf(["Passw0rd", "Password123"]);
+        .spaces(1, "no spaces");
 
     const res = schema.validate(password, { details: true });
 

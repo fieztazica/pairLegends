@@ -25,6 +25,7 @@ import { useSnackbar } from "notistack";
 import LinkRouter from "../components/LinkRouter";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { register } from "../utils/api";
+import { validatePassword } from "../utils/index";
 
 const DiscordIcon = () => <SvgIcon component={DiscordSvg} inheritViewBox />;
 
@@ -130,6 +131,9 @@ export function SignUp() {
                                         autoComplete="new-password"
                                         required
                                         fullWidth
+                                        validation={{
+                                            validate: (value) => validatePassword(value),
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

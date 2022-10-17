@@ -26,7 +26,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
-            return new ApiErrorResult<string>("User does not exist!");
+            return new ApiErrorResult<string>("Username or password incorrect!");
         var result = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!result)
             return new ApiErrorResult<string>("Username or password incorrect!");
@@ -185,6 +185,9 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(request.Id.ToString());
         if (user == null)
             return new ApiErrorResult<bool>("User does not exist.");
+        var checkPwd = await _userManager.CheckPasswordAsync(user, request.Password);
+        if (!checkPwd)
+            return new ApiErrorResult<bool>("Password incorrect!");
 
         if (request.UserName != null && await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
             return new ApiErrorResult<bool>("Username is already existed.");
