@@ -42,12 +42,4 @@ public class JwtManager : IJwtManager
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
-
-    public DateTime GetExpireDate(string token)
-    {
-        JwtSecurityToken jwt = new(token);
-        if (token == null)
-            return DateTime.Now;
-        return jwt.ValidTo.ToUniversalTime();
-    }
 }
