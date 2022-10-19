@@ -95,7 +95,7 @@ const ResponsiveAppBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {user && (
+                {user ? (
                     <MenuList>
                         <MenuItem
                             to={`/profile`}
@@ -125,8 +125,7 @@ const ResponsiveAppBar = () => {
                             <ListItemText>Logout</ListItemText>
                         </MenuItem>
                     </MenuList>
-                )}
-                {!user && (
+                ) : (
                     <MenuList>
                         <MenuItem
                             to="/sign-in"
