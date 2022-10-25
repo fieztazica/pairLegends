@@ -13,11 +13,11 @@ A pikachu alike game with League of Legends champions.
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your `.env` file
+To run this project, you will need to add the following environment variables to `.env` file
 
 `API_HOST`
 
-and your `appsettings.json` file
+and `appsettings.json` file
 
 ```
 "ConnectionStrings": {
