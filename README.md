@@ -19,7 +19,7 @@ To run this project, you will need to add the following environment variables to
 
 and `appsettings.json` file
 
-```
+```JSON
 "ConnectionStrings": {
     "DeployConnection": "yourProductionConnectionString",
     "DefaultConnection": "yourDefaultConnectionString"
