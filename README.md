@@ -23,19 +23,18 @@ and `appsettings.json` file
 "ConnectionStrings": {
     "DeployConnection": "yourProductionConnectionString",
     "DefaultConnection": "yourDefaultConnectionString"
-  },
-  "ApiContacts": {
+},
+"ApiContacts": {
     "Owner": {
-      "Name": "yourName",
-      "Url": "yourUrl"
+        "Name": "yourName",
+        "Url": "yourUrl"
     }
-  },
-  "JWT": {
+},
+"JWT": {
     "Key": "yourJWTKey",
     "Issuer": "yourJWTIssuer",
     "Audience": "yourJWTAudience"
-  }
-
+}
 ```
 
 ## Acknowledgements
